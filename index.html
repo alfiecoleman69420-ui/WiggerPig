@@ -1,25 +1,1191 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>wigger pig</title>
-    <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        background: #000;
-        display: flex;
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WIGGERPIG.COM – The Sacred Pig of the Abyss</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050509;
+      --bg-soft: #111119;
+      --accent: #ff3af5;
+      --accent2: #00ff9d;
+      --text: #f5f5f5;
+      --muted: #9c9caa;
+      --danger: #ff5555;
+      --gold: #ffd447;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+      --radius: 18px;
+      --transition-fast: 0.15s ease-out;
+      --transition-med: 0.28s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #151528 0, #050509 45%, #020206 100%);
+      color: var(--text);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      transition: background 0.4s ease, filter 0.4s ease;
+    }
+
+    body.mlg-mode {
+      background: repeating-linear-gradient(
+        45deg,
+        #10ffb4,
+        #10ffb4 8px,
+        #ff3af5 8px,
+        #ff3af5 16px
+      );
+      animation: mlg-bg 0.25s linear infinite;
+      filter: contrast(1.2) saturate(1.6);
+    }
+
+    @keyframes mlg-bg {
+      from { background-position: 0 0; }
+      to { background-position: 40px 40px; }
+    }
+
+    a {
+      color: var(--accent2);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* NAVBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to right, rgba(5,5,10,0.94), rgba(10,10,20,0.9));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .logo-pig {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 2px solid var(--accent2);
+      box-shadow: 0 0 10px rgba(0, 255, 157, 0.6);
+    }
+
+    nav {
+      display: flex;
+      gap: 14px;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    nav a:hover {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .nav-cta {
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--accent2), var(--accent));
+      color: #050509;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      border: none;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-cta:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    /* LAYOUT */
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 18px 80px;
+    }
+
+    section {
+      margin-bottom: 70px;
+      position: relative;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0.04em;
+    }
+
+    h2.section-title {
+      font-size: 24px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2.section-title::before {
+      content: "";
+      width: 26px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .card {
+      background: radial-gradient(circle at top, #1b1b2b 0, #111119 50%, #08080e 100%);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* HERO */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.9fr);
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .hero-title {
+      font-size: clamp(30px, 4vw, 40px);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .hero-highlight {
+      background: linear-gradient(120deg, var(--accent2), var(--accent));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-tagline {
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 18px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 9px 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--accent2), var(--accent));
+      color: #050509;
+      border-color: transparent;
+      box-shadow: var(--shadow);
+      font-weight: 600;
+    }
+
+    .btn-danger {
+      border-color: rgba(255,0,0,0.4);
+      color: var(--danger);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.6);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+      background: linear-gradient(120deg, var(--accent2), var(--accent));
+    }
+
+    .hero-meta {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .hero-meta strong {
+      color: var(--accent2);
+    }
+
+    .hero-image-wrap {
+      position: relative;
+    }
+
+    .hero-image {
+      width: 100%;
+      border-radius: 28px;
+      object-fit: cover;
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(255,255,255,0.06);
+      transform: translateY(0);
+      animation: hero-float 4.5s ease-in-out infinite;
+    }
+
+    @keyframes hero-float {
+      0%,100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .floating-meme {
+      position: absolute;
+      font-size: 22px;
+      opacity: 0.8;
+      animation: float-around 10s linear infinite;
+      pointer-events: none;
+    }
+
+    .floating-1 { top: -10px; left: -5px; animation-duration: 12s; }
+    .floating-2 { top: 20%; right: -10px; animation-duration: 11s; }
+    .floating-3 { bottom: -8px; left: 10%; animation-duration: 13s; }
+    .floating-4 { bottom: 15%; right: -15px; animation-duration: 9s; }
+
+    @keyframes float-around {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-12px) translateX(6px) rotate(6deg); opacity: 1; }
+      50% { transform: translateY(0) translateX(10px) rotate(-4deg); opacity: 0.8; }
+      75% { transform: translateY(8px) translateX(-4px) rotate(2deg); opacity: 0.9; }
+      100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+    }
+
+    /* LORE SECTIONS */
+
+    .lore-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .lore-chapter-title {
+      font-size: 15px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--accent2);
+    }
+
+    .lore-chapter {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #e3e3f5;
+    }
+
+    /* JEOPARDY */
+
+    .jeopardy-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+      gap: 22px;
+    }
+
+    .jeopardy-card {
+      background: radial-gradient(circle at top left, #252548 0, #12121e 48%, #08080e 100%);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .jeopardy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .pulse {
+      animation: pulse 1.6s ease-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 212, 71, 0.6); }
+      100% { box-shadow: 0 0 0 18px rgba(255, 212, 71, 0); }
+    }
+
+    .jeopardy-title {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .jeopardy-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .small-pill {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .small-pill.highlight {
+      border-color: var(--accent2);
+      color: var(--accent2);
+    }
+
+    .countdown {
+      font-size: 13px;
+      margin-bottom: 10px;
+      color: var(--accent2);
+    }
+
+    .jeopardy-note {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .board-cell {
+      padding: 10px 6px;
+      text-align: center;
+      background: #121226;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #f6f6ff;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .board-cell:hover {
+      background: #191936;
+      border-color: var(--accent);
+    }
+
+    .board-cell span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .board-cell::after {
+      content: "$420";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      font-weight: 700;
+      color: var(--gold);
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+      transition: opacity 0.2s ease;
+    }
+
+    .board-cell:hover::after {
+      opacity: 1;
+    }
+
+    /* DISCORD */
+
+    .discord-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+      gap: 20px;
+      align-items: center;
+    }
+
+    .discord-invite {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .discord-link {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(24, 31, 54, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      border: 1px solid rgba(114, 137, 218, 0.7);
+    }
+
+    .discord-link span {
+      color: #fff;
+    }
+
+    .discord-points {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .discord-points li {
+      margin-bottom: 4px;
+    }
+
+    /* NEWS / TIMELINE */
+
+    .timeline {
+      border-left: 2px dashed rgba(255,255,255,0.15);
+      margin-left: 10px;
+      padding-left: 18px;
+      font-size: 13px;
+    }
+
+    .timeline-item {
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -21px;
+      top: 5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent2);
+      box-shadow: 0 0 12px rgba(0,255,157,0.8);
+    }
+
+    .timeline-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .timeline-title {
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    /* TOYS */
+
+    .toys-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .soundboard-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sound-btn {
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sound-btn:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .slider-wrap {
+      margin-top: 6px;
+    }
+
+    .pig-slider {
+      width: 100%;
+    }
+
+    .slider-output {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--accent2);
+      min-height: 18px;
+    }
+
+    .summon-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .summon-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .summon-img {
+      max-width: 80vw;
+      max-height: 80vh;
+      border-radius: 30px;
+      box-shadow: 0 0 80px rgba(255,255,255,0.35);
+      animation: summon-zoom 0.6s ease-out;
+    }
+
+    @keyframes summon-zoom {
+      0% { transform: scale(0.7) rotate(-2deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .summon-text {
+      position: absolute;
+      bottom: 18px;
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      text-shadow: 0 0 16px rgba(0,0,0,0.9);
+    }
+
+    .prophecy-output {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #f6f6ff;
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      min-height: 40px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 20px 18px 28px;
+      font-size: 11px;
+      color: var(--muted);
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    footer a {
+      color: var(--accent2);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 800px) {
+      .nav-inner {
+        flex-wrap: wrap;
         justify-content: center;
-        align-items: center;
       }
-      img {
-        max-width: 100%;
-        max-height: 100%;
+
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
       }
-    </style>
-  </head>
-  <body>
-    <img src="wiggerpig.jpg" alt="wigger pig" />
-  </body>
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image-wrap {
+        order: -1;
+      }
+
+      .jeopardy-layout,
+      .discord-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding-inline: 12px;
+      }
+
+      .card {
+        padding-inline: 14px;
+      }
+
+      .hero-title {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Summon Pig Overlay -->
+  <div class="summon-overlay" id="summonOverlay">
+    <img src="wiggerpig.jpg" alt="Wigger Pig Ascends" class="summon-img" />
+    <div class="summon-text">
+      <strong>HE HAS BEEN SUMMONED.</strong><br />
+      click anywhere to return to your pathetic reality
+    </div>
+  </div>
+
+  <header>
+    <div class="nav-inner">
+      <div class="logo">
+        <img src="wiggerpig.jpg" alt="Wigger Pig" class="logo-pig" />
+        <span>WIGGERPIG.COM</span>
+      </div>
+      <nav>
+        <a href="#lore">Lore</a>
+        <a href="#jeopardy">Femboy Jeopardy</a>
+        <a href="#discord">Discord</a>
+        <a href="#toys">Toys</a>
+      </nav>
+      <a href="#discord" class="nav-cta">JOIN THE ABYSS</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div>
+        <div class="hero-tagline">THE SACRED ABYSSVC MASCOT</div>
+        <h1 class="hero-title">
+          Behold <span class="hero-highlight">Wigger Pig</span>,  
+          the cursed guardian of <span class="hero-highlight">wiggerpig.com</span>.
+        </h1>
+        <p class="subtle">
+          You weren’t meant to find this site, but now you’re here and the Pig has seen you.
+          There is no going back. Only deeper.
+        </p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="document.getElementById('lore').scrollIntoView({behavior:'smooth'})">
+            📖 Read the Scriptures
+          </button>
+          <button class="btn btn-danger" id="summonBtn">
+            🔻 Do Not Press This
+          </button>
+          <a href="#jeopardy" class="btn">
+            🎮 Femboy Jeopardy Intel
+          </a>
+        </div>
+        <div class="hero-meta">
+          <strong>Live HQ:</strong> <span>wiggerpig.com</span> ·
+          <strong>Discord:</strong> <a href="https://discord.gg/abyssvc" target="_blank" rel="noopener">discord.gg/abyssvc</a> ·
+          <strong>Stream:</strong> Kick <span>@AbyssDiscord</span>
+        </div>
+      </div>
+      <div class="hero-image-wrap">
+        <img src="wiggerpig.jpg" alt="The Wigger Pig" class="hero-image" />
+        <div class="floating-meme floating-1">💨</div>
+        <div class="floating-meme floating-2">🐷</div>
+        <div class="floating-meme floating-3">🔥</div>
+        <div class="floating-meme floating-4">💀</div>
+      </div>
+    </section>
+
+    <!-- LORE -->
+    <section id="lore">
+      <h2 class="section-title">The Lore of Wigger Pig</h2>
+      <p class="subtle" style="max-width:650px;">
+        The following scriptures were recovered from a corrupted .txt file found in the depths of
+        <strong>discord.gg/abyssvc</strong>. Scholars do not agree on what any of this means. The Pig does not care.
+      </p>
+      <div class="lore-grid card" style="margin-top:16px;">
+        <div>
+          <div class="lore-chapter-title">Chapter 1 — The Birth of the Pig</div>
+          <p class="lore-chapter">
+            In the beginning there was only darkness, a faint smell of Doritos, and the echo of a distant no-scope.
+            From the void emerged a creature that was not man, not beast, not gamer and not gremlin, but some horrific
+            hybrid of all four. Its snout twitched, its eyes narrowed, and it hissed the first words ever recorded in
+            the scriptures: <em>“Oink, bitch.”</em> Thus, Wigger Pig was born and reality has been extremely confused
+            ever since.
+          </p>
+        </div>
+        <div>
+          <div class="lore-chapter-title">Chapter 2 — The Awakening of the Abyss</div>
+          <p class="lore-chapter">
+            Wigger Pig wandered the multiverse, corrupting memes and upsetting villagers with nothing more than an
+            unbroken stare. Steam servers crashed. Twitch chats desynced. Roblox children cried for no reason.
+            Eventually a single Discord ping echoed through the cosmos: <code>“join abyssVC”</code>. The Pig answered,
+            and the server would never again know peace.
+          </p>
+        </div>
+        <div>
+          <div class="lore-chapter-title">Chapter 3 — The Great Oinkening</div>
+          <p class="lore-chapter">
+            When Wigger Pig joined <strong>discord.gg/abyssvc</strong>, three members leveled up without typing, one
+            mod passed out in VC, and someone’s mic started blasting 2009 MLG montage music. The banner spontaneously
+            upgraded itself into a higher resolution shitpost. From that day forth, the community was renamed
+            <em>The Abyss</em>, and the Pig its reluctant, cursed mascot.
+          </p>
+        </div>
+        <div>
+          <div class="lore-chapter-title">Chapter 4 — The 420BLAZEIT Prophecy</div>
+          <p class="lore-chapter">
+            Prophecies spoke of a time when 420 and MLG would merge into a single chaotic timeline. With the Pig’s
+            arrival, Doritos began to orbit the server icon and Mountain Dew rained metaphorically from the heavens.
+            Hitmarkers echoed in empty channels. Shrek PNGs appeared where no Shrek had any right to be.
+            The prophecy was clear: <em>“When the Pig rises, the weed shall blaze and the noscopes shall land without aim.”</em>
+          </p>
+        </div>
+        <div>
+          <div class="lore-chapter-title">Chapter 5 — Femboy Jeopardy</div>
+          <p class="lore-chapter">
+            One cursed night, the Pig shared a vision: a neon stage, a host in cat ears, and a scoreboard simply
+            labeled “HELP.” Thus, <strong>Femboy Jeopardy</strong> was foretold — a game show of unholy trivia,
+            streamed on Kick at <strong>@AbyssDiscord</strong>. The winner earns the Blessing of the Pig; the loser
+            gains a lifelong need to never explain this to their family.
+          </p>
+        </div>
+        <div>
+          <div class="lore-chapter-title">Chapter 6 — The Temple of WiggerPig.com</div>
+          <p class="lore-chapter">
+            The Pig demanded a shrine, a temple, a cursed monument carved into HTML: <strong>WIGGERPIG.COM</strong>.
+            A domain destined to be a museum of degeneracy, a lore archive, an announcement board for Femboy Jeopardy
+            and a portal into the Abyss. The scriptures simply said:
+            <em>“Build it, and the unhinged will come.”</em>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JEOPARDY -->
+    <section id="jeopardy">
+      <h2 class="section-title">Femboy Jeopardy Intel</h2>
+      <div class="jeopardy-layout">
+        <div class="jeopardy-card">
+          <div class="jeopardy-badge pulse">⚠ EVENT PROPHECY • COMING SOON</div>
+          <h3 class="jeopardy-title">Femboy Jeopardy – Braincell Sacrifice Edition</h3>
+          <p class="jeopardy-sub">
+            A chaotic trivia game show featuring cursed questions, questionable categories, and contestants
+            who should probably log off. Hosted from the depths of the Abyss and streamed live on Kick.
+          </p>
+          <div class="badge-row">
+            <div class="small-pill highlight">Kick: @AbyssDiscord</div>
+            <div class="small-pill">Location: discord.gg/abyssvc</div>
+            <div class="small-pill">Status: Arming the questions</div>
+          </div>
+          <p class="countdown" id="jeopardyCountdown">
+            Countdown: <span>Awaiting exact time – watch announcements in the Discord.</span>
+          </p>
+          <p class="jeopardy-note">
+            Expect categories like <strong>Wigger Pig Lore</strong>, <strong>Internet Degeneracy</strong>,
+            <strong>MLG History</strong>, and <strong>Cursed Mystery Box</strong>. Prizes include bragging rights,
+            emotional damage and possibly Nitro if the gods are kind.
+          </p>
+        </div>
+        <div class="jeopardy-card">
+          <h4 style="margin-top:0;margin-bottom:10px;">Prototype Question Board</h4>
+          <p class="subtle" style="margin-bottom:12px;">
+            Click a tile to reveal a totally serious, academically valid Jeopardy clue.
+          </p>
+          <div class="board-grid" id="boardGrid">
+            <div class="board-cell"><span>Memes</span></div>
+            <div class="board-cell"><span>Degeneracy</span></div>
+            <div class="board-cell"><span>Lore</span></div>
+            <div class="board-cell"><span>Internet</span></div>
+            <div class="board-cell"><span>Mystery</span></div>
+          </div>
+          <p class="subtle" style="margin-top:12px;font-size:12px;">
+            Actual game will be streamed on Kick – follow <strong>@AbyssDiscord</strong> and watch announcements in
+            <strong>discord.gg/abyssvc</strong> for the official date and sign-ups.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DISCORD -->
+    <section id="discord">
+      <h2 class="section-title">Enter the Abyss – Discord Hub</h2>
+      <div class="card discord-card">
+        <div>
+          <h3 class="discord-invite">Join the Cult of Wigger Pig</h3>
+          <p class="subtle">
+            This entire disaster is powered by the <strong>AbyssVC</strong> Discord server. All lore updates,
+            Femboy Jeopardy announcements, cursed images and general psychological damage originate here.
+          </p>
+          <a class="discord-link" href="https://discord.gg/abyssvc" target="_blank" rel="noopener">
+            <span>👾 discord.gg/abyssvc</span>
+          </a>
+          <ul class="discord-points">
+            <li>🎙 Live events like <strong>Femboy Jeopardy</strong> & other chaotic game nights.</li>
+            <li>📸 Dedicated channels for Wigger Pig edits and cursed media.</li>
+            <li>🧠 Community lore-building, inside jokes and spiritual braincell loss.</li>
+            <li>🕳 A bottomless content sink for the truly terminally online.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-top:0;margin-bottom:8px;">Server Patch Notes (Totally Real)</h4>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-label">v1.0 • The Arrival</div>
+              <div class="timeline-title">Pig detected in server.</div>
+              <div class="subtle">Three members leveled up. No one knows why.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-label">v1.5 • Lore Expansion Pack</div>
+              <div class="timeline-title">WiggerPig.com domain acquired.</div>
+              <div class="subtle">Reality took 12 psychic damage.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-label">v2.0 • Jeopardy Protocol</div>
+              <div class="timeline-title">Femboy Jeopardy announced.</div>
+              <div class="subtle">Scientists agree this should not be allowed and yet here we are.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-label">v2.1 • Meme Singularity</div>
+              <div class="timeline-title">Wigger Pig declared eternal mascot.</div>
+              <div class="subtle">Server IQ decreased by 2, happiness increased by 69.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOYS & CHAOS -->
+    <section id="toys">
+      <h2 class="section-title">Cursed Toys & Interactive Nonsense</h2>
+      <div class="toys-layout">
+        <!-- Soundboard -->
+        <div class="card">
+          <h3 style="margin-top:0;margin-bottom:6px;">Wigger Pig Soundboard</h3>
+          <p class="subtle" style="margin-bottom:10px;">
+            Click a button to emit noises that may or may not be legal in your country. (They’re just beeps. For now.)
+          </p>
+          <div class="soundboard-buttons">
+            <button class="sound-btn" data-tone="pig">
+              🐷 Oink of Doom
+            </button>
+            <button class="sound-btn" data-tone="hitmarker">
+              🎯 Hitmarker
+            </button>
+            <button class="sound-btn" data-tone="airhorn">
+              📢 Airhorn
+            </button>
+            <button class="sound-btn" data-tone="shrek">
+              💚 Shrek Energy
+            </button>
+            <button class="sound-btn" data-tone="weed">
+              🌿 420 Ping
+            </button>
+          </div>
+        </div>
+
+        <!-- Slider -->
+        <div class="card">
+          <h3 style="margin-top:0;margin-bottom:6px;">Rate My Pig</h3>
+          <p class="subtle">
+            Use the slider to tell the universe how you feel about Wigger Pig. The Pig will judge you regardless.
+          </p>
+          <div class="slider-wrap">
+            <input type="range" min="0" max="100" value="69" class="pig-slider" id="pigSlider" />
+            <div class="slider-output" id="sliderOutput">
+              You have selected the sacred 69. The Pig approves.
+            </div>
+          </div>
+        </div>
+
+        <!-- Summon + Prophecy -->
+        <div class="card">
+          <h3 style="margin-top:0;margin-bottom:6px;">Summon & Prophecy Engine</h3>
+          <p class="subtle">
+            If you press the summon button above, you already know what happens. This is the quieter option:
+            generate a random Wigger Pig prophecy to guide (or ruin) your day.
+          </p>
+          <button class="btn" id="prophecyBtn">🔮 Generate Prophecy</button>
+          <div class="prophecy-output" id="prophecyOutput">
+            The Pig is thinking. He does not like it.
+          </div>
+          <p class="subtle" style="margin-top:10px;font-size:11px;">
+            Psst: Try entering the classic Konami code on your keyboard anywhere on this page.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      © <span id="year"></span> WiggerPig.com · forged in the depths of <a href="https://discord.gg/abyssvc" target="_blank" rel="noopener">discord.gg/abyssvc</a>
+    </div>
+    <div>
+      Konami Code → secret MLG mode · Femboy Jeopardy streaming on Kick: <strong>@AbyssDiscord</strong>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Summon overlay
+    const summonBtn = document.getElementById('summonBtn');
+    const summonOverlay = document.getElementById('summonOverlay');
+
+    summonBtn.addEventListener('click', () => {
+      summonOverlay.classList.add('visible');
+    });
+
+    summonOverlay.addEventListener('click', () => {
+      summonOverlay.classList.remove('visible');
+    });
+
+    // Simple soundboard using Web Audio beeps
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioCtx;
+
+    function playBeep(type) {
+      if (!AudioContext) return;
+      if (!audioCtx) audioCtx = new AudioContext();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      let freq = 440;
+      let duration = 0.18;
+
+      switch (type) {
+        case 'pig':
+          freq = 220;
+          duration = 0.25;
+          break;
+        case 'hitmarker':
+          freq = 900;
+          duration = 0.09;
+          break;
+        case 'airhorn':
+          freq = 300;
+          duration = 0.4;
+          break;
+        case 'shrek':
+          freq = 130;
+          duration = 0.3;
+          break;
+        case 'weed':
+          freq = 420;
+          duration = 0.2;
+          break;
+      }
+
+      osc.frequency.value = freq;
+      osc.type = 'square';
+      gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    document.querySelectorAll('.sound-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tone = btn.getAttribute('data-tone');
+        playBeep(tone);
+      });
+    });
+
+    // Slider logic
+    const pigSlider = document.getElementById('pigSlider');
+    const sliderOutput = document.getElementById('sliderOutput');
+
+    const sliderMessages = [
+      "0? You are banned from the farm.",
+      "Between 1 and 20: The Pig stares at you with deep disappointment.",
+      "21–40: You are pig-neutral. Coward.",
+      "41–60: Respectable pig appreciation detected.",
+      "61–80: You have chosen chaos and we salute you.",
+      "81–99: You are dangerously devoted to the Pig.",
+      "100: You have ascended to Oinklightenment."
+    ];
+
+    function updateSlider() {
+      const v = parseInt(pigSlider.value, 10);
+      let msg;
+      if (v === 0) msg = sliderMessages[0];
+      else if (v <= 20) msg = sliderMessages[1];
+      else if (v <= 40) msg = sliderMessages[2];
+      else if (v <= 60) msg = sliderMessages[3];
+      else if (v <= 80) msg = sliderMessages[4];
+      else if (v < 100) msg = sliderMessages[5];
+      else msg = sliderMessages[6];
+      sliderOutput.textContent = `You selected ${v}. ${msg}`;
+    }
+
+    pigSlider.addEventListener('input', updateSlider);
+    updateSlider();
+
+    // Prophecy generator
+    const prophecies = [
+      "On the 420th scroll, the Pig will noscope the moon and leave a crater shaped like a Dorito.",
+      "Those who join discord.gg/abyssvc shall lose braincells but gain inner peace.",
+      "When Femboy Jeopardy begins, three contestants will answer correctly and zero will emotionally recover.",
+      "If you stare into the Pig for more than 10 seconds, he legally owns your GPU.",
+      "The one who types in all caps shall summon the Pig at 3:33 AM exactly.",
+      "He who denies the Pig will see his memes convert to Minions on Facebook.",
+      "When you mute your mic and still breathe loud, the Pig hears every inhale.",
+      "In the end there will be only two entities: the Heat Death of the Universe and one extremely smug Pig.",
+      "Every time someone types ‘WTF is this site’, the Pig grows stronger.",
+      "When the Konami code is entered, the Pig briefly remembers his past life as an outdated Xbox Live profile picture."
+    ];
+
+    const prophecyBtn = document.getElementById('prophecyBtn');
+    const prophecyOutput = document.getElementById('prophecyOutput');
+
+    prophecyBtn.addEventListener('click', () => {
+      const text = prophecies[Math.floor(Math.random() * prophecies.length)];
+      prophecyOutput.textContent = text;
+    });
+
+    // Simple Jeopardy click messages
+    const boardMessages = [
+      "MEMES: This ancient image macro features a frog and existential dread. What is ‘Dat Boi’?",
+      "DEGENERACY: Daily login streak for touching grass. Current record: 0 days.",
+      "LORE: This pig once looked into your soul and decided you were mid. Who is Wigger Pig?",
+      "INTERNET: A legendary era of 360 noscopes and dubstep remixes. What is 2012 MLG?",
+      "MYSTERY: Schrödinger’s prize – both Nitro and absolutely nothing at the same time."
+    ];
+
+    document.querySelectorAll('#boardGrid .board-cell').forEach((cell, idx) => {
+      cell.addEventListener('click', () => {
+        alert(boardMessages[idx] || "The Pig refuses to answer this one.");
+      });
+    });
+
+    // Konami Code → MLG mode
+    const konamiSeq = [
+      "ArrowUp","ArrowUp",
+      "ArrowDown","ArrowDown",
+      "ArrowLeft","ArrowRight",
+      "ArrowLeft","ArrowRight",
+      "b","a"
+    ];
+    let konamiIndex = 0;
+
+    window.addEventListener('keydown', (e) => {
+      const key = e.key;
+      if (key === konamiSeq[konamiIndex]) {
+        konamiIndex++;
+        if (konamiIndex === konamiSeq.length) {
+          konamiIndex = 0;
+          activateMLGMode();
+        }
+      } else {
+        konamiIndex = 0;
+      }
+    });
+
+    function activateMLGMode() {
+      document.body.classList.add('mlg-mode');
+      playBeep('weed');
+      playBeep('hitmarker');
+      playBeep('airhorn');
+
+      // Temporary toast
+      const toast = document.createElement('div');
+      toast.textContent = "MLG MODE: 420BLAZEIT ACTIVATED (TEMPORARY)";
+      toast.style.position = 'fixed';
+      toast.style.bottom = '20px';
+      toast.style.left = '50%';
+      toast.style.transform = 'translateX(-50%)';
+      toast.style.padding = '10px 16px';
+      toast.style.borderRadius = '999px';
+      toast.style.background = 'rgba(0,0,0,0.8)';
+      toast.style.border = '1px solid rgba(255,255,255,0.4)';
+      toast.style.fontSize = '12px';
+      toast.style.letterSpacing = '0.1em';
+      toast.style.textTransform = 'uppercase';
+      toast.style.zIndex = '9999';
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        document.body.classList.remove('mlg-mode');
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 7000);
+    }
+  </script>
+</body>
 </html>
