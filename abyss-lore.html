@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Abyss Lore – AbyssVC Codex</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #040414;
+      --bg-alt: #05071c;
+      --bg-deep: #02020a;
+      --accent: #ff3bbf;   /* neon magenta */
+      --accent2: #32ffe0;  /* neon teal */
+      --accent3: #ffdf6b;  /* gold */
+      --text: #f7f8ff;
+      --muted: #9aa0d2;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --nav-bg: rgba(5, 7, 28, 0.85);
+      --card-bg: radial-gradient(circle at top left, rgba(255, 59, 191, 0.18), transparent 55%), radial-gradient(circle at bottom right, rgba(50, 255, 224, 0.16), transparent 55%), rgba(6, 9, 40, 0.9);
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.65);
+      --shadow-glow: 0 0 24px rgba(255, 59, 191, 0.6);
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.3s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background:
+        radial-gradient(circle at 10% -10%, #220030, transparent 55%),
+        radial-gradient(circle at 90% 120%, #003344, transparent 55%),
+        radial-gradient(circle at 60% 0%, #1a0030, transparent 60%),
+        linear-gradient(160deg, #020212, #050419 60%, #02020a);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -40px;
+      background-image:
+        radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.11) 1px, transparent 0),
+        radial-gradient(circle at 1px 1px, rgba(50, 255, 224, 0.24) 1px, transparent 0);
+      background-size: 140px 140px, 220px 220px;
+      opacity: 0.13;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(0, 0, 0, 0.65), transparent 60%);
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(1, 1, 10, 0.85);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--accent), var(--accent2));
+      border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(var(--accent2), var(--accent));
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(2, 2, 16, 0.96),
+        rgba(2, 2, 18, 0.88)
+      );
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .navbar-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #ffd3f5, #ff3bbf);
+      box-shadow: 0 0 20px rgba(255, 59, 191, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #1a0210;
+      font-weight: 900;
+      transform: rotate(-8deg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8), transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent2);
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 14px;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 4px 0;
+      cursor: pointer;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width var(--transition-fast);
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-abyss-btn {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(50, 255, 224, 0.7);
+      padding: 6px 16px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      background: radial-gradient(circle at 0% 0%, rgba(255, 59, 191, 0.4), transparent 55%), rgba(7, 12, 50, 0.95);
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 18px rgba(50, 255, 224, 0.35);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    .nav-abyss-btn span.icon {
+      font-size: 14px;
+    }
+
+    .nav-abyss-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 0 30px rgba(50, 255, 224, 0.65);
+      background: radial-gradient(circle at 100% 100%, rgba(50, 255, 224, 0.5), transparent 55%), rgba(7, 12, 50, 0.98);
+    }
+
+    .nav-abyss-btn:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 0 16px rgba(50, 255, 224, 0.4);
+    }
+
+    .nav-glyph {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 223, 107, 0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.6), rgba(255, 223, 107, 0.2));
+      box-shadow: 0 0 15px rgba(255, 223, 107, 0.7);
+      animation: glyph-pulse 2.8s ease-in-out infinite alternate;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-glyph span {
+      transform: translateY(1px);
+    }
+
+    @keyframes glyph-pulse {
+      0% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 10px rgba(255, 223, 107, 0.5);
+      }
+      100% {
+        transform: translateY(-1px) scale(1.06);
+        box-shadow: 0 0 20px rgba(255, 223, 107, 0.9);
+      }
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* Layout */
+    .page-wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+      position: relative;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      padding: 30px 24px 28px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255, 59, 191, 0.32), transparent 60%),
+        radial-gradient(circle at 90% 100%, rgba(50, 255, 224, 0.32), transparent 60%),
+        radial-gradient(circle at 50% -10%, rgba(255, 223, 107, 0.24), transparent 60%),
+        linear-gradient(145deg, rgba(5, 7, 28, 0.96), rgba(4, 4, 20, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
+      gap: 28px;
+    }
+
+    .hero-left-heading {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(2, 2, 14, 0.8);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .hero-left-heading span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #ff3bbf);
+      box-shadow: 0 0 12px rgba(255, 59, 191, 0.9);
+    }
+
+    .hero-title {
+      font-size: clamp(30px, 4vw, 38px);
+      line-height: 1.05;
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .hero-title-main {
+      background: linear-gradient(120deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 18px rgba(255, 59, 191, 0.8);
+    }
+
+    .hero-title-sub {
+      font-size: 14px;
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      background: rgba(7, 9, 35, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--accent3);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 460px;
+      margin-bottom: 16px;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .hero-badge {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(6, 9, 36, 0.9);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-badge .emoji {
+      font-size: 13px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      border: none;
+      padding: 9px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #050414;
+      box-shadow: 0 0 20px rgba(255, 59, 191, 0.8);
+      transition: transform var(--transition-med), box-shadow var(--transition-med), filter var(--transition-med);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 0 32px rgba(255, 59, 191, 0.95);
+      filter: saturate(1.1);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
+      box-shadow: 0 0 18px rgba(255, 59, 191, 0.6);
+    }
+
+    .btn-ghost {
+      border-radius: var(--radius-pill);
+      padding: 8px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(5, 7, 26, 0.85);
+      color: var(--muted);
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(8, 12, 40, 0.95);
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .hero-note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+      opacity: 0.8;
+    }
+
+    .hero-right {
+      position: relative;
+      min-height: 210px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255, 59, 191, 0.3), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(50, 255, 224, 0.3), transparent 55%),
+        radial-gradient(circle at 50% 0%, rgba(255, 223, 107, 0.35), transparent 55%),
+        rgba(4, 6, 28, 0.95);
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.75);
+    }
+
+    .hero-runes {
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background-image:
+        repeating-radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.08) 0, transparent 1px, transparent 10px),
+        repeating-radial-gradient(circle at 80% 90%, rgba(255, 59, 191, 0.4) 0, transparent 1px, transparent 10px);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      animation: runes-spin 40s linear infinite;
+      transform-origin: center;
+    }
+
+    @keyframes runes-spin {
+      from {
+        transform: rotate(0deg) scale(1);
+      }
+      to {
+        transform: rotate(360deg) scale(1.02);
+      }
+    }
+
+    .hero-codex-orbit {
+      position: absolute;
+      inset: 14%;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      box-shadow: 0 0 28px rgba(50, 255, 224, 0.3);
+      backdrop-filter: blur(10px);
+      background: radial-gradient(circle at 50% 45%, rgba(6, 255, 195, 0.15), transparent 60%);
+    }
+
+    .hero-codex-core {
+      position: absolute;
+      inset: 26%;
+      border-radius: 40%;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff, #fff3f9 40%, #ff3bbf 75%, transparent 85%);
+      box-shadow:
+        0 0 30px rgba(255, 59, 191, 0.9),
+        0 0 60px rgba(50, 255, 224, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-5deg);
+    }
+
+    .hero-codex-core::after {
+      content: "☵";
+      font-size: 40px;
+      color: #1a0210;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-orbiting-glyph {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.6), rgba(5, 8, 32, 0.9));
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.45);
+      animation: orbit-spin 14s linear infinite;
+      transform-origin: -120px;
+    }
+
+    .hero-orbiting-glyph:nth-child(1) {
+      top: 18%;
+      left: 60%;
+      animation-duration: 19s;
+    }
+
+    .hero-orbiting-glyph:nth-child(2) {
+      bottom: 22%;
+      left: 20%;
+      animation-duration: 15s;
+    }
+
+    .hero-orbiting-glyph:nth-child(3) {
+      top: 52%;
+      right: 14%;
+      animation-duration: 23s;
+    }
+
+    @keyframes orbit-spin {
+      from {
+        transform: rotate(0deg) translateX(18px) rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg) translateX(18px) rotate(-360deg);
+      }
+    }
+
+    .hero-bottom-wall {
+      position: absolute;
+      inset-inline: 0;
+      bottom: 0;
+      height: 28%;
+      background: linear-gradient(to top, rgba(1, 3, 16, 0.96), transparent);
+    }
+
+    .hero-callout {
+      position: absolute;
+      left: 14px;
+      bottom: 12px;
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(3, 5, 19, 0.95);
+      border-radius: 13px;
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-callout-pill {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255, 59, 191, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(255, 59, 191, 0.4);
+    }
+
+    .hero-secret-glow {
+      position: absolute;
+      right: 13px;
+      bottom: 13px;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 223, 107, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.7), rgba(255, 223, 107, 0.18));
+      box-shadow: 0 0 24px rgba(255, 223, 107, 0.95);
+      animation: secret-pulse 2.7s ease-in-out infinite alternate;
+    }
+
+    @keyframes secret-pulse {
+      0% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 16px rgba(255, 223, 107, 0.65);
+      }
+      100% {
+        transform: translateY(-2px) scale(1.1);
+        box-shadow: 0 0 30px rgba(255, 223, 107, 1);
+      }
+    }
+
+    /* Sections */
+    .section {
+      margin-top: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .section-pill {
+      width: 42px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 12px rgba(255, 59, 191, 0.8);
+    }
+
+    .section-title {
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Lore grid */
+    .lore-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .lore-card {
+      position: relative;
+      padding: 16px 15px 14px;
+      border-radius: var(--radius-lg);
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transform-origin: center;
+      transform: translateY(10px) scale(0.98);
+      opacity: 0;
+      transition:
+        transform 0.35s cubic-bezier(0.19, 1, 0.22, 1),
+        opacity 0.32s ease-out,
+        box-shadow var(--transition-med),
+        border-color var(--transition-med),
+        background 0.45s ease-out;
+    }
+
+    .lore-card::before {
+      content: attr(data-chapter);
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(202, 206, 255, 0.5);
+    }
+
+    .lore-glow-orb {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      filter: blur(26px);
+      opacity: 0.6;
+      background: radial-gradient(circle, rgba(255, 59, 191, 0.7), transparent);
+      top: -40px;
+      left: -20px;
+      pointer-events: none;
+    }
+
+    .lore-glow-orb.alt {
+      background: radial-gradient(circle, rgba(50, 255, 224, 0.7), transparent);
+      top: auto;
+      left: auto;
+      right: -30px;
+      bottom: -30px;
+    }
+
+    .lore-pill-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      font-size: 11px;
+    }
+
+    .lore-pill-label {
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      background: rgba(1, 4, 24, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(202, 206, 255, 0.9);
+    }
+
+    .lore-pill-tag {
+      padding: 3px 7px;
+      border-radius: var(--radius-pill);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border: 1px solid rgba(255, 223, 107, 0.6);
+      color: var(--accent3);
+      background: rgba(30, 20, 5, 0.8);
+    }
+
+    .lore-title {
+      font-size: 17px;
+      margin-bottom: 7px;
+      color: #fdf4ff;
+    }
+
+    .lore-body {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .lore-tagline {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.76);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lore-tagline span.icon {
+      font-size: 14px;
+    }
+
+    .lore-meta-row {
+      margin-top: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: rgba(204, 210, 255, 0.8);
+    }
+
+    .lore-meta-pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(8, 11, 40, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .lore-meta-whisper {
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    .lore-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow:
+        var(--shadow-soft),
+        0 0 24px rgba(255, 59, 191, 0.25);
+      border-color: rgba(255, 255, 255, 0.22);
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 59, 191, 0.22), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(50, 255, 224, 0.26), transparent 60%),
+        rgba(6, 9, 40, 0.98);
+    }
+
+    .lore-card.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Final section */
+    .final-section {
+      margin-top: 40px;
+      padding: 20px 16px 18px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(50, 255, 224, 0.26), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(255, 59, 191, 0.26), transparent 55%),
+        rgba(4, 7, 30, 0.97);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-section::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      opacity: 0.15;
+      background-image: conic-gradient(
+        from 190deg,
+        rgba(255, 59, 191, 0.2),
+        rgba(50, 255, 224, 0.4),
+        rgba(255, 223, 107, 0.2),
+        rgba(255, 59, 191, 0.2)
+      );
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .final-title {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .final-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .final-quote {
+      font-size: 13px;
+      font-style: italic;
+      border-left: 2px solid rgba(255, 255, 255, 0.25);
+      padding-left: 10px;
+      margin-bottom: 14px;
+      color: rgba(233, 235, 255, 0.93);
+    }
+
+    .final-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .final-cta-note {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .final-sigil {
+      position: relative;
+      justify-self: center;
+      align-self: center;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.4), rgba(5, 6, 24, 0.95));
+      box-shadow:
+        0 0 28px rgba(50, 255, 224, 0.4),
+        0 0 48px rgba(255, 59, 191, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .final-sigil-inner {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      animation: sigil-spin 18s linear infinite;
+    }
+
+    @keyframes sigil-spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .final-sigil-runes {
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      filter: blur(0.2px);
+      pointer-events: none;
+    }
+
+    /* Secret overlay */
+    .secret-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 0, rgba(255, 59, 191, 0.15), transparent 60%), rgba(1, 1, 10, 0.97);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+
+    .secret-overlay.visible {
+      display: flex;
+    }
+
+    .secret-panel {
+      max-width: 420px;
+      width: calc(100% - 40px);
+      border-radius: 20px;
+      padding: 20px 18px 16px;
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 59, 191, 0.24), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(50, 255, 224, 0.26), transparent 55%),
+        rgba(4, 6, 26, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.88);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .secret-panel::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      opacity: 0.18;
+      background-image: repeating-linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.18) 0,
+        rgba(255, 255, 255, 0.18) 1px,
+        transparent 1px,
+        transparent 6px
+      );
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .secret-title {
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: var(--accent3);
+    }
+
+    .secret-body {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .secret-note {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.8);
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    .secret-close-row {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .secret-close-btn {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 12px;
+      padding: 5px 10px;
+      background: rgba(8, 10, 36, 0.98);
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .secret-close-btn:hover {
+      background: rgba(15, 18, 50, 1);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* Floating runes (global decorative) */
+    .floating-rune {
+      position: fixed;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.25);
+      pointer-events: none;
+      z-index: -1;
+      animation: rune-drift 18s linear infinite;
+      text-shadow: 0 0 10px rgba(50, 255, 224, 0.5);
+    }
+
+    @keyframes rune-drift {
+      from {
+        transform: translate3d(0, 0, 0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      to {
+        transform: translate3d(0, -120px, 0);
+        opacity: 0;
+      }
+    }
+
+    /* Scroll reveal base class */
+    .reveal {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Media Queries */
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 22px 18px 20px;
+      }
+
+      .hero-right {
+        min-height: 190px;
+      }
+
+      .final-section {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .final-sigil {
+        margin-top: 4px;
+      }
+
+      .navbar-inner {
+        padding-inline: 16px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        padding: 8px 16px 10px;
+        background: rgba(2, 2, 16, 0.98);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .nav-right {
+        gap: 6px;
+      }
+
+      .page-wrap {
+        padding-inline: 16px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-ghost {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- SECRET OVERLAY -->
+  <div class="secret-overlay" id="secretOverlay">
+    <div class="secret-panel">
+      <div class="secret-title">The Glyph of Muted Screaming</div>
+      <div class="secret-body">
+        Legend says this sigil appears whenever someone unmutes their mic just to
+        breathe ominously into it. Those who click it are marked as "chronically online"
+        and gain +10 resistance to braincell damage during Femboy Jeopardy.
+      </div>
+      <div class="secret-note">
+        You have seen behind the UI. Do not let the mods know you can read the runes.
+      </div>
+      <div class="secret-close-row">
+        <button class="secret-close-btn" id="secretCloseBtn">
+          <span>✖</span>
+          <span>seal the glyph</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="nav-left">
+        <div class="logo" aria-hidden="true">🐷</div>
+        <div class="brand-text">
+          <div class="brand-title">AbyssVC Codex</div>
+          <div class="brand-sub">lore of the server that should not exist</div>
+        </div>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="lore.html" class="nav-link">Lore</a>
+        <a href="news.html" class="nav-link">Events</a>
+        <a href="memetemple.html" class="nav-link">Memes</a>
+        <a href="discord.html" class="nav-link">Discord</a>
+        <a href="toys.html" class="nav-link">Chaos</a>
+      </nav>
+
+      <div class="nav-right">
+        <button class="nav-abyss-btn" onclick="scrollToFinalSection()">
+          <span class="icon">🕳️</span>
+          <span>Join the Abyss</span>
+        </button>
+        <button class="nav-glyph" id="navGlyph" title="Do not click the rune.">
+          <span>ᛝ</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+    <!-- HERO -->
+    <section class="hero reveal">
+      <div class="hero-left">
+        <div class="hero-left-heading">
+          <span class="dot"></span>
+          <span>Server Lore • AbyssVC</span>
+        </div>
+        <div class="hero-title">
+          <span class="hero-title-main">The AbyssVC Codex</span>
+          <span class="hero-title-sub">classified discord history</span>
+        </div>
+        <p class="hero-desc">
+          Welcome to the part of the server where the chat logs are technically deleted,
+          but the damage is permanent. This is the mythology of AbyssVC: the wars,
+          the cursed game nights, the mic crimes, and the pig that refuses to log off.
+        </p>
+        <div class="hero-badges">
+          <div class="hero-badge">
+            <span class="emoji">📜</span>
+            <span>Chronicles of VC chaos</span>
+          </div>
+          <div class="hero-badge">
+            <span class="emoji">💀</span>
+            <span>Braincells not refundable</span>
+          </div>
+          <div class="hero-badge">
+            <span class="emoji">⚠️</span>
+            <span>Unmodded memories ahead</span>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn-primary" id="awakenCodexBtn">
+            <span>🔊</span>
+            <span>Awaken the Codex</span>
+          </button>
+          <button class="btn-ghost" onclick="scrollToLore()">
+            <span>⮟</span>
+            <span>Browse server history</span>
+          </button>
+        </div>
+        <div class="hero-note">
+          Interaction required to enable ambient hum. We’re chaotic, not monsters.
+        </div>
+      </div>
+      <div class="hero-right" aria-hidden="true">
+        <div class="hero-runes"></div>
+        <div class="hero-codex-orbit"></div>
+        <div class="hero-codex-core"></div>
+        <div class="hero-orbiting-glyph">✦</div>
+        <div class="hero-orbiting-glyph">☉</div>
+        <div class="hero-orbiting-glyph">卐</div>
+        <div class="hero-bottom-wall"></div>
+        <div class="hero-callout">
+          <span class="hero-callout-pill">Abyss log</span>
+          <span>Events no mortal admin could moderate.</span>
+        </div>
+        <button class="hero-secret-glow" id="heroSecretGlyph" title="ARE YOU SURE?">
+          ✺
+        </button>
+      </div>
+    </section>
+
+    <!-- LORE SECTIONS -->
+    <section class="section" id="loreSection">
+      <div class="section-header reveal">
+        <div class="section-pill"></div>
+        <h2 class="section-title">Primary Chronicles</h2>
+      </div>
+      <p class="section-sub reveal">
+        These are the founding scriptures of AbyssVC. Whether they actually
+        happened like this is unclear; what matters is that everyone tells the story
+        the same way while pretending they weren’t there.
+      </p>
+
+      <div class="lore-grid">
+        <!-- Chapter 1 -->
+        <article class="lore-card reveal" data-chapter="CH. I">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">The Birth of AbyssVC</span>
+            <span class="lore-pill-tag">origin patch</span>
+          </div>
+          <h3 class="lore-title">When One VC Wasn’t Enough</h3>
+          <p class="lore-body">
+            AbyssVC began as a “temporary call” to watch one video together. Three hours
+            later, twelve people were arguing about monitor refresh rates, the call
+            had hit maximum cursed energy, and someone suggested “we should make a
+            server for this.” The universe failed its saving throw.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">🌌</span>
+            <span>Created to end the chaos; instead, it industrialized it.</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Era: Pre-Moderation</span>
+            <span class="lore-meta-whisper">
+              “We don’t need rules,” they said.
+            </span>
+          </div>
+        </article>
+
+        <!-- Chapter 2 -->
+        <article class="lore-card reveal" data-chapter="CH. II">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">The First Mic War</span>
+            <span class="lore-pill-tag">audio calamity</span>
+          </div>
+          <h3 class="lore-title">The Night of 10,000 Decibels</h3>
+          <p class="lore-body">
+            It began with a single open mic and a fan pointing directly at it. Reinforcements
+            arrived: mechanical keyboards, clacking forks, and one legendary gamer who
+            refused to move their microphone away from their nose. The resulting feedback
+            spike allegedly knocked two viewers out of spectator mode.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">🎙️</span>
+            <span>The mic quality that shattered heaven and the noise gate.</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Casualties: Braincells</span>
+            <span class="lore-meta-whisper">“Can you mute if you’re not talking?”</span>
+          </div>
+        </article>
+
+        <!-- Chapter 3 -->
+        <article class="lore-card reveal" data-chapter="CH. III">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">The Council of Mods</span>
+            <span class="lore-pill-tag">governance error</span>
+          </div>
+          <h3 class="lore-title">Five Mods, Zero Peace</h3>
+          <p class="lore-body">
+            As the server expanded, a council was formed to “maintain order.” Instead,
+            they invented three new channels, changed the emoji for “muted” four times,
+            and spent two hours arguing whether “mic supremacy” should be a role. The
+            final policy document was a screenshot of a meme.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">⚖️</span>
+            <span>Events no mortal admin could moderate, so they didn’t.</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Governing Body: Chaos Council</span>
+            <span class="lore-meta-whisper">“We’ll make a Trello later.”</span>
+          </div>
+        </article>
+
+        <!-- Chapter 4 -->
+        <article class="lore-card reveal" data-chapter="CH. IV">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">The Femboy Jeopardy Era</span>
+            <span class="lore-pill-tag">game show plague</span>
+          </div>
+          <h3 class="lore-title">Game Shows Where Braincells Go To Die</h3>
+          <p class="lore-body">
+            What started as a single cursed stream quickly became a recurring ritual.
+            Contestants fought for points they couldn’t spend and titles they couldn’t
+            explain, while chat devolved into hieroglyphics and keyboard smash. Historians
+            agree: no one wins Femboy Jeopardy, they just leave with different damage.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">📺</span>
+            <span>Prophecies written in the lag spikes and buzzers.</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Sanity: Negative</span>
+            <span class="lore-meta-whisper">“I’ll just watch one round.”</span>
+          </div>
+        </article>
+
+        <!-- Chapter 5 -->
+        <article class="lore-card reveal" data-chapter="CH. V">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">The Great VC Cataclysm</span>
+            <span class="lore-pill-tag">infinite call</span>
+          </div>
+          <h3 class="lore-title">The Call That Refused To End</h3>
+          <p class="lore-body">
+            One voice chat stayed open for so long that time zones began to loop. People
+            joined, slept, worked, returned, and the same two users were still in there
+            debating microphone brands. Eventually the call was declared a “temporal anomaly”
+            and sealed in the records as a Class V VC Event.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">🕳️</span>
+            <span>The cult of unmuted breathing reached critical mass.</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Duration: Unknown</span>
+            <span class="lore-meta-whisper">“Who’s been here the longest?”</span>
+          </div>
+        </article>
+
+        <!-- Chapter 6 -->
+        <article class="lore-card reveal" data-chapter="CH. VI">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">Rise of Wigger Pig</span>
+            <span class="lore-pill-tag">mascot event</span>
+          </div>
+          <h3 class="lore-title">The Pig That Became Final Boss</h3>
+          <p class="lore-body">
+            At first it was just a cursed image: a pig, too confident, staring back from the
+            void. Then it became a meme, then a reaction, then a role icon, then a full lore
+            arc. Before anyone could stop it, Wigger Pig was canonically the final boss of the
+            server and blamed for every unscheduled outage.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">🐷</span>
+            <span>May or may not exist; definitely has admin energy.</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Alignment: Chaotic Wi-Fi</span>
+            <span class="lore-meta-whisper">“If the pig reacts, you’re done.”</span>
+          </div>
+        </article>
+
+        <!-- Chapter 7 -->
+        <article class="lore-card reveal" data-chapter="CH. VII">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">The Exile of Gym Pig</span>
+            <span class="lore-pill-tag">swole tragedy</span>
+          </div>
+          <h3 class="lore-title">When Leg Day Left The Server</h3>
+          <p class="lore-body">
+            Gym Pig appeared rarely but loudly, joining VC only to drop lifting numbers
+            that sounded made up and then vanish mid-sentence. One day, the check-ins
+            stopped. The legend says Gym Pig transcended into a new plane of existence:
+            a 24/7 gym playlist with no Wi-Fi and perfect form.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">🏋️</span>
+            <span>The only user to truly “touch grass” and keep going.</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Status: Ascended</span>
+            <span class="lore-meta-whisper">“Back in 5, just a quick set.”</span>
+          </div>
+        </article>
+
+        <!-- Chapter 8 -->
+        <article class="lore-card reveal" data-chapter="CH. VIII">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">The Prophecies of the Terminal</span>
+            <span class="lore-pill-tag">cli omen</span>
+          </div>
+          <h3 class="lore-title">Whispers From Abyss Terminal</h3>
+          <p class="lore-body">
+            Deep in the server lore is a terminal that answers only in cryptic one-liners and
+            error codes. Members consult it before big events, game nights, or questionable
+            bets. The prophecies rarely make sense, but somehow they’re always right about
+            who disconnects first.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">⌨️</span>
+            <span>“Fate.exe has stopped responding. Continue anyway?”</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Source: abyss-terminal.html</span>
+            <span class="lore-meta-whisper">Type <code>HELP</code> at your own risk.</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECONDARY LORE / META -->
+    <section class="section">
+      <div class="section-header reveal">
+        <div class="section-pill"></div>
+        <h2 class="section-title">Server Fragments & Side Quests</h2>
+      </div>
+      <p class="section-sub reveal">
+        Not every event gets its own chapter. Some exist as whispers: half-remembered
+        streams, cursed screenshots, and VC nights where everyone logs off at once
+        without saying goodbye.
+      </p>
+
+      <div class="lore-grid">
+        <!-- Fragment 1 -->
+        <article class="lore-card reveal" data-chapter="FRAG. A">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">The PNG Flood</span>
+            <span class="lore-pill-tag">ms paint crimes</span>
+          </div>
+          <h3 class="lore-title">When Media Channel Broke Containment</h3>
+          <p class="lore-body">
+            Someone discovered a folder of old cursed PNGs and decided to “share a few.”
+            The media channel became a firehose of pixelated horrors: stretched memes,
+            overcompressed screenshots, reaction images from 2012. The scroll bar
+            never recovered.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">🖼️</span>
+            <span>Archaeologists call this the JPEG Extinction Event.</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Impact: Permanent</span>
+            <span class="lore-meta-whisper">“Why is that 7MB?”</span>
+          </div>
+        </article>
+
+        <!-- Fragment 2 -->
+        <article class="lore-card reveal" data-chapter="FRAG. B">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">AFK Throne</span>
+            <span class="lore-pill-tag">idle monarchy</span>
+          </div>
+          <h3 class="lore-title">The User Who Never Left VC</h3>
+          <p class="lore-body">
+            A single user remained in VC for so long that their name became synonymous
+            with “still here?” They spoke rarely, if at all, yet their presence shaped
+            the culture. New members assumed it was a bot. It was not.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">🪑</span>
+            <span>Truly online, but emotionally offline.</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Role: AFK Royalty</span>
+            <span class="lore-meta-whisper">“Wait, they just moved.”</span>
+          </div>
+        </article>
+
+        <!-- Fragment 3 -->
+        <article class="lore-card reveal" data-chapter="FRAG. C">
+          <div class="lore-glow-orb"></div>
+          <div class="lore-glow-orb alt"></div>
+          <div class="lore-pill-row">
+            <span class="lore-pill-label">Ping Storm</span>
+            <span class="lore-pill-tag">notification meltdown</span>
+          </div>
+          <h3 class="lore-title">The Day Everyone @Everyone’d at Once</h3>
+          <p class="lore-body">
+            A scheduling misfire caused multiple mods to @everyone in different
+            channels within the same minute. Phones lit up like a ritual circle.
+            Several members logged in, saw the chaos, and immediately logged back out.
+          </p>
+          <div class="lore-tagline">
+            <span class="icon">📣</span>
+            <span>Some say phones still vibrate in that time zone.</span>
+          </div>
+          <div class="lore-meta-row">
+            <span class="lore-meta-pill">Alert Level: Maximum Annoyance</span>
+            <span class="lore-meta-whisper">“Was that ping for me?”</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- FINAL SECTION -->
+    <section class="final-section section reveal" id="finalSection">
+      <div>
+        <h2 class="final-title">The Abyss Expands</h2>
+        <p class="final-sub">
+          The lore of AbyssVC is still being written: in late-night VCs, scuffed
+          streams, unhinged game shows, and mod decisions made at 3&nbsp;AM. Every ping,
+          every cursed screenshot, every “I should sleep but—” message adds another
+          page to the Codex.
+        </p>
+        <p class="final-quote">
+          “In the beginning there was silence, and then someone joined VC with
+          their volume at 200% and no noise gate. The rest is history.”
+        </p>
+        <div class="final-cta-row">
+          <button class="btn-primary" onclick="goToDiscord()">
+            <span>😈</span>
+            <span>Enter the server</span>
+          </button>
+          <button class="btn-ghost" onclick="scrollToLore()">
+            <span>📜</span>
+            <span>Re-read the scriptures</span>
+          </button>
+          <div class="final-cta-note">
+            By joining, you accept that<br />
+            braincells are a non-refundable resource.
+          </div>
+        </div>
+      </div>
+      <div class="final-sigil" aria-hidden="true">
+        <div class="final-sigil-inner">🐷</div>
+        <div class="final-sigil-runes">
+          ABYSSVC • WIGGER PIG • FINAL BOSS OF THE INTERNET • PING AT YOUR OWN RISK
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- AUDIO (user-interaction gated) -->
+  <audio id="ancientHum" src="timeline-hum.mp3" preload="auto"></audio>
+
+  <script>
+    // Mobile nav toggle
+    const navToggle = document.getElementById("navToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    if (navToggle && navLinks) {
+      navToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("open");
+      });
+    }
+
+    // Smooth scroll helpers
+    function scrollToLore() {
+      const loreSection = document.getElementById("loreSection");
+      if (loreSection) {
+        loreSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function scrollToFinalSection() {
+      const finalSection = document.getElementById("finalSection");
+      if (finalSection) {
+        finalSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function goToDiscord() {
+      // Update with real invite/link if needed
+      window.location.href = "discord.html";
+    }
+
+    // Ambient hum on interaction
+    const ancientHum = document.getElementById("ancientHum");
+    const awakenCodexBtn = document.getElementById("awakenCodexBtn");
+    let humEnabled = false;
+
+    function enableHum() {
+      if (humEnabled || !ancientHum) return;
+      humEnabled = true;
+      ancientHum.loop = true;
+      ancientHum.volume = 0.35;
+      ancientHum
+        .play()
+        .catch(() => {
+          humEnabled = false;
+        });
+    }
+
+    if (awakenCodexBtn) {
+      awakenCodexBtn.addEventListener("click", () => {
+        enableHum();
+        awakenCodexBtn.innerHTML = "<span>✨</span><span>Codex awakened</span>";
+      });
+    }
+
+    // Also allow any first click/tap to activate hum for users who miss the button
+    window.addEventListener(
+      "click",
+      () => {
+        enableHum();
+      },
+      { once: true }
+    );
+
+    // Secret overlay logic
+    const secretOverlay = document.getElementById("secretOverlay");
+    const secretCloseBtn = document.getElementById("secretCloseBtn");
+    const heroSecretGlyph = document.getElementById("heroSecretGlyph");
+    const navGlyph = document.getElementById("navGlyph");
+
+    function openSecret() {
+      if (!secretOverlay) return;
+      secretOverlay.classList.add("visible");
+    }
+
+    function closeSecret() {
+      if (!secretOverlay) return;
+      secretOverlay.classList.remove("visible");
+    }
+
+    if (heroSecretGlyph) {
+      heroSecretGlyph.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openSecret();
+      });
+    }
+
+    if (navGlyph) {
+      navGlyph.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openSecret();
+      });
+    }
+
+    if (secretCloseBtn) {
+      secretCloseBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        closeSecret();
+      });
+    }
+
+    if (secretOverlay) {
+      secretOverlay.addEventListener("click", closeSecret);
+      const panel = secretOverlay.querySelector(".secret-panel");
+      if (panel) {
+        panel.addEventListener("click", (e) => e.stopPropagation());
+      }
+    }
+
+    // Scroll reveal using IntersectionObserver
+    const revealElements = document.querySelectorAll(".reveal, .lore-card");
+    const observerOptions = {
+      threshold: 0.15,
+    };
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    revealElements.forEach((el) => revealObserver.observe(el));
+
+    // Floating runes
+    const runeChars = ["ᚠ", "ᚾ", "☽", "✶", "✹", "卍", "✴", "⟡", "☄", "✦"];
+
+    function spawnRune() {
+      const rune = document.createElement("div");
+      rune.className = "floating-rune";
+      rune.textContent =
+        runeChars[Math.floor(Math.random() * runeChars.length)];
+
+      const startX = Math.random() * 100;
+      const startY = 100 + Math.random() * 20;
+      rune.style.left = startX + "vw";
+      rune.style.top = startY + "vh";
+      rune.style.animationDuration = 12 + Math.random() * 12 + "s";
+
+      document.body.appendChild(rune);
+
+      setTimeout(() => {
+        rune.remove();
+      }, 25000);
+    }
+
+    // Spawn a few at start, then occasionally
+    for (let i = 0; i < 6; i++) {
+      setTimeout(spawnRune, i * 800);
+    }
+    setInterval(spawnRune, 6000);
+
+    // Parallax-ish effect on hero background
+    const hero = document.querySelector(".hero-right");
+    const heroRunes = document.querySelector(".hero-runes");
+    window.addEventListener("scroll", () => {
+      if (!hero || !heroRunes) return;
+      const rect = hero.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const diff = window.innerHeight / 2 - center;
+      const offset = diff * 0.02;
+      heroRunes.style.transform = `translateY(${offset}px)`;
+    });
+  </script>
+</body>
+</html>

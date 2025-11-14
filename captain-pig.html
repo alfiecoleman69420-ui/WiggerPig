@@ -1,0 +1,2523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Captain Pig – Abyss Airlines</title>
+
+  <style>
+    :root {
+      --bg: #050715;
+      --bg-alt: #0b0f2a;
+      --bg-soft: #080a1c;
+      --accent: #ff4fa8;
+      --accent2: #39ffcc;
+      --accent3: #f9c86b;
+      --text: #f5f7ff;
+      --muted: #8b93c9;
+      --danger: #ff5c7c;
+      --success: #42ff9e;
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.65);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-pill: 999px;
+      --nav-height: 72px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.28s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255, 79, 168, 0.08), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(57, 255, 204, 0.08), transparent 55%),
+        radial-gradient(circle at 0% 100%, rgba(134, 93, 255, 0.1), transparent 55%),
+        radial-gradient(circle at 120% -10%, rgba(255, 200, 107, 0.09), transparent 60%),
+        linear-gradient(145deg, #02030b, #050715 45%, #04051a 75%, #050715);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      border: none;
+      cursor: pointer;
+      background: none;
+      color: inherit;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(3, 5, 18, 0.95),
+        rgba(3, 5, 18, 0.85),
+        rgba(3, 5, 18, 0.7)
+      );
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: all 0.22s ease-out;
+    }
+
+    .navbar.nav-scrolled {
+      background: radial-gradient(circle at top, rgba(255, 79, 168, 0.09), transparent 55%),
+        rgba(3, 5, 18, 0.96);
+      height: 60px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1120px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-pill {
+      width: 32px;
+      height: 32px;
+      border-radius: 40%;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #ffd7f0 30%, #ff4fa8 75%);
+      box-shadow: 0 0 25px rgba(255, 79, 168, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transform: rotate(-8deg);
+    }
+
+    .logo-text {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 17px;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .logo-accent {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition: all var(--transition-fast);
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 3px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: all var(--transition-fast);
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .nav-link:hover::after {
+      width: 18px;
+      opacity: 1;
+    }
+
+    .nav-link.is-active {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-link.is-active::after {
+      width: 18px;
+      opacity: 1;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: radial-gradient(circle at 0 0, rgba(255, 79, 168, 0.55), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(57, 255, 204, 0.3), transparent 60%),
+        rgba(12, 13, 36, 1);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.8);
+      transform: translateY(0);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+        border-color var(--transition-fast), background var(--transition-med), filter 0.16s ease-out;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 255, 255, 0.25);
+      filter: brightness(1.03);
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.85);
+    }
+
+    .btn-secondary {
+      background: rgba(11, 14, 40, 0.95);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-pill {
+      padding-inline: 18px;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+    }
+
+    .btn-icon {
+      font-size: 15px;
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+    }
+
+    /* MAIN LAYOUT */
+
+    main {
+      padding: 26px 16px 64px;
+    }
+
+    .page-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section {
+      margin-top: 32px;
+      position: relative;
+    }
+
+    .section-header {
+      margin-bottom: 14px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-bar {
+      width: 24px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 12px rgba(255, 79, 168, 0.7);
+    }
+
+    .section-title {
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .section-kicker {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .subtle {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.5;
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255, 79, 168, 0.15), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(57, 255, 204, 0.25), transparent 55%),
+        radial-gradient(circle at -20% 80%, rgba(249, 200, 107, 0.2), transparent 60%),
+        rgba(8, 9, 30, 0.98);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 16px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      transition: transform var(--transition-med), box-shadow var(--transition-med),
+        border-color var(--transition-med), background var(--transition-med);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-med);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.9);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(5, 7, 23, 0.8);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent2);
+      box-shadow: 0 0 15px rgba(57, 255, 204, 0.7);
+    }
+
+    /* HERO */
+
+    .hero {
+      margin-top: 22px;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255, 79, 168, 0.35), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(57, 255, 204, 0.3), transparent 60%),
+        radial-gradient(circle at 120% -10%, rgba(249, 200, 107, 0.28), transparent 60%),
+        linear-gradient(135deg, rgba(9, 11, 36, 0.96), rgba(6, 9, 31, 0.98));
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.82);
+      padding: 22px 22px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(20px);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(255, 79, 168, 0.7), transparent 60%);
+      top: -110px;
+      right: -60px;
+    }
+
+    .hero::after {
+      width: 230px;
+      height: 230px;
+      background: radial-gradient(circle, rgba(57, 255, 204, 0.6), transparent 60%);
+      bottom: -100px;
+      left: -60px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+      gap: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-media {
+      position: relative;
+      align-self: center;
+    }
+
+    .hero-image-wrap {
+      border-radius: 24px;
+      padding: 4px;
+      background:
+        conic-gradient(
+          from 210deg,
+          rgba(255, 79, 168, 0.8),
+          rgba(57, 255, 204, 0.8),
+          rgba(249, 200, 107, 0.8),
+          rgba(255, 79, 168, 0.8)
+        );
+      box-shadow: 0 0 40px rgba(255, 79, 168, 0.7);
+      animation: heroGlow 10s linear infinite;
+    }
+
+    .hero-image-inner {
+      border-radius: 20px;
+      overflow: hidden;
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%),
+        linear-gradient(145deg, #03051c, #05081f);
+    }
+
+    .hero-image-inner img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: saturate(1.1) contrast(1.03);
+      transform-origin: center;
+      animation: heroFloat 7s ease-in-out infinite;
+    }
+
+    .hero-planes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero-plane {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0.7;
+      filter: drop-shadow(0 0 10px rgba(57, 255, 204, 0.8));
+      animation: planeDrift 16s linear infinite;
+    }
+
+    .hero-plane:nth-child(1) {
+      top: -8px;
+      right: 12%;
+      animation-delay: 0s;
+    }
+
+    .hero-plane:nth-child(2) {
+      bottom: -4px;
+      left: 6%;
+      animation-delay: -4s;
+      font-size: 20px;
+    }
+
+    .hero-plane:nth-child(3) {
+      top: 40%;
+      left: -10px;
+      animation-delay: -9s;
+      font-size: 16px;
+    }
+
+    .hero-tagline-pill {
+      position: absolute;
+      bottom: 10px;
+      left: -2px;
+      border-radius: var(--radius-pill);
+      padding: 5px 10px;
+      background: rgba(5, 7, 23, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--muted);
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(16px);
+    }
+
+    .hero-tagline-pill span {
+      color: var(--accent2);
+      font-size: 13px;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .hero-kicker {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-kicker-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent2);
+      box-shadow: 0 0 16px rgba(57, 255, 204, 0.9);
+    }
+
+    .hero-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-title {
+      font-size: 32px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-title span {
+      font-size: 23px;
+    }
+
+    .hero-badge {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(8, 10, 28, 0.95);
+      color: var(--accent3);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-tagline {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .hero-description {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .hero-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(255, 79, 168, 0.8);
+    }
+
+    /* PILOT FILE */
+
+    .grid-stats {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      margin-top: 10px;
+    }
+
+    .stat {
+      padding: 8px 10px;
+      border-radius: var(--radius-md);
+      background: rgba(8, 10, 32, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 13px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .stat-value {
+      font-size: 13px;
+    }
+
+    .stat-pill {
+      font-size: 11px;
+      margin-top: 4px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--accent2);
+    }
+
+    /* LORE */
+
+    .lore-wrapper {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    }
+
+    .lore-block {
+      border-radius: var(--radius-lg);
+      background: rgba(8, 9, 30, 0.96);
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      padding: 14px 14px 12px;
+      position: relative;
+    }
+
+    .lore-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lore-label span {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+    }
+
+    .lore-text {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .lore-hint {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .lore-chip-row {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(5, 7, 25, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--muted);
+    }
+
+    /* FLIGHT LOG */
+
+    .filters {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .filter-btn {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(8, 9, 30, 0.96);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-btn span {
+      font-size: 13px;
+    }
+
+    .filter-btn.is-active {
+      color: var(--text);
+      background: radial-gradient(circle at 0 0, rgba(255, 79, 168, 0.55), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(57, 255, 204, 0.3), transparent 60%),
+        rgba(10, 11, 34, 0.95);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+      position: relative;
+      padding-left: 16px;
+      margin-top: 4px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, rgba(255, 79, 168, 0.9), rgba(57, 255, 204, 0.5));
+      opacity: 0.4;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-left: 6px;
+      padding-left: 18px;
+      padding-right: 8px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -3px;
+      top: 10px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--accent2), var(--accent));
+      box-shadow: 0 0 12px rgba(255, 79, 168, 0.9);
+    }
+
+    .incident-card {
+      border-radius: var(--radius-md);
+      background: rgba(8, 9, 30, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 10px;
+      font-size: 13px;
+      transition: background var(--transition-fast), border-color var(--transition-fast),
+        transform var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .incident-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(9, 11, 35, 1);
+    }
+
+    .incident-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .incident-title {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .incident-status {
+      font-size: 11px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(8, 10, 32, 0.96);
+    }
+
+    .incident-status.delay {
+      border-color: rgba(255, 200, 107, 0.6);
+      color: var(--accent3);
+    }
+
+    .incident-status.crash {
+      border-color: rgba(255, 92, 124, 0.8);
+      color: var(--danger);
+    }
+
+    .incident-status.cursed {
+      border-color: rgba(57, 255, 204, 0.8);
+      color: var(--accent2);
+    }
+
+    .incident-lore {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted);
+      display: none;
+    }
+
+    .incident-card.is-expanded .incident-lore {
+      display: block;
+    }
+
+    .timeline-item.is-hidden {
+      display: none;
+    }
+
+    /* ABILITIES */
+
+    .grid-abilities {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 8px;
+    }
+
+    .ability-card {
+      border-radius: var(--radius-md);
+      background: rgba(8, 9, 30, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 11px;
+      font-size: 13px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ability-title {
+      font-size: 13px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ability-level {
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent2);
+    }
+
+    .ability-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* REVIEWS */
+
+    .reviews-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .reviews-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .review-card {
+      border-radius: var(--radius-md);
+      background: rgba(8, 9, 30, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 9px 11px;
+      font-size: 13px;
+    }
+
+    .review-name {
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .review-quote {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .review-stars {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--accent3);
+    }
+
+    .review-dynamic {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at 0 0, rgba(255, 79, 168, 0.4), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(57, 255, 204, 0.35), transparent 60%),
+        rgba(7, 8, 30, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 12px 13px 11px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .review-dynamic::after {
+      content: "LIVE FEEDBACK FEED";
+      position: absolute;
+      right: -40px;
+      top: 6px;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.12);
+      transform: rotate(-10deg);
+    }
+
+    .review-dynamic-name {
+      font-size: 12px;
+      color: var(--accent2);
+      margin-bottom: 4px;
+    }
+
+    .review-dynamic-quote {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* COCKPIT CONTROLS */
+
+    .cockpit-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .control-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .control-group {
+      background: rgba(8, 9, 30, 0.98);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 12px 12px;
+    }
+
+    .control-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .control-label span {
+      font-size: 10px;
+      text-transform: none;
+      letter-spacing: normal;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 12px rgba(255, 79, 168, 0.9);
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 12px rgba(255, 79, 168, 0.9);
+      cursor: pointer;
+      border: none;
+    }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .toggle input {
+      display: none;
+    }
+
+    .toggle-pill {
+      width: 34px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .toggle-thumb {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 0 8px rgba(255, 79, 168, 0.9);
+      transition: transform var(--transition-fast);
+    }
+
+    .toggle input:checked + .toggle-pill {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-color: transparent;
+    }
+
+    .toggle input:checked + .toggle-pill .toggle-thumb {
+      transform: translateX(14px);
+    }
+
+    .meme-density-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .meme-density-btn {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(8, 9, 30, 0.98);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .meme-density-btn.is-selected {
+      border-color: rgba(255, 255, 255, 0.22);
+      color: var(--text);
+      background: radial-gradient(circle at 0 0, rgba(255, 79, 168, 0.55), transparent 60%),
+        rgba(10, 11, 34, 0.95);
+    }
+
+    select {
+      width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 6px 9px;
+      background: rgba(8, 9, 30, 0.98);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .cockpit-output {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at 0 0, rgba(255, 79, 168, 0.35), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(57, 255, 204, 0.3), transparent 60%),
+        rgba(7, 8, 28, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 12px 13px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+    }
+
+    .cockpit-output-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    .cockpit-output-text {
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* STATUS BOARD */
+
+    .status-board-card {
+      border-radius: var(--radius-lg);
+      background: rgba(8, 9, 30, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 12px 13px 11px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-board-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -60deg,
+        rgba(255, 255, 255, 0.02),
+        rgba(255, 255, 255, 0.02) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .status-board-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .status-board-title {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .status-board-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+      font-size: 12px;
+    }
+
+    .status-board-table thead {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    .status-board-table th,
+    .status-board-table td {
+      padding: 6px 4px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .status-board-table th:nth-child(3),
+    .status-board-table td:nth-child(3) {
+      text-align: center;
+    }
+
+    .status-board-table th:nth-child(5),
+    .status-board-table td:nth-child(5) {
+      text-align: right;
+    }
+
+    .status-row {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .status-pill {
+      font-size: 11px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(12, 14, 40, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .status-pill.delayed {
+      border-color: rgba(255, 200, 107, 0.8);
+      color: var(--accent3);
+    }
+
+    .status-pill.boarding {
+      border-color: rgba(57, 255, 204, 0.8);
+      color: var(--accent2);
+    }
+
+    .status-pill.lost {
+      border-color: rgba(255, 92, 124, 0.9);
+      color: var(--danger);
+    }
+
+    .status-row.glitched {
+      animation: glitchRow 0.5s steps(2, end) 4;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 20px 16px 26px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-badge {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    /* REVEAL ANIMATION */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* KEYFRAMES */
+
+    @keyframes heroGlow {
+      0% {
+        filter: hue-rotate(0deg);
+      }
+      100% {
+        filter: hue-rotate(360deg);
+      }
+    }
+
+    @keyframes heroFloat {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes planeDrift {
+      0% {
+        transform: translateX(0) translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateX(12px) translateY(-6px) rotate(4deg);
+      }
+      100% {
+        transform: translateX(0) translateY(0) rotate(0deg);
+      }
+    }
+
+    @keyframes glitchRow {
+      0% {
+        transform: translate(0, 0);
+      }
+      25% {
+        transform: translate(-2px, 1px);
+      }
+      50% {
+        transform: translate(2px, -1px);
+      }
+      75% {
+        transform: translate(-1px, 1px);
+      }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-media {
+        max-width: 360px;
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding: 18px 16px 20px;
+      }
+
+      .lore-wrapper,
+      .reviews-layout,
+      .cockpit-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-inner {
+        padding-inline: 14px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(7, 8, 24, 0.98);
+        font-size: 16px;
+        transition: background var(--transition-fast), transform var(--transition-fast);
+      }
+
+      .mobile-nav-toggle:active {
+        transform: scale(0.96);
+      }
+
+      .nav-links-mobile {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background: rgba(3, 5, 18, 0.98);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        display: none;
+        flex-direction: column;
+        padding: 8px 14px 10px;
+        gap: 4px;
+        z-index: 999;
+      }
+
+      .nav-links-mobile.active {
+        display: flex;
+      }
+
+      .nav-link {
+        padding: 8px 10px;
+      }
+
+      main {
+        padding-inline: 14px;
+      }
+
+      .hero-title {
+        font-size: 26px;
+      }
+
+      .hero-title span {
+        font-size: 19px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <div class="logo-pill">🐷</div>
+        <div class="logo-text">
+          WiggerPig
+          <span class="logo-accent">Abyss Airlines</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="lore.html" class="nav-link">Lore</a>
+        <a href="games.html" class="nav-link">Events</a>
+        <a href="memetemple.html" class="nav-link">Memes</a>
+        <a href="discord.html" class="nav-link">Discord</a>
+        <a href="toys.html" class="nav-link">Chaos</a>
+      </nav>
+
+      <div class="nav-right">
+        <button class="btn btn-pill" onclick="window.location.href='discord.html'">
+          <span class="btn-icon">🕳️</span>
+          <span>Join the Abyss</span>
+        </button>
+        <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+          ☰
+        </button>
+      </div>
+    </div>
+
+    <nav class="nav-links-mobile" id="mobileNav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="lore.html" class="nav-link">Lore</a>
+      <a href="games.html" class="nav-link">Events</a>
+      <a href="memetemple.html" class="nav-link">Memes</a>
+      <a href="discord.html" class="nav-link">Discord</a>
+      <a href="toys.html" class="nav-link">Chaos</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-inner">
+      <!-- HERO -->
+      <section id="hero" class="hero reveal">
+        <div class="hero-grid">
+          <div class="hero-media">
+            <div class="hero-image-wrap">
+              <div class="hero-image-inner">
+                <img
+                  src="captain-pig.png"
+                  alt="Captain Pig, chaotic pilot of Abyss Airlines"
+                />
+              </div>
+            </div>
+            <div class="hero-planes" aria-hidden="true">
+              <div class="hero-plane">✈️</div>
+              <div class="hero-plane">🛸</div>
+              <div class="hero-plane">✈️</div>
+            </div>
+            <div class="hero-tagline-pill">
+              <span>✈</span>
+              Abyss Airlines // Gate: VIBE-777
+            </div>
+          </div>
+
+          <div class="hero-content">
+            <div class="hero-kicker">
+              <div class="hero-kicker-dot"></div>
+              CAPTAIN ROSTER // CHAOS PILOT
+            </div>
+
+            <div class="hero-title-row">
+              <h1 class="hero-title">
+                Captain Pig
+                <span>✈</span>
+              </h1>
+              <div class="hero-badge">
+                <span>FINAL BOSS OF AIR TRAVEL</span>
+              </div>
+            </div>
+
+            <div class="hero-subtitle">
+              <span>🛫</span>
+              Pilot of Abyss Airlines
+            </div>
+
+            <p class="hero-tagline">
+              “Pilot of Abyss Airlines. Your flight will be delayed due to
+              ‘vibes’.”
+            </p>
+
+            <p class="hero-description">
+              The only pilot whose pre-flight checklist includes “vibe check”,
+              “consult the void”, and “ask the Discord if this is a good idea”.
+              He doesn’t follow the flight plan – the flight plan follows him.
+            </p>
+
+            <div class="hero-actions">
+              <button
+                class="btn btn-pill"
+                data-scroll-target="#cockpit-controls"
+              >
+                <span class="btn-icon">🎫</span>
+                <span>Book a Vibe Flight</span>
+              </button>
+              <button
+                class="btn btn-secondary btn-pill"
+                data-scroll-target="#flight-log"
+              >
+                <span class="btn-icon">📋</span>
+                <span>View Incident Reports</span>
+              </button>
+            </div>
+
+            <div class="hero-meta-row">
+              <div class="hero-meta-item">
+                <div class="dot"></div>
+                AbyssVC certified menace
+              </div>
+              <div class="hero-meta-item">
+                <div class="dot"></div>
+                Femboy Jeopardy frequent flyer
+              </div>
+              <div class="hero-meta-item">
+                <div class="dot"></div>
+                Braincells not included
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PILOT FILE -->
+      <section id="pilot-file" class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-bar"></div>
+            <h2 class="section-title">Pilot File</h2>
+          </div>
+          <div class="section-kicker">Classified dossier</div>
+        </div>
+
+        <p class="subtle">
+          Official Abyss Airlines record for Captain Pig. Contents may or may
+          not be admissible in Mod Court.
+        </p>
+
+        <div class="card" style="margin-top: 12px;">
+          <div class="tag">
+            <div class="tag-dot"></div>
+            Vibe-Based Aviation Profile
+          </div>
+
+          <div class="grid-stats">
+            <div class="stat">
+              <div class="stat-label">Name</div>
+              <div class="stat-value">Captain Pig</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">Callsign</div>
+              <div class="stat-value">“Vibe Delay”</div>
+              <div class="stat-pill">
+                <span>✈</span>
+                heard on scanners worldwide
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">Airline</div>
+              <div class="stat-value">Abyss Airlines</div>
+              <div class="stat-pill">
+                <span>🕳️</span>
+                we fly into the content void
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">Role</div>
+              <div class="stat-value">
+                Chaos Pilot // Final Boss of Air Travel
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">Known For</div>
+              <div class="stat-value">
+                Vibe-based delays, in-flight existential crises, immaculate
+                drip.
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">Alignment</div>
+              <div class="stat-value">Chaotic Neutral (with snacks)</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">Threat Level</div>
+              <div class="stat-value">“TSA Won’t Even Try”</div>
+              <div class="stat-pill" style="color: var(--danger);">
+                <span>🚨</span>
+                do not let him near the intercom unsupervised
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">Flight Hours</div>
+              <div class="stat-value">???</div>
+              <div class="stat-pill" style="color: var(--accent3);">
+                <span>🕒</span>
+                time is fake at 30,000 ft
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LORE & ORIGIN -->
+      <section id="lore" class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-bar"></div>
+            <h2 class="section-title">Lore &amp; Origin Story</h2>
+          </div>
+          <div class="section-kicker">how did this happen</div>
+        </div>
+
+        <p class="subtle">
+          Every airline has a safety manual. Abyss Airlines has a group chat,
+          three cursed memes, and Captain Pig.
+        </p>
+
+        <div class="lore-wrapper" style="margin-top: 12px;">
+          <div class="lore-block">
+            <div class="lore-label">
+              <span></span>
+              INCIDENT: “The Promotion”
+            </div>
+            <p class="lore-text">
+              Captain Pig started as a baggage handler, quietly judging carry-ons
+              that looked like they contained emotional damage. One night, the
+              scheduled pilot opened a suspicious PDF labeled
+              <em>“totally not a discord link.pdf”</em> and vanished into the
+              algorithm. The nearest sentient being with a reflective vest?
+              Captain Pig.
+            </p>
+            <p class="lore-text" style="margin-top: 8px;">
+              Under the watchful eye of AbyssVC Discord (and a Twitch chat
+              chanting “LET HIM COOK”), he taxied the plane, hit “go”, and
+              somehow landed with more passengers than he left with. Management
+              called it “emergent growth”. The FAA called it “a problem”. Abyss
+              Airlines called it a promotion.
+            </p>
+            <div class="lore-hint">
+              Rumor says his pilot license is just a screenshot of a Femboy
+              Jeopardy score screen with “trust me bro” written on it.
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <div class="lore-label">
+              <span></span>
+              SIDE CHANNEL: AbyssVC Reports
+            </div>
+            <p class="lore-text">
+              When Captain Pig flies, the AbyssVC Discord VC list turns into an
+              emergency command center: one channel tracking turbulence, one
+              channel ranking the vibes, one channel arguing if this counts as a
+              “content collab”.
+            </p>
+            <p class="lore-hint">
+              Classified note: every time he makes an “unexpected detour”, a
+              new meme template spawns in <strong>#femboy-jeopardy</strong>. No
+              one knows why. No one wants it to stop.
+            </p>
+
+            <div class="lore-chip-row">
+              <div class="chip">Origin: Terminal 3, Gate ?</div>
+              <div class="chip">Status: Final boss of the boarding group</div>
+              <div class="chip">Lore depth: Please seek therapy</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FLIGHT LOG & INCIDENTS -->
+      <section id="flight-log" class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-bar"></div>
+            <h2 class="section-title">Flight Log &amp; Incidents</h2>
+          </div>
+          <div class="section-kicker">this is why your flight is late</div>
+        </div>
+
+        <p class="subtle">
+          Official Abyss Airlines timeline of flights personally “managed” by
+          Captain Pig. Filter by crime against punctuality.
+        </p>
+
+        <div class="card" style="margin-top: 12px;">
+          <div class="filters">
+            <button class="filter-btn is-active" data-filter="all">
+              <span>🌀</span> All
+            </button>
+            <button class="filter-btn" data-filter="delay">
+              <span>⏳</span> Delays
+            </button>
+            <button class="filter-btn" data-filter="crash">
+              <span>📉</span> Crashes (into the algorithm)
+            </button>
+            <button class="filter-btn" data-filter="cursed">
+              <span>🧿</span> Cursed Events
+            </button>
+          </div>
+
+          <div class="timeline" id="timeline">
+            <div class="timeline-item" data-type="delay">
+              <div class="timeline-dot"></div>
+              <div class="incident-card">
+                <div class="incident-meta">
+                  <span>2031-04-20</span>
+                  <span>Flight ABYSS-404</span>
+                  <span>Brainrot City → VC Hell</span>
+                  <span class="incident-status delay">Delayed due to vibes</span>
+                </div>
+                <div class="incident-title">
+                  Pilot declared “vibe hold” at 10,000 ft.
+                </div>
+                <div class="incident-lore">
+                  Cabin lights were replaced with RGB, seatbelt signs synced to
+                  the beat, and the plane circled until chat decided the vibes
+                  were “immaculate enough to land”.
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item" data-type="crash">
+              <div class="timeline-dot"></div>
+              <div class="incident-card">
+                <div class="incident-meta">
+                  <span>2032-02-03</span>
+                  <span>Flight PIG-777</span>
+                  <span>Abyss Hub → Meme Temple</span>
+                  <span class="incident-status crash">
+                    Crashed (into the algorithm)
+                  </span>
+                </div>
+                <div class="incident-title">
+                  In-flight Wi-Fi accidentally turned into a Kick stream.
+                </div>
+                <div class="incident-lore">
+                  Entire aircraft got recommended 400 hours of “clips you
+                  definitely didn’t ask for”. Plane safely landed. Everyone’s
+                  For You page never recovered.
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item" data-type="cursed">
+              <div class="timeline-dot"></div>
+              <div class="incident-card">
+                <div class="incident-meta">
+                  <span>2032-10-31</span>
+                  <span>Flight VOID-1312</span>
+                  <span>Runway 13 → Backrooms Gate</span>
+                  <span class="incident-status cursed">
+                    Lost in the Backrooms
+                  </span>
+                </div>
+                <div class="incident-title">
+                  Attempted “shortcut through unreleased DLC airspace”.
+                </div>
+                <div class="incident-lore">
+                  Plane vanished from radar, reappeared exactly 3 minutes later
+                  with a new row of seats labeled “Level 0”. Passengers report
+                  smelling wet carpet and hearing distant Windows XP noises.
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item" data-type="delay">
+              <div class="timeline-dot"></div>
+              <div class="incident-card">
+                <div class="incident-meta">
+                  <span>2033-06-09</span>
+                  <span>Flight GYM-069</span>
+                  <span>Gym Pig’s House → Content Farm</span>
+                  <span class="incident-status delay">
+                    Delayed: pre-flight flex check
+                  </span>
+                </div>
+                <div class="incident-title">
+                  Captain refused to take off until playlist “hit correctly”.
+                </div>
+                <div class="incident-lore">
+                  Passengers were invited to a spontaneous Femboy Jeopardy
+                  lightning round while Gym Pig maxed out the overhead bins with
+                  creatine.
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item" data-type="cursed">
+              <div class="timeline-dot"></div>
+              <div class="incident-card">
+                <div class="incident-meta">
+                  <span>2033-12-31</span>
+                  <span>Flight NYE-2024</span>
+                  <span>Reality → “New Season”</span>
+                  <span class="incident-status cursed">
+                    Patched mid-flight
+                  </span>
+                </div>
+                <div class="incident-title">
+                  New Year patch notes deployed at 30,000 ft.
+                </div>
+                <div class="incident-lore">
+                  Gravity briefly went free-to-play, turbulence gained
+                  microtransactions, and all passengers received a battle pass
+                  for “Surviving Another Year with Captain Pig”.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABILITIES & PERKS -->
+      <section id="abilities" class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-bar"></div>
+            <h2 class="section-title">Abilities &amp; Perks</h2>
+          </div>
+          <div class="section-kicker">why HR can’t fire him</div>
+        </div>
+
+        <p class="subtle">
+          Every good pilot reads instruments. Captain Pig reads the room,
+          Discord chat, and the energy in row 13.
+        </p>
+
+        <div class="grid-abilities" style="margin-top: 10px;">
+          <div class="ability-card">
+            <div class="ability-title">
+              Vibe-Based Navigation
+              <span class="ability-level">Passive · Maxed</span>
+            </div>
+            <p class="ability-desc">
+              Ignores GPS and air traffic control, follows the “emotional
+              trajectory” of the cabin. Somehow still avoids mountains.
+            </p>
+          </div>
+
+          <div class="ability-card">
+            <div class="ability-title">
+              In-Flight Meme Deployment
+              <span class="ability-level">Active · 30s CD</span>
+            </div>
+            <p class="ability-desc">
+              Pushes a single button and every seatback screen gets a new meme.
+              Panic decreases, brainrot increases, overall vibe stabilizes.
+            </p>
+          </div>
+
+          <div class="ability-card">
+            <div class="ability-title">
+              TSA Speedrun
+              <span class="ability-level">Passive · Bugged</span>
+            </div>
+            <p class="ability-desc">
+              Clears security purely via aura. Metal detector respects him too
+              much to beep. Shoes stay on. Alarms log out.
+            </p>
+          </div>
+
+          <div class="ability-card">
+            <div class="ability-title">
+              Emergency Chaos Announcement
+              <span class="ability-level">Ultimate</span>
+            </div>
+            <p class="ability-desc">
+              Can instantly cause all passengers to question reality using a
+              single intercom announcement that starts with “so, funny story…”.
+            </p>
+          </div>
+
+          <div class="ability-card">
+            <div class="ability-title">
+              Drip Turbulence
+              <span class="ability-level">Cosmetic</span>
+            </div>
+            <p class="ability-desc">
+              The stronger the fit, the rougher the air currents. Wearing the
+              captain’s bomber jacket is considered an act of god.
+            </p>
+          </div>
+
+          <div class="ability-card">
+            <div class="ability-title">
+              Algorithm Evasion Maneuver
+              <span class="ability-level">Active · 24h CD</span>
+            </div>
+            <p class="ability-desc">
+              Performs a subtle course correction that somehow dodges three
+              copyright claims, two drama threads, and one doomer arc.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PASSENGER REVIEWS -->
+      <section id="reviews" class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-bar"></div>
+            <h2 class="section-title">Passenger Reviews</h2>
+          </div>
+          <div class="section-kicker">braincells not refundable</div>
+        </div>
+
+        <p class="subtle">
+          Real feedback from extremely real passengers who definitely read the
+          terms and conditions before boarding.
+        </p>
+
+        <div class="reviews-layout" style="margin-top: 12px;">
+          <div class="reviews-grid">
+            <div class="review-card">
+              <div class="review-name">@BraincellLeft</div>
+              <div class="review-quote">
+                “10/10 would ascend into the void again. Flight landed on time,
+                but I’m pretty sure we switched timelines.”
+              </div>
+              <div class="review-stars">🐷🐷🐷🐷🐷</div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-name">Karen (Platinum Tier)</div>
+              <div class="review-quote">
+                “Flight delayed 7 hours, got free memes and a live Femboy
+                Jeopardy episode. Honestly upset I enjoyed it.”
+              </div>
+              <div class="review-stars">✈✈✈✈✈</div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-name">“Guy in 17B”</div>
+              <div class="review-quote">
+                “He made the plane barrel roll to dodge a Discord ping. My soda
+                didn’t survive, but my respect did.”
+              </div>
+              <div class="review-stars">🌀🌀🌀🌀🌀</div>
+            </div>
+          </div>
+
+          <div class="review-dynamic">
+            <div class="control-label">
+              LIVE PASSENGER PULL
+              <span>Tap for a new trauma testimonial</span>
+            </div>
+            <div id="dynamicReviewName" class="review-dynamic-name">
+              @GateGoblin
+            </div>
+            <div id="dynamicReviewQuote" class="review-dynamic-quote">
+              “Boarded sober, landed subscribed to three Kick streamers and a
+              pig-themed lore channel. I didn’t even open my laptop.”
+            </div>
+
+            <div style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-secondary btn-pill" id="reviewShuffleBtn">
+                <span class="btn-icon">🎲</span>
+                <span>Generate New Review</span>
+              </button>
+              <span style="font-size: 11px; color: var(--muted); align-self: center;">
+                Results may vary. Braincells will not respawn.
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COCKPIT CONTROLS -->
+      <section id="cockpit-controls" class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-bar"></div>
+            <h2 class="section-title">Cockpit Controls</h2>
+          </div>
+          <div class="section-kicker">do not let TSA see this</div>
+        </div>
+
+        <p class="subtle">
+          Configure your own Abyss Airlines experience. This is legally not a
+          flight simulator, but it is spiritually one.
+        </p>
+
+        <div class="cockpit-layout" style="margin-top: 12px;">
+          <div class="control-row">
+            <div class="control-group">
+              <label class="control-label" for="vibeLevel">
+                Vibe Level
+                <span>Higher = less punctual, more fun</span>
+              </label>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="vibeLevel"
+                  min="0"
+                  max="100"
+                  value="65"
+                />
+                <span
+                  id="vibeValue"
+                  style="min-width: 36px; text-align: right; font-size: 12px;"
+                >
+                  65%
+                </span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="control-label">
+                Turbulence
+                <span>May be caused by drip</span>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="turbulenceToggle" checked />
+                <span class="toggle-pill">
+                  <span class="toggle-thumb"></span>
+                </span>
+                <span>Enabled (for tax reasons)</span>
+              </label>
+            </div>
+
+            <div class="control-group">
+              <div class="control-label">
+                Meme Density
+                <span>OSHA is not aware of this slider</span>
+              </div>
+              <div class="meme-density-row" id="memeDensityRow">
+                <button
+                  class="meme-density-btn"
+                  data-density="low"
+                >
+                  Low
+                </button>
+                <button
+                  class="meme-density-btn is-selected"
+                  data-density="optimal"
+                >
+                  Optimal
+                </button>
+                <button
+                  class="meme-density-btn"
+                  data-density="brainrot"
+                >
+                  Brainrot
+                </button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="destinationSelect">
+                Destination
+                <span>Pick your final braincell’s resting place</span>
+              </label>
+              <select id="destinationSelect">
+                <option value="AbyssVC">AbyssVC Discord</option>
+                <option value="Femboy Jeopardy Studio">
+                  Femboy Jeopardy Studio
+                </option>
+                <option value="VC Hell">VC Hell</option>
+                <option value="Backrooms">The Backrooms</option>
+                <option value="Meme Temple">Meme Temple</option>
+              </select>
+            </div>
+
+            <div>
+              <button
+                class="btn btn-pill"
+                id="engageFlightPlanBtn"
+                style="margin-top: 4px;"
+              >
+                <span class="btn-icon">🚀</span>
+                <span>Engage Flight Plan</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="cockpit-output">
+            <div class="cockpit-output-label">
+              SIMULATED ABYSS AIRLINES STATUS
+            </div>
+            <div
+              class="cockpit-output-text"
+              id="flightStatusOutput"
+            >
+              Waiting for captain input. Please adjust vibes responsibly and
+              press <strong>Engage Flight Plan</strong> to generate your custom
+              chaos route.
+            </div>
+            <div
+              style="font-size: 11px; color: var(--muted); margin-top: 4px;"
+            >
+              Disclaimer: This output is for entertainment purposes only. Do not
+              show this to real pilots. Or do. We’re not your lawyer.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STATUS BOARD -->
+      <section id="status-board" class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-bar"></div>
+            <h2 class="section-title">Abyss Airlines Status Board</h2>
+          </div>
+          <div class="section-kicker">now departing: your sanity</div>
+        </div>
+
+        <p class="subtle">
+          Live-ish departures from the WiggerPig flight network. Hit
+          <strong>Corrupt the Board</strong> to let Captain Pig “update” the
+          statuses.
+        </p>
+
+        <div class="status-board-card" style="margin-top: 12px;">
+          <div class="status-board-header">
+            <div class="status-board-title">ABYSS DEPARTURES</div>
+            <button
+              class="btn btn-outline btn-pill"
+              id="corruptBoardBtn"
+            >
+              <span class="btn-icon">⚡</span>
+              <span>Corrupt the Board</span>
+            </button>
+          </div>
+
+          <table class="status-board-table">
+            <thead>
+              <tr>
+                <th>Flight</th>
+                <th>From → To</th>
+                <th>Gate</th>
+                <th>Status</th>
+                <th>Captain</th>
+              </tr>
+            </thead>
+            <tbody id="statusBoardBody">
+              <tr
+                class="status-row"
+                data-original-status="Delayed due to vibes"
+              >
+                <td>ABYSS-404</td>
+                <td>Brainrot City → VC Hell</td>
+                <td>V13</td>
+                <td>
+                  <span class="status-pill delayed">
+                    Delayed due to vibes
+                  </span>
+                </td>
+                <td>Captain Pig</td>
+              </tr>
+              <tr
+                class="status-row"
+                data-original-status="Boarding (eventually)"
+              >
+                <td>PIG-777</td>
+                <td>Abyss Hub → Meme Temple</td>
+                <td>G07</td>
+                <td>
+                  <span class="status-pill boarding">
+                    Boarding (eventually)
+                  </span>
+                </td>
+                <td>Captain Pig</td>
+              </tr>
+              <tr
+                class="status-row"
+                data-original-status="Lost to the algorithm"
+              >
+                <td>VOID-1312</td>
+                <td>Runway 13 → Backrooms Gate</td>
+                <td>??</td>
+                <td>
+                  <span class="status-pill lost">
+                    Lost to the algorithm
+                  </span>
+                </td>
+                <td>“Unknown pig-shaped entity”</td>
+              </tr>
+              <tr
+                class="status-row"
+                data-original-status="On time (suspicious)"
+              >
+                <td>NYE-2024</td>
+                <td>Reality → “New Season”</td>
+                <td>R24</td>
+                <td>
+                  <span class="status-pill boarding">
+                    On time (suspicious)
+                  </span>
+                </td>
+                <td>Captain Pig (patched)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-badge">
+          © WiggerPig // Abyss Airlines // 203X
+        </div>
+        <div>
+          This page is not FAA approved. It is, however, Discord approved, which
+          is somehow worse.
+        </div>
+      </div>
+    </footer>
+
+  <script>
+    (function () {
+      const navbar = document.querySelector(".navbar");
+      const mobileToggle = document.querySelector(".mobile-nav-toggle");
+      const mobileNav = document.getElementById("mobileNav");
+
+      // nav shrink
+      function handleScroll() {
+        if (window.scrollY > 8) {
+          navbar.classList.add("nav-scrolled");
+        } else {
+          navbar.classList.remove("nav-scrolled");
+        }
+      }
+      window.addEventListener("scroll", handleScroll);
+      handleScroll();
+
+      // mobile nav toggle
+      mobileToggle.addEventListener("click", () => {
+        mobileNav.classList.toggle("active");
+      });
+
+      // smooth scrolling via data-scroll-target
+      function handleSmoothScroll(event) {
+        const targetSelector = event.currentTarget.getAttribute(
+          "data-scroll-target"
+        );
+        if (!targetSelector) return;
+        const target = document.querySelector(targetSelector);
+        if (!target) return;
+        event.preventDefault();
+        const rect = target.getBoundingClientRect();
+        const offset = rect.top + window.scrollY - 82;
+        window.scrollTo({
+          top: offset < 0 ? 0 : offset,
+          behavior: "smooth",
+        });
+      }
+
+      document
+        .querySelectorAll("[data-scroll-target]")
+        .forEach((btn) =>
+          btn.addEventListener("click", handleSmoothScroll)
+        );
+
+      // Timeline filters
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      const timelineItems = document.querySelectorAll(".timeline-item");
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const filter = btn.getAttribute("data-filter");
+          filterButtons.forEach((b) => b.classList.remove("is-active"));
+          btn.classList.add("is-active");
+
+          timelineItems.forEach((item) => {
+            const type = item.getAttribute("data-type");
+            if (filter === "all" || type === filter) {
+              item.classList.remove("is-hidden");
+            } else {
+              item.classList.add("is-hidden");
+            }
+          });
+        });
+      });
+
+      // Incident expand/collapse
+      document.querySelectorAll(".incident-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          card.classList.toggle("is-expanded");
+        });
+      });
+
+      // Reviews randomizer
+      const dynamicName = document.getElementById("dynamicReviewName");
+      const dynamicQuote = document.getElementById("dynamicReviewQuote");
+      const reviewShuffleBtn = document.getElementById("reviewShuffleBtn");
+
+      const reviewsPool = [
+        {
+          name: "@GateGoblin",
+          quote:
+            "Boarded sober, landed subscribed to three Kick streamers and a pig-themed lore channel. I didn’t even open my laptop.",
+        },
+        {
+          name: "Row 0 (Mod Seat)",
+          quote:
+            "He muted the turbulence like a mod mutes VC. 5 stars, would let him pilot my intrusive thoughts again.",
+        },
+        {
+          name: "Economy Enjoyer",
+          quote:
+            "I paid for basic economy and somehow got a front-row seat to Femboy Jeopardy live. No idea what the categories were, but I lost.",
+        },
+        {
+          name: "@WifiIsDown",
+          quote:
+            "Wi-Fi died mid-flight, so Captain Pig did a full lore dump over the intercom. Learned more about the Abyss than I did in school.",
+        },
+        {
+          name: "Seat 13A (voluntary)",
+          quote:
+            "Plane did a gentle barrel roll so the sunset lined up with the playlist drop. OSHA is typing…",
+        },
+      ];
+
+      reviewShuffleBtn.addEventListener("click", () => {
+        const currentName = dynamicName.textContent.trim();
+        let candidate;
+        do {
+          candidate =
+            reviewsPool[Math.floor(Math.random() * reviewsPool.length)];
+        } while (candidate.name === currentName && reviewsPool.length > 1);
+
+        dynamicName.textContent = candidate.name;
+        dynamicQuote.textContent = candidate.quote;
+      });
+
+      // Cockpit controls
+      const vibeSlider = document.getElementById("vibeLevel");
+      const vibeValue = document.getElementById("vibeValue");
+      const turbulenceToggle = document.getElementById("turbulenceToggle");
+      const memeDensityRow = document.getElementById("memeDensityRow");
+      const destinationSelect =
+        document.getElementById("destinationSelect");
+      const engageBtn = document.getElementById("engageFlightPlanBtn");
+      const statusOutput =
+        document.getElementById("flightStatusOutput");
+
+      vibeSlider.addEventListener("input", () => {
+        vibeValue.textContent = vibeSlider.value + "%";
+      });
+
+      let currentDensity = "optimal";
+
+      memeDensityRow.querySelectorAll(".meme-density-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          memeDensityRow
+            .querySelectorAll(".meme-density-btn")
+            .forEach((b) => b.classList.remove("is-selected"));
+          btn.classList.add("is-selected");
+          currentDensity = btn.getAttribute("data-density");
+        });
+      });
+
+      engageBtn.addEventListener("click", () => {
+        const vibe = Number(vibeSlider.value);
+        const turbulence = turbulenceToggle.checked;
+        const destination = destinationSelect.value;
+
+        const delays = [
+          5,
+          13,
+          20,
+          42,
+          69,
+          90,
+          120,
+        ];
+        const delay =
+          delays[Math.floor((vibe / 100) * (delays.length - 1))] ||
+          5;
+
+        const densityLabel =
+          currentDensity === "low"
+            ? "meme drought (rare)"
+            : currentDensity === "optimal"
+            ? "stable meme climate"
+            : "catastrophic brainrot storm";
+
+        const turbulenceText = turbulence
+          ? "Turbulence enabled: drip interacting with the troposphere."
+          : "Turbulence disabled: plane cruising in suspiciously stable air.";
+
+        const flightCodes = ["ABYSS-777", "PIG-101", "VOID-404", "VIBE-999"];
+        const chosenFlight =
+          flightCodes[Math.floor(Math.random() * flightCodes.length)];
+
+        const status = `Flight ${chosenFlight} to ${destination} is now delayed by approximately ${delay} minutes due to elevated vibe levels and ${densityLabel}. ${turbulenceText} Please enjoy complimentary existential dread and in-flight memes while Captain Pig negotiates with the algorithm.`;
+
+        statusOutput.textContent = status;
+      });
+
+      // Status board corruption
+      const corruptBtn = document.getElementById("corruptBoardBtn");
+      const statusRows = Array.from(
+        document.querySelectorAll(".status-row")
+      );
+
+      const cursedStatuses = [
+        "Temporarily streaming on Kick",
+        "Diverted to Meme Temple",
+        "Stuck in Femboy Jeopardy bonus round",
+        "Pilot alt-tabbed into VC Hell",
+        "Gate moved to another timeline",
+        "Boarding passengers directly into the lore",
+        "Lost in duty-free limbo",
+      ];
+
+      corruptBtn.addEventListener("click", () => {
+        if (!statusRows.length) return;
+        const row =
+          statusRows[Math.floor(Math.random() * statusRows.length)];
+        const statusCell = row.querySelector("td:nth-child(4) .status-pill");
+        if (!statusCell) return;
+
+        const original = row.getAttribute("data-original-status");
+        const cursed =
+          cursedStatuses[
+            Math.floor(Math.random() * cursedStatuses.length)
+          ];
+
+        statusCell.textContent = cursed;
+        row.classList.add("glitched");
+
+        // 60% chance to revert after a short time
+        setTimeout(() => {
+          row.classList.remove("glitched");
+          if (Math.random() < 0.6 && original) {
+            statusCell.textContent = original;
+          }
+        }, 1600);
+      });
+
+      // IntersectionObserver for reveal
+      const revealElements = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.2,
+          }
+        );
+
+        revealElements.forEach((el) => observer.observe(el));
+      } else {
+        // Fallback: just show them
+        revealElements.forEach((el) => el.classList.add("visible"));
+      }
+    })();
+  </script>
+</body>
+</html>

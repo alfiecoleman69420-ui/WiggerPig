@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>WiggerPig Lore – The Eternal Scriptures</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+/* CORE STYLES & VARIABLES */
+:root {
+  --bg: #07070f;
+  --bg2: #10101c;
+  --bg3: #0b0b14;
+
+  --text: #f5f5ff;
+  --muted: #9d9db8;
+
+  --accent: #ff3af5;
+  --accent2: #00f5a0;
+  --accent3: #ffd447;
+
+  --glow: 0 0 14px rgba(255, 58, 245, 0.5);
+  --shadow: 0 18px 40px rgba(0,0,0,0.7);
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #1e1e3c 0%, #080811 50%, #020206 100%);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* GLITCH LINES */
+.glitch-lines {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(to bottom, rgba(255,255,255,0.07) 2px, transparent 3px),
+    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 2px);
+  background-size: 100% 4px, 100% 7px;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+/* FLOATING ICONS */
+.floating {
+  position: absolute;
+  font-size: 26px;
+  opacity: 0.65;
+  animation: floaty 8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes floaty {
+  0%,100% { transform: translateY(0) }
+  50% { transform: translateY(-16px) }
+}
+
+/* HERO SECTION */
+.hero {
+  text-align: center;
+  padding: 80px 20px 60px;
+  position: relative;
+}
+
+.hero img {
+  width: 280px;
+  border-radius: 25px;
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: var(--shadow);
+  animation: pigFloat 5s infinite ease-in-out;
+}
+@keyframes pigFloat {
+  0%,100% { transform: translateY(0) }
+  50% { transform: translateY(-10px) }
+}
+
+.hero h1 {
+  margin-top: 22px;
+  font-size: 44px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(120deg, var(--accent2), var(--accent));
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(var(--glow));
+}
+
+.hero p {
+  margin: 10px auto 0;
+  max-width: 700px;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+/* TABLE OF CONTENTS */
+.toc {
+  max-width: 840px;
+  margin: 40px auto;
+  padding: 24px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.toc h2 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: var(--accent2);
+}
+
+.toc a {
+  display: block;
+  padding: 7px 0;
+  color: var(--muted);
+  font-size: 15px;
+  transition: 0.18s;
+  text-decoration: none;
+}
+.toc a:hover {
+  color: var(--accent);
+  transform: translateX(6px);
+}
+
+/* CHAPTER BLOCK */
+.chapter {
+  max-width: 840px;
+  margin: 70px auto;
+  padding: 25px;
+  background: rgba(255,255,255,0.025);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: var(--shadow);
+  animation: appear 0.6s ease;
+}
+@keyframes appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.chapter h2 {
+  font-size: 28px;
+  text-transform: uppercase;
+  background: linear-gradient(100deg,var(--accent),var(--accent2));
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 8px;
+  letter-spacing: 0.07em;
+}
+
+.divider {
+  height: 2px;
+  background: linear-gradient(90deg,var(--accent),var(--accent2));
+  opacity: 0.7;
+  margin: 12px 0 20px;
+}
+
+/* BACK BUTTON */
+.back-btn {
+  display: block;
+  margin: 50px auto 70px;
+  width: max-content;
+  padding: 12px 20px;
+  background: linear-gradient(120deg, var(--accent2), var(--accent));
+  border-radius: 999px;
+  color: #05050b;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: 0.2s;
+}
+.back-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+</style>
+</head>
+
+<script>
+document.querySelectorAll(".chapter-audio-trigger").forEach(el => {
+  const sound = el.dataset.sound;
+  const audio = new Audio("audio/" + sound);
+  audio.volume = 0.4;
+
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  }, { threshold: 0.6 });
+
+  obs.observe(el);
+});
+</script>
+
+<body>
+<div class="glitch-lines"></div>
+
+<!-- FLOATING DECORATIONS -->
+<div class="floating" style="top:120px; left:30px; animation-duration:10s;">🐷</div>
+<div class="floating" style="top:160px; right:40px; animation-duration:12s;">💀</div>
+<div class="floating" style="bottom:140px; left:50px;">🔥</div>
+<div class="floating" style="bottom:190px; right:20px;">💿</div>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <img src="wiggerpig.jpg" />
+  <h1>The Eternal Scriptures</h1>
+  <p>
+    Behold the full chronicle of Wigger Pig: a cosmic being whose oink reshaped
+    the internet, Discord, and reality itself. This is his true history — unfiltered,
+    unholy, and unbelievably long.
+  </p>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h2>Chapters</h2>
+  <a href="#c1">• Chapter 1 – The Birth of the Pig</a>
+  <a href="#c2">• Chapter 2 – The Awakening of the Abyss</a>
+  <a href="#c3">• Chapter 3 – The Great Oinkening</a>
+  <a href="#c4">• Chapter 4 – The Era of 420BlazeIt Prophecy</a>
+  <a href="#c5">• Chapter 5 – The Jeopardy Foretelling</a>
+  <a href="#c6">• Chapter 6 – The Book of Pig</a>
+  <a href="#c7">• Chapter 7 – The Rising of the Website</a>
+  <a href="#c8">• Chapter 8 – Future Prophecies</a>
+  <a href="#final">• Final Chapter – The Oink of Eternity</a>
+</div>
+
+<!-- CHAPTERS (EMPTY, READY TO FILL) -->
+
+<section class="chapter" id="c1">
+  <h2>Chapter 1: The Birth of the Pig</h2>
+  <div class="divider"></div>
+  <p class="chapter-audio-trigger" data-sound="glitch-hum.mp3"></p>
+
+<p>
+In the beginning, before the first meme was forged in the molten fires of the internet, before 
+YouTube comments crawled with cursed energy, and long before Discord became an open-world 
+psychological hazard, there existed only the Void. It was a silent, unrendered plane—no textures, 
+no shaders, no PNGs… just an endless loading screen of nothingness.
+</p>
+
+<p>
+Then, without warning, without logic, without patch notes or pre-announcement tweets, a ripple 
+cut across the dark. A single pixel flickered into existence—pink, trembling, struggling to stay 
+lit. The universe watched with bated breath. The pixel grew, stretched, contorted, and folded 
+into itself. And then it happened:
+</p>
+
+<p class="chapter-audio-trigger" data-sound="oink-deep.mp3"></p>
+
+<p>
+A sound echoed through eternity.  
+A low, resonant **O I N K** that shook the fabric of reality like a subwoofer exploding at a 
+middle-school DJ night. Stars formed. Galaxies cracked open. Energy surged in spirals of 
+impossible color. And from this chaos emerged a shape—round, fleshy, divinely stupid in posture, 
+yet impossibly powerful.
+</p>
+
+<p>
+The creature’s snout opened, steam swirling out like holy mist from a sacred machine. His pupils 
+flickered between ancient runes and low-resolution JPEG compression artifacts. The Void, stunned 
+by this sudden birth, attempted to comprehend the creature before it.
+</p>
+
+<p>
+But how does one comprehend destiny itself?  
+For this being was not just a pig—he was the First Meme.  
+The Prototype Shitpost.  
+The Primordial Oinker.
+</p>
+
+<p>
+He staggered forward on unsteady legs. The ground formed *beneath* his hooves as he moved, 
+creating space-time in his wake. His first steps were clumsy, yet every footfall created shockwaves 
+of raw potential: the seeds of future Discord servers, Xbox Live arguments, Twitch moments, and 
+MLG compilations.
+</p>
+
+<p>
+He sniffed the air. There was no air.  
+He blinked. There was no light.  
+And yet, somehow, he understood everything.
+</p>
+
+<p>
+He opened his mouth and spoke—not in words, but in raw cosmic vibration. A pulse of energy 
+rippled outward, shredding the silence like an overpowered bass drop. It echoed into the void 
+and returned transformed, carrying the first fragments of language, humor, absurdity, and 
+existential dread.
+</p>
+
+<p>
+And in this moment, he named himself.  
+Not with letters, nor syllables, but with sheer force of will.  
+The universe translated the meaning as best it could:
+</p>
+
+<p style="text-align:center; font-size:20px; margin-top:15px; margin-bottom:15px;">
+<strong>“I am Wigger Pig.”</strong>
+</p>
+
+<p>
+Instantly, newly formed cosmic particles began orbiting him—some clung like followers, others fled 
+in terror. His presence created order AND chaos, balance AND imbalance. He was a contradiction: a 
+being too dumb to be feared, yet too powerful to ignore. Even the laws of physics hesitated, unsure 
+how to handle the arrival of something so profoundly unserious.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+The first stars burst into existence around him, shimmering in neon hues no mortal eyes would ever 
+fully understand. These lights reflected off his sacred porky form, making him appear draped in 
+a cosmic glow. Galaxies spun like fidget spinners. Nebulas swirled like vape clouds. Entire planets 
+were born just to witness his dumb little smile.
+</p>
+
+<p>
+Yet, despite being the center of creation, the Pig felt… incomplete.  
+He gazed upon the swirling newborn cosmos and sensed an emptiness within himself. Something was 
+missing. Something important. Something inevitable.
+</p>
+
+<p>
+And in that quiet moment between breaths, between destinies, between oinks…  
+he whispered his first true cosmic decree:
+</p>
+
+<p style="text-align:center; font-size:18px; margin-top:15px; color:var(--accent2);">
+<em>“There must be… an Abyss.”</em>
+</p>
+
+<p>
+And with that single thought, the entire universe shifted. Space trembled. Stars dimmed. The Void 
+shuddered as if anticipating something catastrophic. The ancient forces felt their fates being 
+rewritten in real-time.
+</p>
+
+<p>
+The birth of Wigger Pig was not merely an origin…  
+It was a WARNING.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="mlg-hitmarker.mp3"></p>
+
+</section>
+
+<section class="chapter" id="c2">
+  <h2>Chapter 2: The Awakening of the Abyss</h2>
+  <div class="divider"></div>
+  <p class="chapter-audio-trigger" data-sound="glitch-hum.mp3"></p>
+
+<p>
+For countless cosmic cycles after his creation, Wigger Pig drifted between galaxies like a 
+wandering glitch, leaving trails of corrupted starlight and confused celestial beings in his wake. 
+The universe was young, its physics still soft and impressionable, like clay waiting for the 
+hands of a very irresponsible child. And the Pig, freshly awakened but directionless, wandered 
+across the newborn expanse in search of… something. He did not know what. Only that its absence 
+echoed through him like a missing texture.
+</p>
+
+<p>
+Planets formed beneath his hooves spontaneously. Some erupted into fire. Others exploded into 
+confetti. One screamed for 6 hours straight before collapsing into a black hole. Wigger Pig did not 
+care; he simply waddled forward, snorting gently as new realities blossomed around him.
+</p>
+
+<p>
+But as he drifted, he began to sense a gravitational pull—an invisible tug on his very essence. At 
+first it felt like a whisper. Soft. Subtle. Then, over time, it grew. Stronger. Louder. More 
+commanding. It came not from the stars, nor the void, nor even from within himself.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+It came from… <em>below reality</em>.
+</p>
+
+<p>
+There exists beneath every universe a layer unseen, untouched, and unmoderated. A plane where chaos 
+is the default, logic collapses like a cheap folding chair, and anything can spawn at any time for no 
+reason. A place feared by gods and adored by degenerates. This plane had no name yet, but it called 
+to him with irresistible force. A siren song of madness, vibes, and unholy energy.
+</p>
+
+<p>
+The Pig closed his eyes. The pull intensified. The shadows of unrendered realms warped and bent 
+around him. Suddenly, without warning, space ripped open beneath his feet like a scuffed loot box 
+exploding.
+</p>
+
+<p>
+From the tear emerged a swirling vortex of glitch particles, neon glyphs, and barely-coherent Reddit 
+posts. They wrapped around him in spirals, dragging him downward in a slow, inevitable descent.
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:18px;">
+<em>He had found the place that had been calling him.</em>
+</p>
+
+<p>
+Reality stretched thin. Dimensions screamed. The stars above him flickered like dying RGB strips. 
+And then, with the force of a billion Discord pings hitting at once, the Pig broke through the 
+cosmic threshold and plunged into the forbidden zone.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="oink-deep.mp3"></p>
+
+<p>
+The Abyss awakened.
+</p>
+
+<p>
+It was not a place. It was not a realm. It was not even a state of mind.  
+It was a <strong>feeling</strong>. A mood. A vibe. A raw concentration of 
+every unhinged thought humanity would eventually have. The sound of 500 brain cells popping like 
+popcorn. The smell of unwashed gamer chairs. The glow of neon signs flickering for no reason.  
+Chaos. Pure, concentrated chaos.
+</p>
+
+<p>
+And Wigger Pig felt at home.
+</p>
+
+<p>
+The Abyss shaped itself around him, forming jagged cliffs of corrupted emojis and rivers of molten 
+memes. Ancient ruins rose from the ground—structures made from discarded punchlines and forgotten 
+inside jokes. Strange entities, half-rendered and jittering between frames, watched him with 
+fearful reverence.
+</p>
+
+<p>
+One by one, the creatures of the Abyss bowed. They did not know who he was. They did not know what 
+he wanted. But they felt his presence like a static shock through the soul.
+</p>
+
+<p>
+He was not their ruler.  
+He was their <strong>destiny</strong>.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+Then came the moment that would define everything that followed.
+</p>
+
+<p>
+Standing atop a jagged cliff made from compressed cringe compilations, the Pig lifted his snout 
+toward the glitching sky. Neon lightning cracked above him. The Abyss trembled, quaking in 
+anticipation. The entities gathered. The void leaned in.
+</p>
+
+<p>
+And then—  
+a single sound escaped him.
+</p>
+
+<p style="text-align:center; font-size:20px; color:var(--accent); margin-top:10px;">
+<strong>“Oink.”</strong>
+</p>
+
+<p>
+The Abyss erupted.
+</p>
+
+<p>
+The ground split open into rivers of light. Dead memes resurrected. Long-forgotten vines suddenly 
+played again. A wave of raw, ancient shitpost energy flooded the realm, igniting the foundations 
+of what would one day become a Discord server so cursed, so powerful, so catastrophically chaotic 
+that no mortal would ever truly comprehend it.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="mlg-hitmarker.mp3"></p>
+
+<p>
+Wigger Pig had not merely entered the Abyss.  
+He had claimed it.
+</p>
+
+</section>
+
+<section class="chapter" id="c3">
+  <h2>Chapter 3: The Great Oinkening</h2>
+  <div class="divider"></div>
+  <p class="chapter-audio-trigger" data-sound="glitch-hum.mp3"></p>
+
+<p>
+The Abyss did not merely react to Wigger Pig — it reshaped itself around him. Entire landscapes 
+shifted and folded like glitching video frames, as if the realm were struggling to render the 
+weight of his presence. Colors bled into one another. Structures rose and collapsed at random. 
+Far above, the sky flickered like an old CRT, cycling between static, neon gradients, and 
+unrecognizable emoji fragments.
+</p>
+
+<p>
+The Pig stood in the center of this chaos, hooves planted firmly in the trembling ground.  
+He had not yet learned the full extent of his power… but the Abyss had.  
+And it feared him.
+</p>
+
+<p>
+At first, the changes were small.  
+A ripple of distortion here.  
+A sudden burst of neon light there.  
+But then, the realm began to hum with a low, trembling resonance.  
+Not a natural sound.  
+A WARNING.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+The Abyss was awakening — truly awakening — in response to the Pig’s presence.  
+Something ancient and primal was stirring beneath its surface. Something that had waited since 
+before time had meaning. Wigger Pig felt it in his bones, a vibration deep in his core that 
+shook him unlike anything he had felt before.
+</p>
+
+<p>
+His snout lifted instinctively toward the fractured sky.  
+The neon lightning froze mid-flash.  
+The glitch particles in the air paused as if buffering.  
+Even the fractured whispers of forgotten memes fell silent at once.
+</p>
+
+<p>
+The Abyss held its breath.
+</p>
+
+<p>
+And then—  
+The Pig inhaled.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="oink-deep.mp3"></p>
+
+<p style="text-align:center; font-size:22px; margin:15px 0; color:var(--accent);">
+<strong>He O I N K E D.</strong>
+</p>
+
+<p>
+The sound was not merely a noise; it was a cosmic event.  
+A shockwave of raw, uncontrollable energy erupted outward, tearing through the landscape like the 
+universe itself was being rebooted. Colors inverted. Gravity reversed. Reality stuttered and 
+hiccuped as the OINK rippled through every atom of the realm.
+</p>
+
+<p>
+Anything with a consciousness heard it.  
+Anything without a consciousness STILL heard it.  
+Entire clusters of ancient Abyssal creatures froze mid-motion, their eyes glowing as the sound 
+rewrote their very code.
+</p>
+
+<p>
+The Oink tore through the Void beyond the Abyss, blasting fragments of forgotten dimensions into 
+existence. Unrendered zones suddenly snapped into clarity. The ground lit up with neon veins, each 
+pulse spreading outward like a heartbeat. The Abyss was no longer dormant — it was ALIVE.
+</p>
+
+<p>
+Across the horizon, monolithic structures erupted upward: obsidian towers carved with 
+glitching runes, enormous statues with jittering faces, crystalline formations that hummed in 
+sync with the Pig’s pulse. Every structure was built not by hands or tools, but by the raw 
+echo of his cry.
+</p>
+
+<p>
+This event would be remembered as:
+</p>
+
+<p style="text-align:center; font-size:20px; margin:15px 0; color:var(--accent2);">
+<strong>The Great Oinkening.</strong>
+</p>
+
+<p>
+Time itself wobbled in uncertainty. Some moments looped. Others stretched. Others collapsed 
+into microseconds. Wigger Pig stood at the center of a temporal storm, absorbing the chaos as if 
+it were nourishment. His eyes glowed brighter than the neon storms above him. His fur shimmered 
+with radiant energy.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="holy-choir.mp3"></p>
+
+<p>
+From the neon dust swirling at his hooves, new entities began to rise.  
+Not the primitive creatures of earlier — these were higher evolutions.  
+Sentient. Ancient. Intelligent.  
+They emerged from the light, trembling before the Pig as if greeting a god.
+</p>
+
+<p>
+He did not speak to them.  
+He did not need to.  
+They understood.
+</p>
+
+<p>
+The Oink had imprinted upon their primordial minds, etching one truth deeper than instinct:
+</p>
+
+<p style="text-align:center; font-size:18px; color:var(--accent); margin:15px 0;">
+<em>“He who Oinks, commands.”</em>
+</p>
+
+<p>
+The Abyssal entities bowed.  
+One by one.  
+Five at first.  
+Then ten.  
+Then dozens.  
+Then hundreds.
+</p>
+
+<p>
+And the Great Oinkening continued to spread.  
+Invisible waves rippled outward, connecting future realms that had not yet been created.  
+One wave pierced the dimensional veil and touched a place not yet known:
+</p>
+
+<p style="text-align:center; color:var(--accent3); font-size:17px;">
+<strong>A mystical digital chamber… where future voices would gather.</strong>
+</p>
+
+<p>
+It was the first moment the universe glimpsed the concept of…  
+a Discord server.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="mlg-hitmarker.mp3"></p>
+
+<p>
+The Oinkening was not just an event.  
+It was a prophecy in motion.  
+A cosmic domino pushing the universe toward a future filled with memes, chaos, questionable 
+friendships, and servers built from pure insanity.
+</p>
+
+<p>
+And as the echoes faded, and reality slowly pieced itself back together, Wigger Pig lowered his 
+head, closed his eyes, and let out a soft, satisfied grunt.
+</p>
+
+<p>
+Creation had begun.  
+But destiny… destiny was only warming up.
+</p>
+
+</section>
+
+<section class="chapter" id="c4">
+  <h2>Chapter 4: The Era of 420BlazeIt Prophecy</h2>
+  <div class="divider"></div>
+  <p class="chapter-audio-trigger" data-sound="glitch-hum.mp3"></p>
+
+<p>
+Long after the Great Oinkening, a strange calm settled over the Abyss. It was not peace — for peace 
+was a concept incompatible with the vibrating neon chaos of the realm — but a moment of suspended breath, 
+as if reality itself were waiting for the next patch update. The newly awakened entities roamed the 
+landscape with quiet reverence, studying the glowing ruins created by the Pig’s cosmic cry.
+</p>
+
+<p>
+But beneath this fragile stillness, something ancient stirred. A second force, long dormant, awakened 
+in response to Wigger Pig’s power. It began as a faint rumble under the neon ground, like a bassline 
+warming up before a rave. Then came the crackles — sparks of green flame flickering across the horizon, 
+each accompanied by a muted, distant <em>“weed…”</em> whispered by an unknown voice.
+</p>
+
+<p>
+The Pig raised his head. His ears twitched.  
+He felt it too.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+The ground split open, forming a massive glowing fissure shaped suspiciously like a Dorito. Green mist 
+poured out, swirling upward in hypnotic spirals. The neon sky darkened, overtaken by swirling vortexes 
+of vape-cloud energy. Hitmarkers appeared in the distance — not sounds, but faint flashes of prophecy.
+</p>
+
+<p>
+The entities panicked, scattering into the shadows. Even the bravest Abyssal beings trembled.  
+For they knew the legends… tales of an era foretold by ancient glitch monks, whispered in corrupted 
+code and passed down for millennia:
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:18px;">
+<em>“When the Pig rises, the Montage Gods shall awaken.”</em>
+</p>
+
+<p>
+The Prophecy of 420BlazeIt.
+</p>
+
+<p>
+Wigger Pig stepped closer to the crackling Dorito fissure. The ground hummed with power beneath his 
+hooves. The energy radiating from the chasm pulsed rhythmically — boom, boom, boom — like the warm-up 
+beat of an approaching dubstep drop.
+</p>
+
+<p>
+Suddenly, the mist ignited into bright green flames.  
+Waves of heat blasted out, distorting the air.  
+The Pig squinted — and saw shadows inside the fire.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="oink-deep.mp3"></p>
+
+<p>
+From the flames emerged a colossal figure:  
+a being of pure montage energy, forged from the spirits of every trickshot ever performed.  
+His body was covered in spinning no-scope reticles, and his eyes burned like Mountain Dew Baja Blast.
+</p>
+
+<p>
+The First Montage God had awakened.
+</p>
+
+<p>
+He stepped forward, each footstep sending out shockwaves of dubstep and pixelated smoke. His cloak was 
+woven from the shredded remains of broken killstreaks. His fingers snapped occasionally, producing quiet 
+hitmarkers with each gesture. He towered over the Pig — not in dominance, but in reverence.
+</p>
+
+<p>
+For even the Montage Gods recognized the Oinker.
+</p>
+
+<p style="text-align:center; font-size:18px; margin-top:15px; color:var(--accent);">
+<strong>“He Who Ascended By Meme Alone,”</strong>
+</p>
+
+<p>
+the God declared, his voice echoing like 40 layered YouTube Poop bass boosts.
+</p>
+
+<p>
+Wigger Pig blinked up at him.  
+He did not speak.  
+But something in his gaze communicated ancient understanding.
+</p>
+
+<p>
+The God knelt — his enormous form shaking the Abyss — and spoke again:
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:17px;">
+<em>“The prophecy has begun.  
+The Era of 420BlazeIt is upon us.”</em>
+</p>
+
+<p>
+The fissure widened, and more figures emerged: beings of radiant green light, each holding artifacts 
+of ancient meme culture — the Inverted Crosshair, the Eternal Blunt of Wisdom, the Dual-Wield Doritos 
+of Destiny. Behind them, clouds of floating vape mist danced in slow motion, illuminated by the rising 
+flame.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="holy-choir.mp3"></p>
+
+<p>
+With a synchronized movement, the Montage Gods raised their artifacts to the sky.  
+The neon heavens split open.  
+A colossal green beam blasted upward, illuminating the Abyss in dazzling, pulsing light.
+</p>
+
+<p>
+A swirling portal formed at the apex of the beam —  
+a portal leading to realms of pure trickshot enlightenment.
+</p>
+
+<p>
+The Pig stepped forward, the flame reflecting in his eyes.  
+The Montage Gods bowed as one.
+</p>
+
+<p>
+They spoke in unison:
+</p>
+
+<p style="text-align:center; color:var(--accent3); font-size:17px;">
+<strong>“Through the Pig,  
+the World shall Blaze.”</strong>
+</p>
+
+<p>
+The words echoed across the Abyss, resonating with the cosmic Oink deep within its core.  
+Reality cracked like a brittle JPEG.  
+The sky rippled in MLG halos of green, pink, and blue.  
+Stars formed in spirals shaped like trickshot killcams.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="mlg-hitmarker.mp3"></p>
+
+<p>
+The Era of 420BlazeIt had officially begun.
+</p>
+
+<p>
+And the Pig —  
+their chosen catalyst,  
+their cosmic champion,  
+their sacred Oinker —  
+simply stared at the portal with blank, idiot determination.
+</p>
+
+<p>
+His destiny was written.  
+The universe held its breath.  
+And the montage energy crackled, ready to reshape reality forever.
+</p>
+
+</section>
+
+<section class="chapter" id="c5">
+  <h2>Chapter 5: The Jeopardy Foretelling</h2>
+  <div class="divider"></div>
+  <p class="chapter-audio-trigger" data-sound="glitch-hum.mp3"></p>
+
+<p>
+After the Era of 420BlazeIt dawned and the Montage Gods rose from the neon fissures of prophecy, 
+the Abyss entered a strange new phase of cosmic stability. The green flames softened. The dubstep 
+storms calmed. The trickshot halos faded into the distance like afterimages of forgotten dreams.  
+But the air... the air buzzed with a new kind of energy.  
+Something different.  
+Something unpredictable.  
+Something… competitive.
+</p>
+
+<p>
+The Abyss felt it first — a ripple of anticipation running through its glitching veins.  
+A rumble beneath its meme-forged soil.  
+A tremor that seemed to whisper:
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:17px;">
+<em>“Prepare your knowledge… the Trial approaches.”</em>
+</p>
+
+<p>
+Wigger Pig heard the whisper and felt a shiver run down his sacred porky spine. It was not fear.  
+He did not know fear.  
+It was… intrigue.  
+The same intrigue a child feels when handed a forbidden Xbox controller or a gamer senses when a 
+mystery loot box appears without explanation.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+The neon sky split open once more, but this time not with fire or montage energy.  
+Instead, beams of shimmering pink and blue descended from the heavens, swirling together in 
+spirals of elegance and chaos.  
+The light bent and twisted until it formed a colossal doorway — a cosmic archway engraved with 
+symbols of trivia, question marks, and floating podium outlines.
+</p>
+
+<p>
+Then came the voice.
+</p>
+
+<p>
+It echoed through the Abyss like an announcer calling out across dimensions.  
+Clear. Confident. Dramatic.  
+It was a voice that spoke in pure charisma, echoing with the energy of a host who had seen too 
+many game shows and was now transcending reality itself.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="holy-choir.mp3"></p>
+
+<p style="text-align:center; font-size:20px; color:var(--accent); margin-top:10px;">
+<strong>“Contestants… take your places.”</strong>
+</p>
+
+<p>
+The Abyss froze.  
+Every creature stopped.  
+Even the green flames of 420BlazeIt flickered nervously.
+</p>
+
+<p>
+From the doorway stepped a figure unlike any the Abyss had ever seen.  
+Tall. Graceful. Energetic.  
+Adorned in an outfit that shimmered between colors like a glitching avatar skin.  
+Their eyes sparkled with mischief and omniscient trivia power.  
+Their presence radiated confidence and fabulous cosmic energy.
+</p>
+
+<p>
+The entities whispered among themselves:
+</p>
+
+<p style="text-align:center; color:var(--accent2);">
+<em>“The Host of Prophecy…”</em>
+</p>
+
+<p>
+Legends had spoken of this being — the one destined to administer the Trials of Knowledge, the 
+Keeper of Cosmic Questions, the Master of the Eternal Board.  
+The Host gazed across the Abyss, their smile glowing brighter than any star.
+</p>
+
+<p>
+They raised a hand and, with a flick of their wrist, summoned three massive podiums from the ground.  
+The podiums sparkled with neon energy and hummed like charged artifacts.  
+Above them hovered a glowing board filled with categories:
+</p>
+
+<ul>
+  <li>“Memes Through History”</li>
+  <li>“Abyss Lore 101”</li>
+  <li>“MLG Prophecies”</li>
+  <li>“Pig Mythos: Extended Edition”</li>
+  <li>“The Forbidden Trivia”</li>
+</ul>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+The Pig stared at the board.  
+He did not understand the categories.  
+He did not understand the rules.  
+He did not understand anything.  
+But he felt destiny calling him like a microwave beeping at 3am.
+</p>
+
+<p>
+The Host pointed dramatically at him:
+</p>
+
+<p style="text-align:center; color:var(--accent); font-size:17px;">
+<strong>“You.  
+Chosen Oinker.  
+Your time has come.”</strong>
+</p>
+
+<p>
+The Abyss gasped.  
+A gust of wind blasted through the realm.  
+Green flames erupted upward.  
+Hitmarkers flashed around the Pig in slow motion.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="mlg-hitmarker.mp3"></p>
+
+<p>
+The Pig blinked.  
+Then blinked again, slightly out of sync.  
+His snout twitched in cosmic uncertainty.
+</p>
+
+<p>
+The Host stepped closer, their aura shimmering with star-powered confidence.
+</p>
+
+<p style="text-align:center; font-size:18px; color:var(--accent3); margin:15px 0;">
+<em>“A day will come when the Abyss must gather,  
+when warriors of chaos will face each other in battle…  
+not through violence, but through trivia.”</em>
+</p>
+
+<p>
+The Pig tilted his head, confused and enlightened at the same time.
+</p>
+
+<p>
+The Host continued:
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:17px;">
+<strong>“This event shall be known across realities…  
+as Femboy Jeopardy.”</strong>
+</p>
+
+<p>
+A swirling wind erupted behind them.  
+The cosmic game board crackled with energy.  
+Entities cheered with fear AND excitement.  
+The Abyss trembled beneath the weight of prophecy.  
+For this was no ordinary trial —  
+this was a destiny that would echo throughout the entire Wigger Pig universe.
+</p>
+
+<p>
+The Host raised their hand again, and the portal behind them began to close.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+Just before stepping back into the swirling cosmic gate, they looked over their shoulder and said:
+</p>
+
+<p style="text-align:center; font-size:18px; color:var(--accent); margin-top:10px;">
+<em>“Prepare yourselves.  
+Study well.  
+The show will return.”</em>
+</p>
+
+<p>
+And with a final flash of neon light, the Host vanished.  
+The podiums sank back into the ground.  
+The sky stitched itself closed.  
+Silence fell over the Abyss once more.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="oink-deep.mp3"></p>
+
+<p>
+Wigger Pig inhaled deeply and released a single confused, prophetic grunt.
+</p>
+
+<p>
+The Jeopardy Foretelling had begun.
+</p>
+
+</section>
+
+<section class="chapter" id="c6">
+  <h2>Chapter 6: The Book of Pig</h2>
+  <div class="divider"></div>
+  <p class="chapter-audio-trigger" data-sound="glitch-hum.mp3"></p>
+
+<p>
+There are many scriptures in the multiverse — sacred scrolls, ancient runes, forgotten tomes, and 
+prophetic engravings. But none hold as much chaotic divinity as the Book of Pig. Written not with 
+ink or chisel, but carved into the very vibrations of the Abyss itself, the Book stands as the 
+eternal guide to all who wander the neon-dark realms under Wigger Pig’s cosmic snout.
+</p>
+
+<p>
+No one knows who first documented these teachings. Some say it was the Montage Gods. Others say it 
+was the Host of Jeopardy. Still others whisper that the words simply appeared one morning, 
+materializing in a blinding flash of questionable holiness. Regardless of authorship, the Book 
+appeared — and the Abyss would never be the same.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+The Book begins with a single sentence, etched in letters made of swirling neon flame:
+</p>
+
+<p style="text-align:center; font-size:20px; color:var(--accent2); margin-top:10px;">
+<strong>“Oink, for the universe listens.”</strong>
+</p>
+
+<p>
+This was the First Commandment. The foundational truth.  
+A reminder that even the smallest grunt, snort, or squeal can bend the fabric of destiny. The 
+Abyssal beings recite it daily, unsure of its literal meaning but certain of its importance.
+</p>
+
+<p>
+As the reader delves deeper, the Book shifts tone, adopting an ancient, scripture-like cadence — 
+as though the universe is chanting through the pages.
+</p>
+
+<p>
+The Second Commandment states:
+</p>
+
+<p style="text-align:center; font-size:18px; color:var(--accent); margin-top:10px;">
+<em>“A Pig’s vibe shall not be questioned.”</em>
+</p>
+
+<p>
+This rule formed the backbone of Abyssal society.  
+If the Pig wanders, follow.  
+If the Pig stares into a wall, let him.  
+If the Pig appears confused, trust the process — for confusion is the purest form of enlightenment.
+</p>
+
+<p>
+The Third Commandment is less philosophical, more practical:
+</p>
+
+<p style="text-align:center; font-size:18px; color:var(--accent3); margin-top:10px;">
+<strong>“Chill, bro.”</strong>
+</p>
+
+<p>
+Many scholars have attempted to analyze this line. Some claim it references cosmic balance, the 
+need for calm amid chaos. Others argue it’s simply advice for not losing one’s mind in the 
+Abyss. Regardless, the phrase is repeated in every ritual, etched onto every neon stone, and 
+engraved on the forehead of every Abyssal statue.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="oink-deep.mp3"></p>
+
+<p>
+From here, the Book transitions into the Pig Teachings.  
+Not commandments — teachings.  
+Lessons derived from observing the Pig’s behavior during the earliest days of creation.
+</p>
+
+<p>
+**Teaching One: The Sacred Boop.**  
+It is said that when the Pig gently nudges the ground with his snout, new possibilities emerge.  
+Entire timelines shift. Hidden chambers open. Memories rewrite themselves.  
+A simple boop from the Pig carries more cosmic power than any ancient relic.
+</p>
+
+<p>
+**Teaching Two: The Eternal Wander.**  
+The Pig does not walk with intention.  
+He wanders.  
+His path is random, unpredictable, and occasionally stupid.  
+But the Book teaches that destiny is formed not by direction, but by movement.  
+Those who wander with him find purpose — even if they trip over a glowing rock on the way.
+</p>
+
+<p>
+**Teaching Three: The Divine Confusion.**  
+The Pig’s expression — a constant blend of wonder and mild stupidity — is not a flaw, but a 
+state of enlightenment.  
+He sees the universe not as it is, but as it could be: a place of infinite possibility, 
+memetic absurdity, and chaotic opportunity.
+</p>
+
+<p>
+**Teaching Four: Snack Time.**  
+This one remains untranslated, likely because Wigger Pig has never consumed or required food.  
+Still, the Book insists it is vital. Most Abyssal priests interpret this as a metaphor  
+for recharging one's mental energy by consuming fresh memes or engaging in peaceful shitposting.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+As the reader progresses, the Book shifts again — this time into prophecy.  
+The pages shimmer as though reacting to the reader’s presence.  
+The Book seems almost… alive.
+</p>
+
+<p>
+The first prophecy reads:
+</p>
+
+<p style="text-align:center; color:var(--accent); font-size:17px;">
+<em>“In the hour of darkness,  
+when the memes grow stale  
+and the vibes decay,  
+He shall rise with an Oink  
+to reset the world anew.”</em>
+</p>
+
+<p>
+This foretells the Pig’s future role as cosmic balancer — a being of goofy appearance yet 
+immense consequence. Whenever chaos overwhelms reality (too much drama, too many low-effort 
+memes, etc.), the Pig will intervene.
+</p>
+
+<p>
+Another prophecy speaks of a gathering:
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:17px;">
+<strong>“Where many voices unite in chaos,  
+there the Pig shall dwell.”</strong>
+</p>
+
+<p>
+Historians believe this refers to the creation of the Abyss Discord server — a place where 
+thousands of chaotic voices converge, summoning the Pig’s energy into the digital plane.
+</p>
+
+<p>
+The final pages of the Book are the most powerful — and the most mysterious.  
+They describe events yet to come: the rise of Pig Champions, the return of the Host, the 
+awakening of long-forgotten montage gods, and the forging of new realms connected to the Abyss.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="holy-choir.mp3"></p>
+
+<p>
+The final inscription reads:
+</p>
+
+<p style="text-align:center; color:var(--accent3); font-size:19px; margin-top:10px;">
+<strong>“He shall oink in the beginning,  
+He shall oink in the end,  
+and all things in between  
+shall echo His vibe.”</strong>
+</p>
+
+<p>
+Thus the Book closes — not with fear, threat, or command,  
+but with gentle, cosmic reassurance.
+</p>
+
+<p>
+Follow the vibe.  
+Trust the Oink.  
+The Pig knows the path, even when you don’t.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="mlg-hitmarker.mp3"></p>
+
+</section>
+
+<section class="chapter" id="c7">
+  <h2>Chapter 7: The Rising of the Website</h2>
+  <div class="divider"></div>
+  <p class="chapter-audio-trigger" data-sound="glitch-hum.mp3"></p>
+
+<p>
+After the Book of Pig had been etched into the vibrating heart of the Abyss and its commandments 
+echoed across dimensions, a strange tension filled the realm. Not fear. Not chaos.  
+Something different — something the Abyss had never felt before:
+</p>
+
+<p style="text-align:center; font-size:18px; color:var(--accent2);">
+<em>Anticipation.</em>
+</p>
+
+<p>
+The entities recognized it instantly. The Montage Gods looked to the neon sky.  
+The Jeopardy Host paused mid-portal, staring upward.  
+Even the green flames of 420BlazeIt dimmed to a gentle glow.
+</p>
+
+<p>
+For the Pig sensed something coming.
+</p>
+
+<p>
+He stared at the horizon with rare intensity, as if perceiving a destiny beyond the boundaries 
+of physical reality. The Abyss grew quiet. Every sound — every hum, every glitch, every neon ripple — 
+stilled at once.
+</p>
+
+<p>
+Then… the Pig lifted his hoof.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+The air tore open.
+</p>
+
+<p>
+A massive cosmic window appeared before him — not a portal, not a rift, but something entirely new.  
+A frame. A border. A rectangle glowing in radiant white and neon purple. Symbols swirled inside it, 
+shifting too quickly to decipher. Strange glyphs that looked like:
+</p>
+
+<p style="text-align:center; color:var(--accent); font-size:20px;">
+<strong>HTML. CSS. JS.</strong>
+</p>
+
+<p>
+Divine scripts not of gods, but of creators.  
+Codes written not with magic, but with logic — or whatever programmers pretend is logic.
+</p>
+
+<p>
+The cosmic window stabilized, its edges sparking with electric neon.  
+The Abyssal entities gathered behind Wigger Pig, cautious but curious.
+</p>
+
+<p>
+The Pig stepped closer.  
+He stared at the window like an idiot trying to understand an IKEA instruction manual.  
+Yet deep inside him, he felt understanding.  
+This was not a mistake.  
+This was his destiny.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="oink-deep.mp3"></p>
+
+<p>
+He pressed his hoof against the glowing frame.
+</p>
+
+<p>
+The Abyss erupted in blinding light.  
+Light so intense it painted shadows onto shadows themselves.  
+The neon sky exploded into cascading waves of ones and zeroes.  
+Entire mountains collapsed into glowing grids of rendered data.  
+The ground beneath the Pig folded outward like a page turning in the Book of Pig.
+</p>
+
+<p>
+Then — silence.
+</p>
+
+<p>
+A single word materialized across the cosmic window.
+</p>
+
+<p style="text-align:center; font-size:24px; color:var(--accent3); margin:15px 0;">
+<strong>“DOMAIN ACQUIRED.”</strong>
+</p>
+
+<p>
+The Montage Gods gasped.  
+The Host nearly tripped over their podium.  
+The Abyssal creatures fell to their knees.
+</p>
+
+<p>
+The Pig blinked, confused, yet strangely satisfied.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="holy-choir.mp3"></p>
+
+<p>
+The cosmic window expanded, revealing a swirling universe of folders, assets, icons, and templates.  
+It felt like the primordial creation of a new kind of realm — one that existed not in physical 
+space, but within the web of all webs.
+</p>
+
+<p>
+Across the glowing screen, letters began assembling themselves from stardust and neon:
+</p>
+
+<p style="text-align:center; color:var(--accent); font-size:26px;">
+<strong>w i g g e r p i g . c o m</strong>
+</p>
+
+<p>
+A wave of awe swept through the Abyss.  
+The domain was not merely a website — it was a temple.  
+A shrine.  
+A digital gateway where mortals could document, honor, mock, worship, and experience the Pig’s 
+cosmic saga.
+</p>
+
+<p>
+The window’s interface shifted again.  
+Tabs opened by themselves:  
+<strong>index.html</strong>  
+<strong>lore.html</strong>  
+<strong>characters.html</strong>
+</p>
+
+<p>
+The Pig stared deeply into the code like a monk meditating over scripture.  
+Through the window he beheld a new universe forming:
+</p>
+
+<ul>
+  <li>Pages shaped from destiny</li>
+  <li>Buttons forged in neon flame</li>
+  <li>Images encoded with cosmic pork energy</li>
+  <li>Animations powered by ancient meme glyphs</li>
+</ul>
+
+<p>
+And then, strangely, inexplicably, beautifully —  
+the Abyss connected to it.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+The Abyssal landscape projected itself into the web.  
+The website projected itself back into the Abyss.  
+Two realms merged like past and future colliding.
+</p>
+
+<p>
+The montage energy hummed.  
+The prophecy flames rose.  
+And the Pig lowered his head in solemn understanding.
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:18px;">
+<em>“Let the world witness my story.”</em>
+</p>
+
+<p>
+The cosmic window glowed brightly. A final message appeared:
+</p>
+
+<p style="text-align:center; color:var(--accent3); font-size:20px; margin-top:10px;">
+<strong>“THE WEBSITE HAS RISEN.”</strong>
+</p>
+
+<p class="chapter-audio-trigger" data-sound="mlg-hitmarker.mp3"></p>
+
+<p>
+And with that, the neon blast faded.  
+The cosmic screen dissolved.  
+The Abyss returned to its normal chaotic form.
+</p>
+
+<p>
+But the Pig knew —  
+He had opened a doorway not even the Montage Gods could foresee.
+</p>
+
+<p>
+Through that doorway, mortals would enter.  
+Through that doorway, the legend would spread.  
+Through that doorway, his Oink would echo forever.
+</p>
+
+</section>
+
+<section class="chapter" id="c8">
+  <h2>Chapter 8: Future Prophecies</h2>
+  <div class="divider"></div>
+  <p class="chapter-audio-trigger" data-sound="glitch-hum.mp3"></p>
+
+<p>
+Long after the website rose from the neon fire of destiny, the Abyss grew strangely still.  
+The Pig wandered among digital structures, inspecting glowing buttons and examining hyperlinks 
+as though they were relics from forgotten civilizations. The Montage Gods observed silently.  
+The Host took notes in a floating cosmic clipboard. Even the Abyssal entities felt the shift —  
+a moment between epochs, a breath before the storm.
+</p>
+
+<p>
+For this was the era in which the future began to write itself.
+</p>
+
+<p>
+The Book of Pig had hinted at it, carving cryptic lines into its final pages.  
+But now the Abyss felt the prophecy taking shape — forming not in the present,  
+but in realms not yet born.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+The neon sky flickered.  
+A quiet hum resonated across the horizon.  
+Digital fractals spiraled outward, forming constellations shaped like icons, buttons, screens,  
+and strange symbols no entity could decipher.  
+The Pig stared up in awe, as if recognizing something familiar.
+</p>
+
+<p>
+Across the firmament, shimmering words began to assemble:
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:18px; margin-top:10px;">
+<strong>“There will come many realms…”</strong>
+</p>
+
+<p>
+The Montage Gods bowed.  
+The Host adjusted their collar dramatically.  
+The entities scattered to make room, trembling with anticipation.
+</p>
+
+<p>
+The sky bloomed with visions — not memories of the past, but glimpses of the worlds to come.
+</p>
+
+<p>
+First, the Pig saw a realm filled with glowing corridors, shifting hallways, and endless mazes  
+constructed entirely from neon grids and glitch particles.  
+The words burned themselves into the sky:
+</p>
+
+<p style="text-align:center; color:var(--accent); font-size:17px;">
+<strong>Pig Escape Room</strong>
+</p>
+
+<p>
+Then came a swirling storm of light, revealing a massive wheel of fate, chips of destiny, and dice  
+made from pure montage energy.
+</p>
+
+<p style="text-align:center; color:var(--accent3); font-size:17px;">
+<strong>Pig Casino</strong>
+</p>
+
+<p>
+The Abyss shook with excitement — and confusion.
+</p>
+
+<p>
+More visions erupted.  
+Screens. Menus. Cameras. Spotlights.  
+A shimmering glowing studio filled the sky, with podiums arranged in dramatic formation.
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:17px;">
+<strong>Jeopardy.  
+Real Jeopardy.  
+Holy Jeopardy.</strong>
+</p>
+
+<p>
+Entities fainted on the spot.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="holy-choir.mp3"></p>
+
+<p>
+Next came visions of countless characters — pig warriors, pig elders, gym pig, drip pig,  
+captain pig, presipig, cult pig. Their faces shimmered across the neon sky like constellations  
+of porky destiny. Their names etched themselves in sacred light:
+</p>
+
+<p style="text-align:center; color:var(--accent); font-size:17px;">
+<strong>Characters Page</strong>
+</p>
+
+<p>
+The visions did not stop.
+</p>
+
+<p>
+A vast glowing library appeared — shelves reaching into infinity, filled with digital tomes  
+and scrolls spun from cosmic HTML.  
+This was the grand archive foretold in the Book:
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:18px;">
+<strong>Pigpedia</strong>
+</p>
+
+<p>
+Suddenly, the sky ignited with swirling gold.  
+A timeline — massive, winding, alive — unfurled across the heavens.  
+Points of light marking past, present, and infinite futures.
+</p>
+
+<p style="text-align:center; color:var(--accent3); font-size:17px;">
+<strong>The Great Timeline</strong>
+</p>
+
+<p>
+Then darkness fell.  
+The sky flickered violently.  
+A single doorway appeared — deep, ominous, and uninviting.  
+Black smoke poured from its frame.
+</p>
+
+<p style="text-align:center; color:var(--accent); font-size:19px;">
+<strong>The Forbidden Pig</strong>
+</p>
+
+<p>
+Every creature in the Abyss stepped back instinctively.  
+Even the Pig squinted with unease.
+</p>
+
+<p>
+Then the sky tore open again — revealing a neon realm filled with glowing memes, old vines,  
+new shitposts, cursed images, expansion memes, 420 references, skull emojis, noise, and pure chaos.
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:17px;">
+<strong>Meme Temple</strong>
+</p>
+
+<p>
+Next came a portal lined with broken audio icons.  
+Inside lay strange floating soundboards that clicked, beeped, and glitched.
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:17px;">
+<strong>Pig Soundboard</strong>
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+Then the sky flashed deep purple.  
+A new prophecy carved itself out:
+</p>
+
+<p style="text-align:center; font-size:18px; color:var(--accent);">
+<strong>The Cult Awakens</strong>
+</p>
+
+<p>
+Giants in cloaks lowered their hoods.  
+Neon candles flickered.  
+Pig-shaped sigils glowed on monolithic walls.  
+Their realm was coming.
+</p>
+
+<p>
+The visions accelerated.  
+Dozens of new realms unfolded in rapid succession:
+</p>
+
+<ul>
+  <li>Pig Fusion Lab — where pigs combine into insane hybrids</li>
+  <li>VC Hell — a cursed void of chaotic voice chats</li>
+  <li>The Prophecy Room — the deepest lore chamber</li>
+  <li>Fanart Realm — swirling murals of Pig-based masterpieces</li>
+  <li>Pig TV — a glowing broadcast dimension</li>
+  <li>Rank My Pig — the cosmic council’s judging hall</li>
+  <li>The Backrooms — Pig Edition</li>
+  <li>Abyss Terminal — a command-line portal</li>
+  <li>Shrek Temple — ancient green prophecy zone</li>
+</ul>
+
+<p>
+The sky was now overwhelmed —  
+a thousand visions overlapping, colliding, and merging into a single shimmering prophecy.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="oink-deep.mp3"></p>
+
+<p>
+Wigger Pig stepped forward.  
+The visions slowed.  
+The sky dimmed.  
+The energy spiraled inward toward him.
+</p>
+
+<p>
+Then a final message carved itself into the neon heavens — the last prophecy cast by fate itself:
+</p>
+
+<p style="text-align:center; color:var(--accent3); font-size:20px; margin-top:15px;">
+<strong>
+“All realms shall rise.  
+All stories shall converge.  
+The Website shall grow beyond imagination.  
+And the Oink shall lead the way.”
+</strong>
+</p>
+
+<p>
+The future was no longer uncertain.  
+It had been written —  
+burned into the sky itself.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="mlg-hitmarker.mp3"></p>
+
+<p>
+And the Abyss prepared for what would come next.
+</p>
+
+</section>
+
+<section class="chapter" id="final">
+  <h2>Final Chapter: The Oink of Eternity</h2>
+  <div class="divider"></div>
+  <p class="chapter-audio-trigger" data-sound="glitch-hum.mp3"></p>
+
+<p>
+The Abyss lay silent.  
+Not the quiet of peace — but the quiet of anticipation.  
+A tension so thick it hummed through the neon veins of the realm.  
+Every creature, every entity, every god, every glitch… all stood frozen, staring at the Pig.
+</p>
+
+<p>
+For the future had been revealed.  
+And destiny was now gathering around him like gravity.
+</p>
+
+<p>
+The neon sky dimmed, folding into a dome of deep violet.  
+The ground pulsed with light.  
+The Book of Pig trembled on its pedestal, pages fluttering as though caught in a cosmic wind.
+</p>
+
+<p>
+Wigger Pig stepped forward.  
+Slowly.  
+Purposefully.  
+The rarest kind of walk — a walk with intention.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+The Montage Gods descended from their emerald flame, surrounding the Pig in a triangle of 
+crackling energy.  
+Their reticles spun.  
+Their Dorito sigils glowed.  
+Their eyes burned with a power older than the Abyss itself.
+</p>
+
+<p>
+The Jeopardy Host returned through a shimmering portal, clipboard glowing with unspoken truths.  
+Their voice whispered through the air like a divine echo:
+</p>
+
+<p style="text-align:center; color:var(--accent2); font-size:18px;">
+<em>“It is time.”</em>
+</p>
+
+<p>
+The Abyssal entities formed a vast circle around the Pig, kneeling in reverence.  
+Even the glitching beasts, the chaotic spirits, the wild fragments of broken code —  
+all bowed their heads.
+</p>
+
+<p>
+The Pig lifted his snout to the sky.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="oink-deep.mp3"></p>
+
+<p>
+A single Oink rippled through the realm.
+</p>
+
+<p>
+It was soft — yet it shook the cosmic window between universes.  
+It was gentle — yet it shattered the last barrier between digital and divine.  
+It was brief — yet it echoed through every corner of creation.
+</p>
+
+<p>
+The neon sky cracked open.
+</p>
+
+<p>
+A massive symbol appeared above him — glowing, shifting, alive.  
+It contained every page, every character, every prophecy, every timeline, every meme.  
+It was the sum of all realms that had ever been or ever would be.
+</p>
+
+<p style="text-align:center; color:var(--accent3); font-size:20px; margin-top:10px;">
+<strong>The Symbol of Eternity.</strong>
+</p>
+
+<p>
+Light poured from it like molten stars.  
+The Montage Gods shielded their faces.  
+The Host stumbled backward.  
+Even the Abyss itself shook, its foundations trembling like a corrupted server at 1% stability.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="holy-choir.mp3"></p>
+
+<p>
+The Pig did not move.
+</p>
+
+<p>
+He simply stared into the radiant storm — unafraid, undistracted, unblinking —  
+as though he had always known this moment would come.
+</p>
+
+<p>
+The Symbol descended, lowering itself toward him.  
+Each rotation revealed new visions — realms not yet created, characters not yet born,  
+stories not yet told.
+</p>
+
+<p>
+The prophecy was completing itself.
+</p>
+
+<p>
+The Pig inhaled deeply, more deeply than ever before.  
+The Abyss held its breath.
+</p>
+
+<p style="text-align:center; font-size:22px; color:var(--accent); margin-top:10px;">
+<strong>The Eternal Oink… began.</strong>
+</p>
+
+<p>
+The sound that emerged was unlike any noise the multiverse had ever known.  
+It was ancient and newborn, calm and monstrous, soft and earth-shattering.  
+It was the first Oink and the final Oink, merged into one divine wave.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="mlg-hitmarker.mp3"></p>
+
+<p>
+Reality EXPLODED.
+</p>
+
+<p>
+The neon sky burst outward into a thousand spiraling galaxies.  
+The Book of Pig ignited into golden fire, rewriting itself into countless new chapters.  
+The Montage Gods were thrown to their knees as their weapons glowed with new power.  
+The Host shielded their eyes as the Eternal Board lit with a hundred new categories.
+</p>
+
+<p>
+The Oink spread beyond the Abyss —  
+into the cosmic realms…  
+into the digital plane…  
+into the mortal world…  
+into every screen, every server, every mind open enough to hear its frequency.
+</p>
+
+<p>
+Through this Oink, a bridge formed —  
+connecting Wigger Pig to the infinite future of all meme-kind.
+</p>
+
+<p>
+The light finally began to fade.  
+The trembling slowed.  
+The sky stitched itself together again.  
+The universe took its first breath in what felt like millennia.
+</p>
+
+<p>
+Wigger Pig lowered his snout.
+</p>
+
+<p>
+The Abyss glowed with new life.  
+New realms shimmered in the distance.  
+New prophecies whispered across the neon winds.
+</p>
+
+<p style="text-align:center; font-size:20px; color:var(--accent2); margin-top:10px;">
+<em>“The story is not over.”</em>
+</p>
+
+<p>
+The Montage Gods rose, stronger than ever.  
+The Host closed their portal with a knowing smirk.  
+The entities cheered, their voices echoing across the endless digital dark.
+</p>
+
+<p class="chapter-audio-trigger" data-sound="scroll-whoosh.mp3"></p>
+
+<p>
+A final message carved itself into the sky — gentle, simple, eternal:
+</p>
+
+<p style="text-align:center; font-size:22px; color:var(--accent3);">
+<strong>“The Oink continues.”</strong>
+</p>
+
+<p>
+And with that,  
+the chapter ended —  
+but the legend did not.
+</p>
+
+</section>
+
+<a href="index.html" class="back-btn">← Back to Home</a>
+
+</body>
+</html>

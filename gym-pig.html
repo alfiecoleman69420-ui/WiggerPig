@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gym Pig | WiggerPig.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gym Pig – the iron-snorting, protein-powered hog of legend. JRPG stat sheet, cursed gym lore, and bro-science abilities in the WiggerPig universe." />
+  <style>
+    :root {
+      --bg: #050712;
+      --bg-soft: #0b0f1f;
+      --bg-alt: #0b0b18;
+      --bg-gradient: radial-gradient(circle at top, #181b3a 0, #070815 40%, #030309 100%);
+      --accent: #ff4fa3;   /* magenta */
+      --accent2: #4ef2c5;  /* neon mint */
+      --accent3: #ffc857;  /* gold */
+      --gym-orange: #ff9b3d; /* Gym Pig glow */
+      --text: #f6f5ff;
+      --muted: #8c94b8;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --card-bg: radial-gradient(circle at top left, rgba(255, 79, 163, 0.16), rgba(13, 16, 35, 0.96));
+      --card-bg-strong: radial-gradient(circle at top left, rgba(255, 155, 61, 0.22), rgba(6, 7, 22, 0.98));
+      --shadow-soft: 0 18px 35px rgba(0, 0, 0, 0.65);
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.28s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Background particles */
+    .particle {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255, 155, 61, 0.85), transparent 70%);
+      opacity: 0.25;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      z-index: -1;
+      animation: drift 18s linear infinite;
+    }
+
+    @keyframes drift {
+      0% {
+        transform: translate3d(0, 0, 0) scale(0.9);
+        opacity: 0.12;
+      }
+      50% {
+        transform: translate3d(40px, -40px, 0) scale(1.1);
+        opacity: 0.4;
+      }
+      100% {
+        transform: translate3d(0, 0, 0) scale(0.9);
+        opacity: 0.12;
+      }
+    }
+
+    /* Layout */
+    .page-shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to right, rgba(5, 6, 20, 0.98), rgba(8, 8, 24, 0.96));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: conic-gradient(from 160deg, var(--accent), var(--gym-orange), var(--accent2), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 18px rgba(255, 155, 61, 0.65);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::after {
+      content: "🏋️‍♂️";
+      font-size: 18px;
+      filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.7));
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-title {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: 12px;
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 6px 8px;
+      color: var(--muted);
+      transition: color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -2px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      transform: translateX(-50%);
+      transition: width var(--transition-fast);
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .nav-link:hover::after {
+      width: 80%;
+    }
+
+    .nav-link.active {
+      color: var(--text);
+    }
+
+    .nav-link.active::after {
+      width: 80%;
+    }
+
+    .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-cta {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(78, 242, 197, 0.4);
+      background: radial-gradient(circle at top left, rgba(78, 242, 197, 0.2), rgba(10, 18, 34, 0.9));
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform 0.16s ease-out, box-shadow 0.16s ease-out, border-color 0.16s ease-out;
+      box-shadow: 0 0 18px rgba(78, 242, 197, 0.25);
+    }
+
+    .nav-cta span.icon {
+      font-size: 14px;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.85);
+      border-color: rgba(78, 242, 197, 0.8);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .shell-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 26px 20px 40px;
+    }
+
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 155, 61, 0.3);
+      background: radial-gradient(circle at top left, rgba(255, 155, 61, 0.28), transparent);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent3);
+    }
+
+    .tag-pill .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--gym-orange), transparent);
+      box-shadow: 0 0 12px rgba(255, 155, 61, 0.9);
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .hero-text {
+      position: relative;
+      padding-right: 10px;
+    }
+
+    .hero-title {
+      font-size: clamp(30px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 10px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-title-badge {
+      font-size: 13px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 79, 163, 0.7);
+      background: radial-gradient(circle at top left, rgba(255, 79, 163, 0.3), transparent);
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 420px;
+    }
+
+    .hero-subtitle span.highlight {
+      color: var(--gym-orange);
+      font-weight: 600;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .hero-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(9, 10, 26, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .hero-meta-item .label {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 10px;
+      color: rgba(177, 182, 219, 0.9);
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      position: relative;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 9px 16px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at top left, rgba(255, 155, 61, 0.4), #ff4fa3);
+      color: #05030a;
+      box-shadow: 0 15px 28px rgba(0, 0, 0, 0.85);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.9);
+    }
+
+    .btn-ghost {
+      background: rgba(10, 11, 32, 0.9);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(15, 17, 42, 0.98);
+    }
+
+    .hero-art {
+      position: relative;
+      justify-self: center;
+    }
+
+    .hero-orbit {
+      position: absolute;
+      inset: -18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 155, 61, 0.35);
+      background: radial-gradient(circle at top, rgba(255, 155, 61, 0.18), transparent);
+      filter: blur(0.5px);
+      opacity: 0.9;
+    }
+
+    .hero-image-wrap {
+      position: relative;
+      width: min(320px, 80vw);
+      aspect-ratio: 4 / 5;
+      border-radius: 30px;
+      overflow: hidden;
+      background: radial-gradient(circle at top left, rgba(255, 155, 61, 0.42), rgba(5, 5, 18, 0.98));
+      box-shadow: var(--shadow-soft);
+      animation: float 7s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate3d(0, 0, 0) rotate(-1deg);
+      }
+      50% {
+        transform: translate3d(0, -8px, 0) rotate(1deg);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) rotate(-1deg);
+      }
+    }
+
+    .hero-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.2) contrast(1.05);
+    }
+
+    .hero-glow {
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      width: 70%;
+      height: 36px;
+      background: radial-gradient(circle, rgba(255, 155, 61, 0.7), transparent 70%);
+      transform: translateX(-50%);
+      opacity: 0.7;
+      filter: blur(4px);
+    }
+
+    .hero-floating-icon {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.16), transparent);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(4px);
+      animation: bob 6s ease-in-out infinite;
+    }
+
+    .hero-floating-icon:nth-child(1) {
+      top: -10px;
+      right: 12%;
+      animation-delay: 0.2s;
+    }
+
+    .hero-floating-icon:nth-child(2) {
+      bottom: 12%;
+      left: -6px;
+      animation-delay: 0.9s;
+    }
+
+    .hero-floating-icon:nth-child(3) {
+      top: 24%;
+      left: calc(100% - 22px);
+      animation-delay: 1.4s;
+    }
+
+    @keyframes bob {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      50% {
+        transform: translate3d(0, -7px, 0);
+      }
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    /* Sections */
+    .section {
+      margin: 30px 0;
+      padding: 20px 18px 22px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top left, rgba(255, 155, 61, 0.16), rgba(5, 6, 22, 0.96));
+      box-shadow: var(--shadow-soft);
+      opacity: 0;
+      transform: translateY(16px) scale(0.99);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1.02);
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      position: relative;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding-left: 32px;
+    }
+
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--gym-orange), var(--accent2));
+      box-shadow: 0 0 12px rgba(255, 155, 61, 0.7);
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--muted);
+      flex: 1;
+      min-width: 220px;
+    }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 6px;
+    }
+
+    .stat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .stat-row {
+      background: rgba(5, 6, 20, 0.9);
+      border-radius: 14px;
+      padding: 9px 11px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .stat-row-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .stat-label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(199, 205, 241, 0.95);
+    }
+
+    .stat-value {
+      font-weight: 600;
+      color: var(--accent3);
+    }
+
+    .stat-bar-outer {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(13, 16, 40, 0.95);
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255, 155, 61, 0.12);
+    }
+
+    .stat-bar-inner {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #ffdf9a, var(--gym-orange), var(--accent));
+      box-shadow:
+        0 0 12px rgba(255, 155, 61, 0.9),
+        0 0 25px rgba(255, 79, 163, 0.65);
+      transition: width 1.1s cubic-bezier(0.16, 0.89, 0.4, 1);
+    }
+
+    .stat-tagline {
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .stat-side-card {
+      background: radial-gradient(circle at top left, rgba(255, 79, 163, 0.26), rgba(5, 5, 20, 0.96));
+      border-radius: 18px;
+      padding: 12px 12px 13px;
+      border: 1px solid rgba(255, 79, 163, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-side-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 155, 61, 0.26), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(78, 242, 197, 0.2), transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .stat-side-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 8px;
+    }
+
+    .stat-side-body {
+      font-size: 12px;
+      color: var(--text);
+      position: relative;
+    }
+
+    .stat-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-top: 6px;
+      color: var(--accent2);
+    }
+
+    /* Lore */
+    .lore-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 18px;
+      font-size: 14px;
+    }
+
+    .lore-text p {
+      margin-bottom: 10px;
+      color: var(--muted);
+    }
+
+    .lore-text p strong {
+      color: var(--accent3);
+    }
+
+    .lore-quotes {
+      background: rgba(5, 6, 22, 0.95);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 12px 12px 13px;
+      font-size: 13px;
+    }
+
+    .lore-quote {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .lore-quote::before {
+      content: "❝";
+      position: absolute;
+      left: 0;
+      top: -2px;
+      color: var(--gym-orange);
+      font-size: 16px;
+    }
+
+    .lore-quote span {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Abilities */
+    .ability-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .ability-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 155, 61, 0.45);
+      background: var(--card-bg-strong);
+      padding: 12px 11px 11px;
+      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+      transform: translateY(0) scale(1);
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med), background var(--transition-med);
+      cursor: default;
+    }
+
+    .ability-card::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      opacity: 0.65;
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 155, 61, 0.5), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(255, 79, 163, 0.55), transparent 55%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .ability-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 24px 40px rgba(0, 0, 0, 0.95);
+      background: radial-gradient(circle at top left, rgba(255, 155, 61, 0.38), rgba(4, 5, 16, 0.98));
+    }
+
+    .ability-chip-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ability-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(4, 4, 14, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 11px;
+    }
+
+    .ability-chip span.icon {
+      font-size: 14px;
+    }
+
+    .ability-chip span.label {
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .ability-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(255, 223, 154, 0.9);
+    }
+
+    .ability-body {
+      position: relative;
+      z-index: 1;
+      font-size: 12px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .ability-meta {
+      position: relative;
+      z-index: 1;
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* Achievements */
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .achievement-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      font-size: 13px;
+    }
+
+    .achievement-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--muted);
+      background: rgba(5, 6, 20, 0.9);
+      border-radius: 12px;
+      padding: 7px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .achievement-icon {
+      font-size: 16px;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .achievement-label {
+      color: var(--text);
+    }
+
+    .achievement-note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .achievement-card {
+      border-radius: 16px;
+      padding: 11px 11px 12px;
+      background: radial-gradient(circle at top left, rgba(78, 242, 197, 0.22), rgba(4, 6, 15, 0.98));
+      border: 1px solid rgba(78, 242, 197, 0.55);
+      font-size: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .achievement-card h4 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 6px;
+    }
+
+    .achievement-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .achievement-pill {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.23);
+      background: rgba(3, 4, 12, 0.96);
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 20px 12px 10px;
+      background: radial-gradient(circle at top, rgba(255, 79, 163, 0.22), rgba(4, 5, 15, 0.97));
+      border: 1px solid rgba(255, 79, 163, 0.65);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.95);
+      margin-top: 36px;
+    }
+
+    .cta-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .cta-sub {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 14px;
+    }
+
+    .cta-sub span {
+      color: var(--accent3);
+      font-weight: 600;
+    }
+
+    .cta-note {
+      font-size: 11px;
+      color: rgba(183, 189, 230, 0.85);
+      margin-top: 6px;
+    }
+
+    footer {
+      padding: 16px 20px 24px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      background: linear-gradient(to bottom, rgba(2, 2, 10, 0.98), rgba(1, 1, 5, 1));
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .footer-pill {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(4, 5, 18, 0.96);
+      margin-bottom: 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .nav-inner {
+        flex-wrap: wrap;
+      }
+
+      .nav-center {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+      }
+
+      .nav-right {
+        margin-left: auto;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+      }
+
+      .hero-text {
+        order: 2;
+      }
+
+      .hero-art {
+        order: 1;
+      }
+
+      .stats-grid,
+      .lore-body,
+      .achievement-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-inner {
+        padding-inline: 16px;
+      }
+
+      .shell-inner {
+        padding-inline: 16px;
+      }
+
+      .section {
+        padding-inline: 14px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-image-wrap {
+        width: min(260px, 76vw);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="nav-inner">
+        <div class="nav-left">
+          <a href="index.html" class="logo-mark" aria-label="WiggerPig Home"></a>
+          <div class="logo-text">
+            <div class="logo-title">WiggerPig</div>
+            <div class="logo-sub">Gym Pig Protocols Online</div>
+          </div>
+        </div>
+        <nav class="nav-center" aria-label="Main navigation">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="lore.html" class="nav-link">Lore</a>
+          <a href="games.html" class="nav-link">Events</a>
+          <a href="memetemple.html" class="nav-link">Memes</a>
+          <a href="discord.html" class="nav-link active">Discord</a>
+          <a href="toys.html" class="nav-link">Chaos</a>
+        </nav>
+        <div class="nav-right">
+          <a href="discord.html" class="nav-cta">
+            <span class="icon">🌀</span>
+            <span>Join the Abyss</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="shell-inner">
+        <!-- Hero -->
+        <section class="hero">
+          <div class="hero-text">
+            <div class="tag-pill">
+              <span class="dot"></span>
+              <span>Character dossier</span>
+            </div>
+            <h1 class="hero-title">
+              Gym Pig
+              <span class="hero-title-badge">Final Boss of Planet Fitness</span>
+            </h1>
+            <p class="hero-subtitle">
+              <span class="highlight">The Iron-Snorting, Protein-Powered Hog of Legend.</span>
+              Lifts in every timeline simultaneously. Pre-workout blood type. Gym mirrors fear him.
+            </p>
+
+            <div class="hero-meta">
+              <div class="hero-meta-item">
+                <span>💪</span>
+                <div>
+                  <div class="label">Role</div>
+                  <div>Strength DPS / Motivational Menace</div>
+                </div>
+              </div>
+              <div class="hero-meta-item">
+                <span>⚡</span>
+                <div>
+                  <div class="label">Threat Level</div>
+                  <div>“Bro, do you even render?”</div>
+                </div>
+              </div>
+              <div class="hero-meta-item">
+                <span>🐷</span>
+                <div>
+                  <div class="label">Affiliation</div>
+                  <div>AbyssVC • WiggerPig Gym Cult</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-buttons">
+              <button class="btn btn-primary" data-scroll-target="#stats">
+                <span>View Stat Sheet</span>
+                <span>📊</span>
+              </button>
+              <a href="discord.html" class="btn btn-ghost">
+                <span>Queue a Gym VC</span>
+                <span>🎧</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-art">
+            <div class="hero-orbit"></div>
+            <div class="hero-image-wrap">
+              <!-- Main Gym Pig art -->
+              <img src="gym-pig.png" alt="Gym Pig flexing aggressively in cursed gym lighting" />
+              <div class="hero-glow"></div>
+            </div>
+            <div class="hero-floating-icon">🏋️‍♂️</div>
+            <div class="hero-floating-icon">🥤</div>
+            <div class="hero-floating-icon">💥</div>
+          </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="section" id="stats">
+          <div class="section-header">
+            <h2 class="section-title">Stat Sheet</h2>
+            <p class="section-sub">
+              JRPG stats, gym-bro science, and numbers that definitely haven't been approved by any medical board.
+            </p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-list">
+              <div class="stat-row" data-stat>
+                <div class="stat-row-header">
+                  <span class="stat-label">Strength</span>
+                  <span class="stat-value" data-stat-value="999">0</span>
+                </div>
+                <div class="stat-bar-outer">
+                  <div class="stat-bar-inner" data-stat-bar data-value="100"></div>
+                </div>
+                <div class="stat-tagline">“Benches small cars as a warm-up set.”</div>
+              </div>
+
+              <div class="stat-row" data-stat>
+                <div class="stat-row-header">
+                  <span class="stat-label">Creatine Saturation</span>
+                  <span class="stat-value" data-stat-value="110">0%</span>
+                </div>
+                <div class="stat-bar-outer">
+                  <div class="stat-bar-inner" data-stat-bar data-value="98"></div>
+                </div>
+                <div class="stat-tagline">Cellular structure legally classified as pre-workout powder.</div>
+              </div>
+
+              <div class="stat-row" data-stat>
+                <div class="stat-row-header">
+                  <span class="stat-label">Flex Radius</span>
+                  <span class="stat-value" data-stat-value="37">0m</span>
+                </div>
+                <div class="stat-bar-outer">
+                  <div class="stat-bar-inner" data-stat-bar data-value="82"></div>
+                </div>
+                <div class="stat-tagline">Area of effect where bystanders automatically say “yo chill.”</div>
+              </div>
+
+              <div class="stat-row" data-stat>
+                <div class="stat-row-header">
+                  <span class="stat-label">Bench PR</span>
+                  <span class="stat-value" data-stat-value="405">0kg</span>
+                </div>
+                <div class="stat-bar-outer">
+                  <div class="stat-bar-inner" data-stat-bar data-value="94"></div>
+                </div>
+                <div class="stat-tagline">Spotted once benching a mod who said “one more rep.”</div>
+              </div>
+
+              <div class="stat-row" data-stat>
+                <div class="stat-row-header">
+                  <span class="stat-label">Rizz Level</span>
+                  <span class="stat-value" data-stat-value="69">0</span>
+                </div>
+                <div class="stat-bar-outer">
+                  <div class="stat-bar-inner" data-stat-bar data-value="72"></div>
+                </div>
+                <div class="stat-tagline">Can only flirt using gym cues and protein coupon codes.</div>
+              </div>
+
+              <div class="stat-row" data-stat>
+                <div class="stat-row-header">
+                  <span class="stat-label">Pig Energy Output</span>
+                  <span class="stat-value" data-stat-value="300">0%</span>
+                </div>
+                <div class="stat-bar-outer">
+                  <div class="stat-bar-inner" data-stat-bar data-value="100"></div>
+                </div>
+                <div class="stat-tagline">If he sneezes mid-set, three Wi-Fi routers disconnect.</div>
+              </div>
+            </div>
+
+            <aside class="stat-side-card">
+              <div class="stat-side-title">Gym Pig Protocol</div>
+              <div class="stat-side-body">
+                In the AbyssVC Discord, Gym Pig appears whenever someone types
+                <strong>“one more set”</strong> at 3am. Legend says if you dry-scoop
+                pre-workout while staring at his image, your <em>ping</em> goes up but your
+                <em>PRs</em> do too.
+                <div class="stat-tag">
+                  <span>⚠</span>
+                  <span>Side Effects: Infinite DOMS</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- Lore -->
+        <section class="section">
+          <div class="section-header">
+            <h2 class="section-title">Origin & Lore</h2>
+            <p class="section-sub">
+              From couch potato to creatine cryptid. This is how a normal pig became the final boss of the weight room.
+            </p>
+          </div>
+
+          <div class="lore-body">
+            <div class="lore-text">
+              <p>
+                <strong>The Dawn of the Pump:</strong> Once a background NPC in the
+                <em>Pig Backrooms</em>, Gym Pig touched a cursed dumbbell labeled “<span>Do
+                Not Curl in the Squat Rack</span>.” The moment he ignored it, reality
+                rewrote his stats.
+              </p>
+              <p>
+                <strong>Three Gyms, Three Bans:</strong> One got mad when he blasted MLG airhorn
+                after every rep. One couldn't handle the chalk cloud. The third banned him for
+                “excessive oinking during PR attempts.” He framed the ban letters as wall art.
+              </p>
+              <p>
+                <strong>VC Myths:</strong> In AbyssVC voice chat, users swear they hear plates
+                clanking behind him at all times—even when he’s “not at the gym bro, chill.”
+                Some say his webcam is just the same looping flex GIF.
+              </p>
+              <p>
+                <strong>Gym Commandments:</strong> He speaks in pre-workout riddles: 
+                “If bench is life, what is leg day?” (No one answers. No one wants to know.)
+              </p>
+            </div>
+
+            <aside class="lore-quotes">
+              <div class="lore-quote">
+                I lift, therefore I OINK.
+                <span>— Gym Pig, 5 minutes before another unnecessary set</span>
+              </div>
+              <div class="lore-quote">
+                If your arms still move, you’re not done.
+                <span>— Overheard in VC Hell</span>
+              </div>
+              <div class="lore-quote">
+                Pre-workout is just emotional damage in powder form.
+                <span>— Moderator testimony during Mod Court</span>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- Abilities -->
+        <section class="section">
+          <div class="section-header">
+            <h2 class="section-title">Abilities Loadout</h2>
+            <p class="section-sub">
+              Every boss needs a move set. Gym Pig’s kit is balanced in the same way a 4-scoop pre-workout is “balanced.”
+            </p>
+          </div>
+
+          <div class="ability-grid">
+            <article class="ability-card">
+              <div class="ability-chip-row">
+                <div class="ability-chip">
+                  <span class="icon">🧱</span>
+                  <span class="label">Oink Press</span>
+                </div>
+                <span class="ability-tag">Core • Single Target</span>
+              </div>
+              <p class="ability-body">
+                Slams the bar with such force that nearby mics peak instantly. Deals massive damage to
+                eardrums and innocent noise gates.
+              </p>
+              <div class="ability-meta">
+                <span>Power: 9.5 / 10</span>
+                <span>Cooldown: 2 rest days (ignored)</span>
+              </div>
+            </article>
+
+            <article class="ability-card">
+              <div class="ability-chip-row">
+                <div class="ability-chip">
+                  <span class="icon">📢</span>
+                  <span class="label">Pre-Workout Screech</span>
+                </div>
+                <span class="ability-tag">Debuff • AoE</span>
+              </div>
+              <p class="ability-body">
+                Emits a war cry that reduces enemy IQ and raises gym hype by 300%. All party members gain
+                +20% strength, -50% decision-making.
+              </p>
+              <div class="ability-meta">
+                <span>Power: 8 / 10</span>
+                <span>Side Effect: VC braincells go missing</span>
+              </div>
+            </article>
+
+            <article class="ability-card">
+              <div class="ability-chip-row">
+                <div class="ability-chip">
+                  <span class="icon">🌪️</span>
+                  <span class="label">Protein Storm</span>
+                </div>
+                <span class="ability-tag">Buff • Channel</span>
+              </div>
+              <p class="ability-body">
+                Summons a swirling vortex of protein shakers and shaker ball rattles. Allies inside gain
+                continuous HP regen and +creatine stacks.
+              </p>
+              <div class="ability-meta">
+                <span>Power: 10 / 10</span>
+                <span>Cast Time: 1 full “bro, listen” speech</span>
+              </div>
+            </article>
+
+            <article class="ability-card">
+              <div class="ability-chip-row">
+                <div class="ability-chip">
+                  <span class="icon">🪞</span>
+                  <span class="label">Mirror Flex</span>
+                </div>
+                <span class="ability-tag">Control • AoE Stun</span>
+              </div>
+              <p class="ability-body">
+                Flexes in front of any reflective surface. All nearby players must stop and stare,
+                losing their turn as they question their own routine.
+              </p>
+              <div class="ability-meta">
+                <span>Power: 7 / 10</span>
+                <span>Duration: Until someone says “yo we actually lifting?”</span>
+              </div>
+            </article>
+
+            <article class="ability-card">
+              <div class="ability-chip-row">
+                <div class="ability-chip">
+                  <span class="icon">💥</span>
+                  <span class="label">Bench Slam</span>
+                </div>
+                <span class="ability-tag">Ultimate • Server Risk</span>
+              </div>
+              <p class="ability-body">
+                Attempts a PR so disrespectful that the Discord audio codec collapses. Chance to crash a
+                random VC and ping three mods simultaneously.
+              </p>
+              <div class="ability-meta">
+                <span>Power: 11 / 10</span>
+                <span>Server Crash Chance: 12%</span>
+              </div>
+            </article>
+
+            <article class="ability-card">
+              <div class="ability-chip-row">
+                <div class="ability-chip">
+                  <span class="icon">🧠</span>
+                  <span class="label">Bro Science Gospel</span>
+                </div>
+                <span class="ability-tag">Passive • Aura</span>
+              </div>
+              <p class="ability-body">
+                Constantly emits questionable fitness advice that somehow works. Party gains +confidence,
+                -ability to cite sources.
+              </p>
+              <div class="ability-meta">
+                <span>Power: 6 / 10</span>
+                <span>Stacking: Infinite “trust me bro” stacks</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Achievements -->
+        <section class="section">
+          <div class="section-header">
+            <h2 class="section-title">Achievement Wall</h2>
+            <p class="section-sub">
+              The gym doesn't give out badges, so he just started inventing his own.
+              These are the ones witnesses have confirmed.
+            </p>
+          </div>
+
+          <div class="achievement-grid">
+            <ul class="achievement-list">
+              <li>
+                <span class="achievement-icon">🔥</span>
+                <div>
+                  <div class="achievement-label">“Benched a Moderator.”</div>
+                  <div class="achievement-note">
+                    Moderator volunteered as a “spotter.” Regrets everything. Now permanently tagged as “plate”.
+                  </div>
+                </div>
+              </li>
+              <li>
+                <span class="achievement-icon">💪</span>
+                <div>
+                  <div class="achievement-label">“Deadlifted a Chair While in VC.”</div>
+                  <div class="achievement-note">
+                    Webcam shows only ceiling fan. All anyone hears is heavy breathing and clanking plates.
+                  </div>
+                </div>
+              </li>
+              <li>
+                <span class="achievement-icon">🐷</span>
+                <div>
+                  <div class="achievement-label">“Survived 4 Scoops of Dry Pre-Workout.”</div>
+                  <div class="achievement-note">
+                    Heart rate: unknown. Mic gain: maxed. VC bitrate: did not survive.
+                  </div>
+                </div>
+              </li>
+              <li>
+                <span class="achievement-icon">⚡</span>
+                <div>
+                  <div class="achievement-label">“Turned Leg Day into a Community Event.”</div>
+                  <div class="achievement-note">
+                    Five people opened fitness apps. One actually went outside. Historic moment.
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <aside class="achievement-card">
+              <h4>Legendary Titles Unlocked</h4>
+              <p>
+                Known across the WiggerPig multiverse as:
+              </p>
+              <div class="achievement-pills">
+                <span class="achievement-pill">Plate Whisperer</span>
+                <span class="achievement-pill">PR Prophet</span>
+                <span class="achievement-pill">Cursed Gym Advisor</span>
+                <span class="achievement-pill">AbyssVC Spotter</span>
+                <span class="achievement-pill">Oinkform Lifter</span>
+              </div>
+              <p style="margin-top: 8px;">
+                Rumor says a secret title unlocks if you queue a Femboy Jeopardy match
+                <em>during</em> his workout stream.
+              </p>
+            </aside>
+          </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+          <div class="tag-pill" style="margin-bottom:10px;">
+            <span class="dot"></span>
+            <span>Summon the hog</span>
+          </div>
+          <h3 class="cta-title">Train with Gym Pig</h3>
+          <p class="cta-sub">
+            Join the <span>AbyssVC Discord</span> to witness live PR attempts, gym VC chaos, and
+            game shows where braincells go to die. You probably shouldn’t join (but will anyway).
+          </p>
+          <a href="discord.html" class="btn btn-primary">
+            <span>Enter the Abyss Gym</span>
+            <span>🌀</span>
+          </a>
+          <div class="cta-note">
+            Warning: Side effects may include DOMS, MLG flashbacks, and spontaneous flexing on camera.
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-pill">
+          <span>🐷💪</span>
+          <span>GYM PIG INSTANCE • WIGGERPIG EXPANDED UNIVERSE</span>
+        </div>
+        <div>
+          For full lore, consult <a href="characters.html">characters.html</a> and
+          <a href="lore.html">lore.html</a>. For maximum suffering, open
+          <a href="vc-hell.html">vc-hell.html</a> during leg day.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Helper: create background particles
+    (function spawnParticles() {
+      const particleCount = 22;
+      for (let i = 0; i < particleCount; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        resetParticle(p, true);
+        document.body.appendChild(p);
+      }
+
+      function resetParticle(el, initial) {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const x = Math.random() * vw;
+        const y = Math.random() * vh;
+        const size = 3 + Math.random() * 6;
+        const duration = 14 + Math.random() * 10;
+
+        el.style.width = size + "px";
+        el.style.height = size + "px";
+        el.style.left = x + "px";
+        el.style.top = y + "px";
+        el.style.animationDuration = duration + "s";
+        if (!initial) {
+          el.style.animation = "none";
+          void el.offsetWidth; // reflow
+          el.style.animation = "drift " + duration + "s linear infinite";
+        }
+      }
+
+      window.addEventListener("resize", () => {
+        const particles = document.querySelectorAll(".particle");
+        particles.forEach((p) => resetParticle(p, false));
+      });
+    })();
+
+    // Scroll reveal + mini "pump" animation
+    (function sectionReveal() {
+      const sections = document.querySelectorAll(".section");
+      if (!("IntersectionObserver" in window)) {
+        sections.forEach((sec) => sec.classList.add("visible"));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.2
+        }
+      );
+
+      sections.forEach((sec) => observer.observe(sec));
+    })();
+
+    // Stat bars + counters animate when stats section enters view
+    (function statsAnimation() {
+      const statSection = document.querySelector("#stats");
+      if (!statSection) return;
+
+      const statRows = statSection.querySelectorAll("[data-stat]");
+      let hasAnimated = false;
+
+      function animateStats() {
+        if (hasAnimated) return;
+        hasAnimated = true;
+
+        statRows.forEach((row) => {
+          const bar = row.querySelector("[data-stat-bar]");
+          const barValue = Number(bar.getAttribute("data-value") || "0");
+          const valueEl = row.querySelector("[data-stat-value]");
+          const displayTarget = Number(valueEl.getAttribute("data-stat-value") || "0");
+          const textTemplate = valueEl.textContent.includes("%")
+            ? "%d%"
+            : valueEl.textContent.includes("kg")
+            ? "%dkg"
+            : valueEl.textContent.includes("m")
+            ? "%dm"
+            : "%d";
+
+          // animate bar
+          requestAnimationFrame(() => {
+            bar.style.width = barValue + "%";
+          });
+
+          // animate number
+          const duration = 1100;
+          const start = performance.now();
+
+          function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(displayTarget * eased);
+            valueEl.textContent = textTemplate.replace("%d", current);
+            if (progress < 1) {
+              requestAnimationFrame(tick);
+            }
+          }
+          requestAnimationFrame(tick);
+        });
+      }
+
+      if (!("IntersectionObserver" in window)) {
+        animateStats();
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateStats();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.35 }
+      );
+
+      observer.observe(statSection);
+    })();
+
+    // Smooth scroll to stats from hero button
+    (function bindScrollButton() {
+      const btn = document.querySelector('[data-scroll-target="#stats"]');
+      const target = document.querySelector("#stats");
+      if (!btn || !target) return;
+
+      btn.addEventListener("click", () => {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    })();
+  </script>
+</body>
+</html>

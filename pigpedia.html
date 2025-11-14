@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pigpedia – The Complete Wiggerverse Archive</title>
+
+<style>
+:root{
+  --bg:#05050b;
+  --bg2:#0b0b16;
+  --accent:#ff42ff;
+  --accent2:#00f7ff;
+  --accent3:#ffd657;
+  --text:#f4f4ff;
+  --muted:#9a9ac0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:radial-gradient(circle at top,#181833 0%,#05050b 50%,#020206 100%);
+  color:var(--text);
+  overflow-x:hidden;
+}
+a{text-decoration:none;color:var(--accent2)}
+/* background glitch lines */
+.bg-glitch{
+  position:fixed;inset:0;pointer-events:none;opacity:.07;
+  background-image:
+    linear-gradient(to bottom,rgba(255,255,255,.08) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(255,255,255,.04) 1px,transparent 3px);
+  background-size:100% 4px,100% 9px;
+  z-index:-2;
+}
+/* particles */
+#particles-layer{
+  position:fixed;inset:0;pointer-events:none;z-index:-1;
+}
+.particle{
+  position:absolute;border-radius:50%;background:rgba(0,247,255,.5);
+  width:4px;height:4px;filter:blur(1px);
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float{
+  0%{transform:translateY(0);opacity:.3}
+  50%{transform:translateY(-40px);opacity:1}
+  100%{transform:translateY(0);opacity:.3}
+}
+/* top nav */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 28px;
+  background:linear-gradient(to right,rgba(5,5,20,.9),rgba(5,5,25,.6));
+  backdrop-filter:blur(10px);
+  z-index:50;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.top-bar-title{
+  font-size:1rem;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--accent2);
+  text-shadow:0 0 10px rgba(0,247,255,.7);
+}
+.top-bar-links a{
+  margin-left:14px;font-size:.9rem;color:var(--muted);
+  padding:5px 10px;border-radius:999px;
+  border:1px solid transparent;
+  transition:.2s;
+}
+.top-bar-links a:hover{
+  color:var(--text);
+  border-color:rgba(255,255,255,.18);
+  box-shadow:0 0 10px rgba(0,247,255,.4);
+}
+/* hero */
+#pigpedia-root{padding-top:70px;padding-bottom:60px;}
+.hero{
+  text-align:center;
+  padding:60px 16px 40px;
+}
+.hero-inner{
+  max-width:800px;margin:0 auto;
+  background:radial-gradient(circle at top,rgba(255,255,255,.08),rgba(0,0,0,.4));
+  border-radius:22px;
+  padding:30px 20px 28px;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 20px 50px rgba(0,0,0,.7);
+  position:relative;
+  overflow:hidden;
+}
+.hero h1{
+  font-size:2.4rem;
+  background:linear-gradient(120deg,var(--accent2),var(--accent));
+  -webkit-background-clip:text;color:transparent;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+  animation:breath 4s ease-in-out infinite;
+}
+.hero h3{
+  font-size:.9rem;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  color:var(--accent3);
+  opacity:.9;
+}
+.hero-sub{
+  margin-top:16px;font-size:.95rem;color:var(--muted);
+}
+.hero-runes,.hero-glyphs{
+  position:absolute;inset:0;pointer-events:none;
+}
+.rune{
+  position:absolute;font-size:1.1rem;opacity:.4;
+  color:var(--accent2);
+  animation:runefloat 7s ease-in-out infinite;
+}
+.glyph{
+  position:absolute;font-size:1.3rem;opacity:.25;
+  color:var(--accent);
+  animation:glyphspin 9s linear infinite;
+}
+@keyframes breath{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.02)}
+}
+@keyframes runefloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+@keyframes glyphspin{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+/* search + random */
+#search-section{
+  padding:20px 16px 10px;
+}
+.search-inner{
+  max-width:780px;margin:0 auto;
+  display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
+}
+#search-bar{
+  flex:1 1 260px;
+  background:rgba(10,10,30,.85);
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  padding:10px 14px;
+  color:var(--text);
+  font-size:.95rem;
+  outline:none;
+  box-shadow:0 0 0 0 rgba(0,247,255,.4);
+  transition:.2s;
+}
+#search-bar::placeholder{color:rgba(185,185,220,.6);}
+#search-bar:focus{
+  border-color:var(--accent2);
+  box-shadow:0 0 12px rgba(0,247,255,.6);
+}
+#random-entry{
+  flex:0 0 auto;
+  border-radius:999px;
+  padding:9px 16px;
+  border:1px solid rgba(255,255,255,.22);
+  background:radial-gradient(circle at top,var(--accent),var(--accent2));
+  color:#05050b;
+  font-size:.9rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-weight:600;
+  box-shadow:0 12px 25px rgba(0,0,0,.7);
+  transition:.18s;
+}
+#random-entry:hover{transform:translateY(-1px);filter:brightness(1.06);}
+/* filters */
+#filters{
+  padding:10px 16px 0;
+  position:sticky;top:60px;z-index:20;
+}
+.filters-inner{
+  max-width:900px;margin:0 auto;
+  display:flex;flex-wrap:wrap;gap:8px;
+  justify-content:center;
+  padding:10px 12px;
+  border-radius:16px;
+  background:linear-gradient(to right,rgba(5,5,20,.95),rgba(10,10,35,.8));
+  border:1px solid rgba(255,255,255,.1);
+}
+.filter-btn{
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(10,10,30,.9);
+  color:var(--muted);
+  padding:6px 12px;
+  font-size:.8rem;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  transition:.18s;
+}
+.filter-btn:hover{
+  color:var(--text);
+  border-color:var(--accent2);
+  box-shadow:0 0 10px rgba(0,247,255,.5);
+}
+.filter-btn.active{
+  background:radial-gradient(circle at top,var(--accent2),var(--accent));
+  color:#05050b;
+  border-color:transparent;
+  box-shadow:0 0 18px rgba(0,247,255,.7);
+}
+/* entries */
+#entries{
+  max-width:980px;
+  margin:26px auto 0;
+  padding:0 16px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+}
+.entry-card{
+  background:linear-gradient(145deg,rgba(15,15,40,.95),rgba(5,5,20,.9));
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.12);
+  padding:14px 14px 10px;
+  box-shadow:0 18px 40px rgba(0,0,0,.8);
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  transition:.2s;
+}
+.entry-card::before{
+  content:"";
+  position:absolute;inset:-40%;
+  background:conic-gradient(from 120deg,rgba(255,66,255,.2),transparent,rgba(0,247,255,.2),transparent);
+  opacity:0;transition:.3s;filter:blur(18px);
+}
+.entry-card:hover::before{opacity:.5;}
+.entry-card h2{
+  font-size:1rem;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  margin-bottom:6px;
+  color:var(--accent2);
+}
+.entry-summary{
+  font-size:.86rem;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.entry-body{
+  font-size:.86rem;
+  color:var(--text);
+  line-height:1.5;
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:.25s ease;
+}
+.entry-card.open .entry-body{
+  max-height:280px;
+  opacity:1;
+  margin-top:4px;
+}
+.entry-card.open{
+  box-shadow:0 20px 50px rgba(0,0,0,.9),0 0 20px rgba(0,247,255,.4);
+  transform:translateY(-2px);
+}
+.entry-tag{
+  position:absolute;
+  top:10px;right:10px;
+  font-size:.7rem;
+  text-transform:uppercase;
+  padding:3px 7px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.2);
+  color:var(--accent3);
+}
+.forbidden-hidden{display:none;}
+.forbidden-visible{
+  display:block;
+  border-color:rgba(255,80,80,.8)!important;
+  box-shadow:0 0 18px rgba(255,0,64,.7);
+}
+.forbidden-visible h2{color:#ff6b6b;}
+/* nav buttons */
+#nav-buttons{
+  text-align:center;
+  margin-top:36px;
+}
+.nav-link{
+  display:inline-block;
+  margin:6px 8px;
+  padding:8px 18px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(5,5,18,.9);
+  font-size:.85rem;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:var(--muted);
+  transition:.18s;
+}
+.nav-link:hover{
+  color:var(--text);
+  border-color:var(--accent2);
+  box-shadow:0 0 12px rgba(0,247,255,.6);
+}
+/* forbidden flash */
+.forbidden-flash{
+  animation:forbflash .7s ease-out;
+}
+@keyframes forbflash{
+  0%{background:radial-gradient(circle at center,#3b0015,#05050b);}
+  100%{background:radial-gradient(circle at top,#181833 0%,#05050b 50%,#020206 100%);}
+}
+/* responsive tweak */
+@media(max-width:600px){
+  .hero-inner{padding:24px 16px;}
+  .hero h1{font-size:1.8rem;}
+  .hero h3{font-size:.8rem;}
+}
+</style>
+</head>
+<body>
+<div class="bg-glitch"></div>
+
+<div class="top-bar">
+  <div class="top-bar-title">WIGGERPIG // PIGPEDIA</div>
+  <div class="top-bar-links">
+    <a href="index.html">Home</a>
+    <a href="lore.html">Lore</a>
+  </div>
+</div>
+
+<div id="pigpedia-root">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Pigpedia – The Complete Wiggerverse Archive</h1>
+      <h3>Approved Access Only — Tier OINK Clearance Required</h3>
+      <p class="hero-sub">
+        A classified neon vault documenting every major event, entity, and anomaly tied to the sacred Oink.
+      </p>
+      <div class="hero-runes" id="runes"></div>
+      <div class="hero-glyphs" id="glyphs"></div>
+    </div>
+  </section>
+
+  <!-- SEARCH + RANDOM -->
+  <section id="search-section">
+    <div class="search-inner">
+      <input id="search-bar" type="text"
+        placeholder="Search the Wiggerverse..."
+        title="Accessing Pig Neural Index…" />
+      <button id="random-entry">Random Article</button>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section id="filters">
+    <div class="filters-inner">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="characters">Characters</button>
+      <button class="filter-btn" data-filter="events">Events</button>
+      <button class="filter-btn" data-filter="artifacts">Artifacts</button>
+      <button class="filter-btn" data-filter="locations">Locations</button>
+      <button class="filter-btn" data-filter="memes">Memes</button>
+      <button class="filter-btn" data-filter="forbidden">Forbidden Entities</button>
+      <button class="filter-btn" data-filter="server">Server Lore</button>
+      <button class="filter-btn" data-filter="misc">Miscellaneous</button>
+    </div>
+  </section>
+
+  <!-- ENTRIES -->
+  <section id="entries">
+
+    <article class="entry-card" data-category="characters" data-name="wigger pig the prophesied one">
+      <span class="entry-tag">Character</span>
+      <h2>Wigger Pig — The Prophesied One</h2>
+      <p class="entry-summary">The primordial source of all Oink-based energy in the Wiggerverse.</p>
+      <div class="entry-body">
+        <p>
+          Born from glitch static, montage energy, and pure narrative disrespect,
+          Wigger Pig stands at the center of every prophecy, meme, and catastrophic event in the Abyss.
+        </p>
+      </div>
+    </article>
+
+    <article class="entry-card" data-category="events" data-name="the great oinkening">
+      <span class="entry-tag">Event</span>
+      <h2>The Great Oinkening</h2>
+      <p class="entry-summary">The first Oink that rewrote reality and awakened the Abyss.</p>
+      <div class="entry-body">
+        <p>
+          A single snout-born sound cracked the fabric of space-time,
+          spawning the Abyss, the Montage Gods, and the entire WiggerPig mythos in one unholy vibration.
+        </p>
+      </div>
+    </article>
+
+    <article class="entry-card" data-category="memes" data-name="420 blaze shift meme convergence event">
+      <span class="entry-tag">Meme Event</span>
+      <h2>420 Blaze Shift — Meme Convergence Event</h2>
+      <p class="entry-summary">The day montage energy fused with the Wigger Pig’s aura.</p>
+      <div class="entry-body">
+        <p>
+          Doritos fell like meteors, airhorns shook the neon sky, and the Abyss permanently absorbed MLG culture
+          into its core, never to be removed or regulated.
+        </p>
+      </div>
+    </article>
+
+    <article class="entry-card" data-category="server" data-name="the abyss terminal">
+      <span class="entry-tag">Server Lore</span>
+      <h2>The Abyss Terminal</h2>
+      <p class="entry-summary">The command nexus for all classified WiggerPig operations.</p>
+      <div class="entry-body">
+        <p>
+          A mythical console said to control roles, channels, hidden events, and unknown moderation tools
+          within the AbyssVC server. Most buttons are not labeled. None are safe.
+        </p>
+      </div>
+    </article>
+
+    <article class="entry-card" data-category="events" data-name="femboy jeopardy trials of knowledge">
+      <span class="entry-tag">Event</span>
+      <h2>Femboy Jeopardy — Trials of Knowledge</h2>
+      <p class="entry-summary">A legendary game show foretold in the Jeopardy Foretelling.</p>
+      <div class="entry-body">
+        <p>
+          Contestants are dragged into a neon-lit arena of absurd trivia, cosmic penalties,
+          and lore questions nobody studied for. Winners gain glory. Losers gain trauma.
+        </p>
+      </div>
+    </article>
+
+    <article class="entry-card" data-category="artifacts" data-name="pig fusion reactor destroyed">
+      <span class="entry-tag">Artifact</span>
+      <h2>Pig Fusion Reactor (Destroyed)</h2>
+      <p class="entry-summary">A shattered relic from early experiments in multi-pig fusion.</p>
+      <div class="entry-body">
+        <p>
+          Designed to combine multiple pigs into higher-dimensional hybrids,
+          the reactor overloaded after spawning something reality refused to render.
+          The machine was “turned off” with extreme prejudice.
+        </p>
+      </div>
+    </article>
+
+    <article class="entry-card" data-category="server" data-name="cult of the snout temple records">
+      <span class="entry-tag">Server Lore</span>
+      <h2>Cult of the Snout — Temple Records</h2>
+      <p class="entry-summary">Classified archives from the inner circle of Pig devotion.</p>
+      <div class="entry-body">
+        <p>
+          These digital tablets document rituals, chants, and frankly concerning levels of worship
+          focused entirely on Wigger Pig’s snout. Membership is “voluntary” in the same way gravity is.
+        </p>
+      </div>
+    </article>
+
+    <article class="entry-card" data-category="locations" data-name="shrek temple annex">
+      <span class="entry-tag">Location</span>
+      <h2>Shrek Temple (Annex)</h2>
+      <p class="entry-summary">A side shrine where ancient green prophecy and Pig lore intersect.</p>
+      <div class="entry-body">
+        <p>
+          Built during the 420 Blaze Shift after unexpected cross-contamination with Shrek-based prophecy.
+          Scholars do not speak of what happened there. They only post reaction images.
+        </p>
+      </div>
+    </article>
+
+    <article class="entry-card" data-category="misc" data-name="abyss terminal log 404-lost">
+      <span class="entry-tag">File</span>
+      <h2>Abyss Terminal Log: 404-LOST</h2>
+      <p class="entry-summary">An incomplete record referencing a page that technically shouldn’t exist.</p>
+      <div class="entry-body">
+        <p>
+          Contains trace data of lost users, broken links, and a mysterious redirect loop
+          that always ends where it began. Used as evidence that the timeline is not okay.
+        </p>
+      </div>
+    </article>
+
+    <!-- SECRET FORBIDDEN ENTRY (UNLOCKED BY OINK) -->
+    <article class="entry-card forbidden-hidden" data-category="forbidden" data-name="classified the unseen pig">
+      <span class="entry-tag">Forbidden</span>
+      <h2>### CLASSIFIED: THE UNSEEN PIG ###</h2>
+      <p class="entry-summary">ACCESS DENIED — Authorization tier exceeded.</p>
+      <div class="entry-body">
+        <p>
+          This entity is not officially part of the Wiggerverse. It exists between frames and between timelines,
+          watching everything, acknowledged by none. Every attempt to delete its file increases its size.
+        </p>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- NAV -->
+  <section id="nav-buttons">
+    <a href="index.html" class="nav-link">Back to Home</a>
+    <a href="lore.html" class="nav-link">Back to Lore</a>
+  </section>
+
+</div>
+
+<div id="particles-layer"></div>
+
+<script>
+// basic particles
+(function(){
+  const layer=document.getElementById('particles-layer');
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'vw';
+    p.style.top=Math.random()*100+'vh';
+    p.style.animationDelay=(Math.random()*6)+'s';
+    p.style.opacity=.3+Math.random()*.6;
+    layer.appendChild(p);
+  }
+})();
+
+// floating runes/glyphs
+(function(){
+  const runes=document.getElementById('runes');
+  const glyphs=document.getElementById('glyphs');
+  const runeChars=['卍','◊','✶','☼','✦','✧','¤'];
+  const glyphChars=['🐷','◆','◉','✪','◎'];
+  for(let i=0;i<8;i++){
+    const span=document.createElement('span');
+    span.className='rune';
+    span.textContent=runeChars[Math.floor(Math.random()*runeChars.length)];
+    span.style.left=(10+Math.random()*80)+'%';
+    span.style.top=(10+Math.random()*70)+'%';
+    span.style.animationDelay=(Math.random()*5)+'s';
+    runes.appendChild(span);
+  }
+  for(let i=0;i<6;i++){
+    const span=document.createElement('span');
+    span.className='glyph';
+    span.textContent=glyphChars[Math.floor(Math.random()*glyphChars.length)];
+    span.style.left=(10+Math.random()*80)+'%';
+    span.style.top=(10+Math.random()*70)+'%';
+    span.style.animationDelay=(Math.random()*5)+'s';
+    glyphs.appendChild(span);
+  }
+})();
+
+// audio engine
+const sounds={
+  hum:new Audio('audio/pigpedia-hum.mp3'),
+  click:new Audio('audio/pigpedia-click.mp3'),
+  open:new Audio('audio/pigpedia-open.mp3'),
+  random:new Audio('audio/pigpedia-random.mp3'),
+  forbidden:new Audio('audio/pigpedia-rumble.mp3')
+};
+sounds.hum.loop=true;
+sounds.hum.volume=0.25;
+Object.keys(sounds).forEach(k=>{
+  if(k!=='hum')sounds[k].volume=0.35;
+});
+
+// start hum on first interaction
+let humStarted=false;
+function ensureHum(){
+  if(!humStarted){
+    humStarted=true;
+    try{sounds.hum.play();}catch(e){}
+  }
+}
+document.addEventListener('click',ensureHum,{once:true});
+document.addEventListener('keydown',ensureHum,{once:true});
+
+// entries + filters + search
+const entries=[...document.querySelectorAll('.entry-card')];
+const filterBtns=[...document.querySelectorAll('.filter-btn')];
+const searchBar=document.getElementById('search-bar');
+const randomBtn=document.getElementById('random-entry');
+const forbiddenEntry=document.querySelector('.forbidden-hidden');
+
+function playSound(name){
+  const s=sounds[name];
+  if(!s)return;
+  s.currentTime=0;
+  s.play().catch(()=>{});
+}
+
+// toggle entry open
+entries.forEach(card=>{
+  card.addEventListener('click',e=>{
+    // prevent click from interfering with text selection later if needed
+    card.classList.toggle('open');
+    playSound('open');
+  });
+});
+
+// filters
+let activeFilter='all';
+filterBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    activeFilter=btn.dataset.filter;
+    filterBtns.forEach(b=>b.classList.toggle('active',b===btn));
+    applyFilters();
+    playSound('click');
+  });
+});
+
+function applyFilters(){
+  const q=searchBar.value.trim().toLowerCase();
+  entries.forEach(card=>{
+    const cat=card.dataset.category;
+    const name=card.dataset.name||card.textContent.toLowerCase();
+    let matchCategory=(activeFilter==='all' || cat===activeFilter);
+    let matchSearch=(!q || name.includes(q));
+    card.style.display=(matchCategory && matchSearch)?'block':'none';
+  });
+}
+
+// search
+searchBar.addEventListener('input',()=>{
+  const q=searchBar.value.trim().toLowerCase();
+  if(q==='oink'){
+    unlockForbidden();
+  }
+  applyFilters();
+});
+
+// unlock forbidden
+function unlockForbidden(){
+  if(!forbiddenEntry)return;
+  if(!forbiddenEntry.classList.contains('forbidden-visible')){
+    forbiddenEntry.classList.remove('forbidden-hidden');
+    forbiddenEntry.classList.add('forbidden-visible');
+    document.body.classList.add('forbidden-flash');
+    setTimeout(()=>document.body.classList.remove('forbidden-flash'),700);
+    playSound('forbidden');
+  }
+}
+
+// random entry
+randomBtn.addEventListener('click',()=>{
+  const visible=entries.filter(c=>c.style.display!== 'none' && !c.classList.contains('forbidden-hidden'));
+  if(!visible.length)return;
+  const card=visible[Math.floor(Math.random()*visible.length)];
+  card.scrollIntoView({behavior:'smooth',block:'center'});
+  card.classList.add('open');
+  playSound('random');
+});
+
+// start with all filters applied
+applyFilters();
+</script>
+
+</body>
+</html>

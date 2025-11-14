@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Dawn of Wigger Pig | Episode 0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Episode 0: The Dawn of Wigger Pig. The cosmic, cursed, and mildly stupid origin myth of the WiggerPig universe.">
+  <style>
+    :root {
+      --bg: #050515;
+      --bg-alt: #090921;
+      --bg-alt2: #151532;
+      --accent: #ff3fae;
+      --accent2: #36f0c6;
+      --accent3: #f3c96a;
+      --danger: #ff4b6b;
+      --text: #f5f5ff;
+      --muted: #7d87b1;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --card-bg: radial-gradient(circle at top left, rgba(255, 63, 174, 0.18), transparent 55%), radial-gradient(circle at bottom right, rgba(54, 240, 198, 0.16), transparent 55%), #0a0a1d;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.6);
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --nav-height: 68px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.25s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1b1138 0, #050515 45%, #02020b 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Subtle starfield background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -10%;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.12) 0, transparent 52%),
+        radial-gradient(circle at 80% 10%, rgba(114,137,218,0.15) 0, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(54,240,198,0.15) 0, transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.45;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -10%;
+      background-image:
+        repeating-radial-gradient(circle at 0 0, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 1px, transparent 1px, transparent 3px);
+      opacity: 0.11;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: -3;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ==========================
+       NAVBAR
+       ========================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(5,5,24,0.92), rgba(5,5,24,0.78));
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-orb {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: conic-gradient(from 210deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 0 22px rgba(255,63,174,0.6);
+      overflow: hidden;
+    }
+
+    .logo-orb::after {
+      content: "🐷";
+      font-size: 22px;
+      filter: drop-shadow(0 0 8px rgba(0,0,0,0.9));
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .logo-tagline {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-link a {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-link a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    .nav-link a.active {
+      color: var(--text);
+      background: radial-gradient(circle at top left, rgba(255,63,174,0.6), rgba(54,240,198,0.4));
+      border-color: rgba(255,255,255,0.35);
+      box-shadow: 0 0 24px rgba(54,240,198,0.4);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-cta {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: linear-gradient(120deg, rgba(255,63,174,0.7), rgba(54,240,198,0.7));
+      color: #050515;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 24px rgba(255,63,174,0.6);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+    }
+
+    .nav-cta span.icon {
+      font-size: 14px;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px) scale(1.03);
+      filter: brightness(1.1);
+      box-shadow: 0 16px 35px rgba(0,0,0,0.6);
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px;
+      padding: 6px 9px;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 13px;
+      align-items: center;
+      gap: 6px;
+      background-color: rgba(10,10,30,0.85);
+    }
+
+    .nav-toggle span {
+      display: inline-block;
+      width: 16px;
+      height: 2px;
+      background: var(--text);
+      position: relative;
+    }
+
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 16px;
+      height: 2px;
+      background: var(--text);
+      transition: transform var(--transition-fast), opacity var(--transition-fast), top var(--transition-fast);
+    }
+
+    .nav-toggle span::before {
+      top: -5px;
+    }
+
+    .nav-toggle span::after {
+      top: 5px;
+    }
+
+    .nav-toggle.active span {
+      background: transparent;
+    }
+
+    .nav-toggle.active span::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    .nav-toggle.active span::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+
+    /* ==========================
+       LAYOUT
+       ========================== */
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 26px 20px 60px;
+    }
+
+    section {
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-tag-bar {
+      width: 5px;
+      height: 26px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 14px rgba(255,63,174,0.7);
+      flex-shrink: 0;
+    }
+
+    .section-title-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .section-title {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .section-body {
+      background: var(--card-bg);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-body::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top, rgba(255,63,174,0.08), transparent 65%), radial-gradient(circle at bottom right, rgba(54,240,198,0.1), transparent 65%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .section-body p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #dee1ff;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ==========================
+       HERO SECTION
+       ========================== */
+
+    #hero {
+      margin-top: 18px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap: 24px;
+      align-items: center;
+      padding: 22px 22px 24px;
+    }
+
+    .hero-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent2);
+      margin-bottom: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-kicker-pill {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent2);
+      box-shadow: 0 0 12px rgba(54,240,198,0.9);
+    }
+
+    .hero-title {
+      font-size: clamp(30px, 4vw, 38px);
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .hero-gradient-text {
+      background: linear-gradient(120deg, var(--accent), var(--accent2), var(--accent3));
+      -webkit-background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #d4d6ff;
+      margin-bottom: 14px;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .meta-pill {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border-radius: 999px;
+      padding: 4px 10px;
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--muted);
+      background: rgba(3,3,12,0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-pill span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(255,63,174,0.9);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast);
+      background: none;
+      color: var(--text);
+    }
+
+    .btn-primary {
+      background: linear-gradient(130deg, var(--accent), var(--accent2));
+      color: #050515;
+      border-color: rgba(255,255,255,0.3);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.85);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 22px 55px rgba(0,0,0,0.9);
+      filter: brightness(1.05);
+    }
+
+    .btn-ghost {
+      border-color: rgba(255,255,255,0.15);
+      background: rgba(5,5,26,0.8);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.45);
+      color: var(--text);
+      transform: translateY(-1px);
+      background: rgba(10,10,40,0.95);
+    }
+
+    .btn span.icon {
+      font-size: 15px;
+    }
+
+    .hero-right {
+      position: relative;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-sigil-wrapper {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 0, rgba(255,63,174,0.4), transparent 60%), radial-gradient(circle at 80% 80%, rgba(54,240,198,0.5), transparent 70%), #050515;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 40px rgba(255,63,174,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      transition: transform 0.2s ease-out;
+    }
+
+    .hero-sigil-inner {
+      position: relative;
+      width: 72%;
+      height: 72%;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.32);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 15%, rgba(255,255,255,0.16), transparent 55%), radial-gradient(circle at 30% 80%, rgba(255,63,174,0.35), transparent 60%), rgba(3,3,14,0.9);
+      box-shadow:
+        inset 0 0 20px rgba(255,255,255,0.15),
+        0 0 35px rgba(255,63,174,0.5),
+        0 0 55px rgba(54,240,198,0.4);
+    }
+
+    .hero-sigil-inner::before {
+      content: "🐷";
+      font-size: 62px;
+      filter: drop-shadow(0 0 14px rgba(0,0,0,0.9));
+    }
+
+    .hero-orbit {
+      position: absolute;
+      inset: 14%;
+      border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,0.32);
+      opacity: 0.6;
+      animation: orbit-spin 22s linear infinite;
+    }
+
+    .hero-orbit-dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--accent3);
+      box-shadow: 0 0 18px rgba(243,201,106,0.95);
+      top: -6px;
+      right: 50%;
+    }
+
+    .hero-floating-emoji {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0.8;
+      animation: floaty 9s ease-in-out infinite alternate;
+    }
+
+    .hero-floating-emoji:nth-child(1) {
+      top: 6%;
+      left: 10%;
+      animation-delay: 0.2s;
+    }
+
+    .hero-floating-emoji:nth-child(2) {
+      bottom: 10%;
+      right: 8%;
+      animation-delay: 1s;
+    }
+
+    .hero-floating-emoji:nth-child(3) {
+      top: 18%;
+      right: 18%;
+      animation-delay: 1.8s;
+    }
+
+    .hero-floating-emoji:nth-child(4) {
+      bottom: 14%;
+      left: 16%;
+      animation-delay: 2.4s;
+    }
+
+    .hero-caption {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      max-width: 260px;
+    }
+
+    /* ==========================
+       CHAPTERED MYTH
+       ========================== */
+
+    .chapter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .chapter-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: radial-gradient(circle at top left, rgba(255,63,174,0.18), transparent 60%), rgba(4,4,20,0.95);
+      padding: 14px 14px 12px;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .chapter-card::before {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.14), transparent 60%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      pointer-events: none;
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+      border-color: rgba(255,255,255,0.32);
+      background: radial-gradient(circle at top left, rgba(255,63,174,0.24), transparent 65%), rgba(4,4,22,0.98);
+    }
+
+    .chapter-card:hover::before {
+      opacity: 0.32;
+    }
+
+    .chapter-meta-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .chapter-title {
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .chapter-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.26);
+      color: var(--accent3);
+      background: rgba(12,10,30,0.95);
+      white-space: nowrap;
+    }
+
+    .chapter-body {
+      font-size: 13px;
+      color: #e4e4ff;
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+
+    .chapter-lore-bullet {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chapter-lore-bullet span.bullet-icon {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent2);
+      box-shadow: 0 0 12px rgba(54,240,198,0.9);
+      flex-shrink: 0;
+    }
+
+    /* ==========================
+       MINI TIMELINE
+       ========================== */
+
+    .timeline-wrapper {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .timeline-copy {
+      font-size: 14px;
+      color: #dde2ff;
+      line-height: 1.7;
+    }
+
+    .timeline-copy em {
+      color: var(--accent3);
+      font-style: normal;
+    }
+
+    .timeline-mini {
+      position: relative;
+      padding-left: 24px;
+      padding-right: 8px;
+    }
+
+    .timeline-spine {
+      position: absolute;
+      left: 8px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,63,174,0.0), rgba(255,63,174,0.9), rgba(54,240,198,0.0));
+      box-shadow: 0 0 20px rgba(255,63,174,0.7);
+      opacity: 0.9;
+    }
+
+    .timeline-node {
+      position: relative;
+      margin-bottom: 16px;
+      padding-bottom: 4px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -15px;
+      top: 4px;
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: var(--accent2);
+      box-shadow: 0 0 14px rgba(54,240,198,0.9);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .timeline-label {
+      font-size: 11px;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 3px;
+    }
+
+    .timeline-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .timeline-desc {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ==========================
+       RELICS & ARTIFACTS
+       ========================== */
+
+    .relics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .relic-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.16);
+      background: radial-gradient(circle at top left, rgba(255,63,174,0.18), transparent 55%), radial-gradient(circle at bottom right, rgba(54,240,198,0.18), transparent 60%), rgba(4,4,20,0.96);
+      padding: 12px 12px 11px;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+      overflow: hidden;
+    }
+
+    .relic-card::before {
+      content: "RELIC";
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(243,201,106,0.85);
+      background: rgba(5,5,18,0.8);
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(243,201,106,0.6);
+    }
+
+    .relic-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+      border-color: rgba(243,201,106,0.8);
+      background: radial-gradient(circle at top left, rgba(255,63,174,0.25), transparent 60%), radial-gradient(circle at bottom right, rgba(54,240,198,0.2), transparent 65%), rgba(6,6,24,0.98);
+    }
+
+    .relic-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .relic-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .relic-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      border-radius: 999px;
+      padding: 2px 7px;
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--accent2);
+    }
+
+    .relic-status {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .relic-note {
+      margin-top: 6px;
+      font-size: 11px;
+      color: #f0e3c6;
+      border-top: 1px dashed rgba(243,201,106,0.5);
+      padding-top: 5px;
+      display: none;
+    }
+
+    .relic-card.expanded .relic-note {
+      display: block;
+    }
+
+    .relic-hint {
+      margin-top: 4px;
+      font-size: 10px;
+      color: rgba(243,201,106,0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    /* ==========================
+       PROPHECIES & GLITCHES
+       ========================== */
+
+    .prophecy-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .prophecy-line {
+      position: relative;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 8px 11px 7px;
+      font-size: 12px;
+      color: #f2e9ff;
+      background: linear-gradient(120deg, rgba(255,63,174,0.16), rgba(5,5,24,0.95));
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), filter var(--transition-fast);
+    }
+
+    .prophecy-line::before {
+      content: "PROPHECY";
+      position: absolute;
+      top: 6px;
+      right: 9px;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .prophecy-line:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.45);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.9);
+      background: linear-gradient(120deg, rgba(255,63,174,0.22), rgba(54,240,198,0.18));
+    }
+
+    .prophecy-meta {
+      margin-top: 4px;
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+    }
+
+    .prophecy-status-pill {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 2px 7px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .status-fulfilled {
+      border-color: rgba(54,240,198,0.8);
+      color: var(--accent2);
+    }
+
+    .status-pending {
+      border-color: rgba(243,201,106,0.8);
+      color: var(--accent3);
+    }
+
+    .status-please-no {
+      border-color: rgba(255,75,107,0.8);
+      color: var(--danger);
+    }
+
+    .prophecy-caption {
+      font-size: 10px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 4px;
+      display: none;
+    }
+
+    .prophecy-line.activated {
+      filter: hue-rotate(20deg) saturate(1.3);
+      box-shadow: 0 0 24px rgba(255,63,174,0.9);
+    }
+
+    .prophecy-line.activated .prophecy-caption {
+      display: block;
+    }
+
+    /* ==========================
+       BRIDGE & CTA
+       ========================== */
+
+    .bridge-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      gap: 18px;
+    }
+
+    .bridge-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .bridge-link-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 13px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(6,6,22,0.9);
+      transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .bridge-link-row:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.4);
+      background: radial-gradient(circle at top left, rgba(255,63,174,0.18), transparent 65%), rgba(8,8,28,0.98);
+    }
+
+    .bridge-link-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bridge-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .bridge-cta-body {
+      text-align: left;
+      font-size: 14px;
+      color: #dfe1ff;
+    }
+
+    .final-cta-inner {
+      text-align: center;
+      padding: 18px 10px 10px;
+    }
+
+    .final-cta-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .final-cta-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .final-cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    /* ==========================
+       REVEAL ANIMATIONS
+       ========================== */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================
+       FOOTER
+       ========================== */
+
+    footer {
+      max-width: 1120px;
+      margin: 0 auto 24px;
+      padding: 0 20px;
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      opacity: 0.72;
+    }
+
+    footer a {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 3px;
+    }
+
+    /* ==========================
+       ANIMATIONS
+       ========================== */
+
+    @keyframes orbit-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes floaty {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(0, -14px, 0); }
+    }
+
+    /* ==========================
+       RESPONSIVE
+       ========================== */
+
+    @media (max-width: 1024px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-right {
+        order: -1;
+      }
+
+      .timeline-wrapper,
+      .bridge-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-center {
+        display: none;
+      }
+
+      .nav-center.open {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 10px 16px 12px;
+        background: linear-gradient(to bottom, rgba(5,5,24,0.98), rgba(5,5,24,0.96));
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+      }
+
+      .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-link a {
+        width: 100%;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      .nav-inner {
+        padding-inline: 16px;
+      }
+
+      main {
+        padding-inline: 16px;
+      }
+
+      .section-body {
+        padding-inline: 14px;
+      }
+
+      .hero-inner {
+        padding-inline: 14px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-sigil-wrapper {
+        width: 210px;
+        height: 210px;
+      }
+
+      .timeline-mini {
+        padding-left: 20px;
+      }
+
+      .timeline-spine {
+        left: 6px;
+      }
+
+      .timeline-dot {
+        left: -17px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 26px;
+      }
+
+      .section-title {
+        font-size: 17px;
+      }
+
+      .section-body {
+        border-radius: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ==========================
+       NAVBAR
+       ========================== -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="index.html" class="logo-orb" aria-label="Back to WiggerPig main hub"></a>
+        <div class="logo-text">
+          <span class="logo-title">WiggerPig</span>
+          <span class="logo-tagline">Episode 0 &mdash; The Dawn</span>
+        </div>
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span class="subtle-label">menu</span>
+      </button>
+
+      <div class="nav-center">
+        <ul class="nav-links">
+          <li class="nav-link"><a href="index.html">Home</a></li>
+          <li class="nav-link"><a href="lore.html">Lore</a></li>
+          <li class="nav-link"><a href="pigpedia.html">Pigpedia</a></li>
+          <li class="nav-link"><a href="timeline.html">Timeline</a></li>
+          <li class="nav-link"><a href="pig-wars.html">Pig Wars</a></li>
+          <li class="nav-link"><a href="the-dawn.html" class="active">Dawn</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-right">
+        <a href="discord.html" class="nav-cta">
+          <span class="icon">🕳️</span>
+          <span>Join the Abyss</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================
+         HERO SECTION
+         ========================== -->
+    <section id="hero">
+      <div class="section-body hero-inner reveal">
+        <div class="hero-left">
+          <div class="hero-kicker">
+            <span class="hero-kicker-pill"></span>
+            EPISODE 0 · PREQUEL SCROLL
+          </div>
+          <h1 class="hero-title">
+            In the Beginning, There Was <span class="hero-gradient-text">No&nbsp;Pig</span>
+          </h1>
+          <p class="hero-subtitle">
+            Before the wars, before the voice calls, before <em>Femboy Jeopardy</em> and VC&nbsp;Hell, there was only a quiet, featureless internet. Then somebody, for reasons still unknown, uploaded a cursed pig image. The universe has not recovered.
+          </p>
+          <div class="hero-meta-row">
+            <div class="meta-pill">
+              <span class="dot"></span>
+              Canon Status: <strong>&nbsp;“Probably Real”</strong>
+            </div>
+            <div class="meta-pill">
+              <span class="dot" style="background: var(--accent3); box-shadow: 0 0 10px rgba(243,201,106,0.9);"></span>
+              Era: <strong>&nbsp;Pre-Server Void</strong>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-scroll-to="chapters">
+              <span class="icon">📜</span>
+              <span>Begin the Myth</span>
+            </button>
+            <button class="btn btn-ghost" data-scroll-to="dawn-timeline">
+              <span class="icon">⏱️</span>
+              <span>Skip to Dawn Timeline</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-sigil-wrapper" id="hero-sigil">
+            <div class="hero-sigil-inner"></div>
+            <div class="hero-orbit">
+              <div class="hero-orbit-dot"></div>
+            </div>
+            <!-- Floating emojis orbiting the cursed pig -->
+            <div class="hero-floating-emoji">💾</div>
+            <div class="hero-floating-emoji">⚠️</div>
+            <div class="hero-floating-emoji">📡</div>
+            <div class="hero-floating-emoji">🥓</div>
+          </div>
+          <p class="hero-caption">
+            Archaeologists agree: if the first image had been normal, none of this would exist. Unfortunately, it was very much not normal.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         CHAPTERED MYTH
+         ========================== -->
+    <section id="chapters">
+      <div class="section-header">
+        <div class="section-tag-bar"></div>
+        <div class="section-title-wrapper">
+          <h2 class="section-title">Chaptered Myth &mdash; The Script of the First Oink</h2>
+          <p class="section-subtitle">A totally serious and absolutely fact-checked account of how one JPEG ruined everything.</p>
+        </div>
+      </div>
+      <div class="section-body reveal">
+        <div class="chapter-list">
+          <!-- Chapter I -->
+          <article class="chapter-card">
+            <div class="chapter-meta-row">
+              <h3 class="chapter-title">Chapter I &mdash; Before the Ping</h3>
+              <span class="chapter-tag">Apocrypha (Probably)</span>
+            </div>
+            <p class="chapter-body">
+              In the first days of the internet-that-mattered, there were productivity apps, crypto threads, and six trillion unread emails. Servers stood empty, voice channels echoed with nobody, and no one had yet uttered the phrase, “Why does the pig look like that?”
+            </p>
+            <div class="chapter-lore-bullet">
+              <span class="bullet-icon"></span>
+              <span><strong>Relic:</strong> &ldquo;project-roadmap-final-FINAL-v7.xlsx&rdquo; &mdash; last known document before fun entered the timeline.</span>
+            </div>
+          </article>
+
+          <!-- Chapter II -->
+          <article class="chapter-card">
+            <div class="chapter-meta-row">
+              <h3 class="chapter-title">Chapter II &mdash; The First Image</h3>
+              <span class="chapter-tag">Canon (lol)</span>
+            </div>
+            <p class="chapter-body">
+              One bored entity, name redacted by history and Discord TOS, opened MS Paint. They drew a pig. They gave it an expression scientists still cannot classify. They exported it as a suspiciously compressed JPEG and posted it into a tiny, forgotten channel with the caption: &ldquo;he is wigger pig&rdquo;.
+            </p>
+            <div class="chapter-lore-bullet">
+              <span class="bullet-icon"></span>
+              <span><strong>Relic:</strong> The Original Screenshot.jpg &mdash; the first known capture of Wigger Pig, complete with 144p blur.</span>
+            </div>
+          </article>
+
+          <!-- Chapter III -->
+          <article class="chapter-card">
+            <div class="chapter-meta-row">
+              <h3 class="chapter-title">Chapter III &mdash; The Oink Heard Across the Server</h3>
+              <span class="chapter-tag">Confirmed by Screenshots</span>
+            </div>
+            <p class="chapter-body">
+              Notifications began to appear. One ping. Two. A flood. People joined just to say &ldquo;what is that&rdquo;, &ldquo;delete this&rdquo;, or &ldquo;i am saving this forever&rdquo;. The pig was reposted, cropped, color-inverted, and quoted out of context. The first reaction stack formed: 😂💀🐷🔥.
+            </p>
+            <div class="chapter-lore-bullet">
+              <span class="bullet-icon"></span>
+              <span><strong>Relic:</strong> The Reaction Layer &mdash; a screenshot with so many emojis the client UI visibly struggled.</span>
+            </div>
+          </article>
+
+          <!-- Chapter IV -->
+          <article class="chapter-card">
+            <div class="chapter-meta-row">
+              <h3 class="chapter-title">Chapter IV &mdash; Birth of the Cult</h3>
+              <span class="chapter-tag">Community-Verified</span>
+            </div>
+            <p class="chapter-body">
+              As hours turned into whatever time is in Discord, users began assigning titles: Gym Pig, Drip Pig, Cult Pig, PresiPig. Roles were forged, emojis were minted, and someone said, &ldquo;this is basically a religion now&rdquo;. No one disagreed. The first unofficial doctrine was typed entirely in caps lock.
+            </p>
+            <div class="chapter-lore-bullet">
+              <span class="bullet-icon"></span>
+              <span><strong>Relic:</strong> The Copypasta Scroll &mdash; the original walls of text later archived in <a href="wall-of-text.html">wall-of-text.html</a>.</span>
+            </div>
+          </article>
+
+          <!-- Chapter V -->
+          <article class="chapter-card">
+            <div class="chapter-meta-row">
+              <h3 class="chapter-title">Chapter V &mdash; Dawn of the Wars</h3>
+              <span class="chapter-tag">Foreshadowing, Unfortunately</span>
+            </div>
+            <p class="chapter-body">
+              With every new pig variant came arguments: Which pig is canon? Who owns the original file? Should the pig be allowed admin perms? Factions formed. Alliances broke. Someone made a tier list. Thus the foundations of the <a href="pig-wars.html">Pig Wars</a> were quietly installed, like doomed DLC.
+            </p>
+            <div class="chapter-lore-bullet">
+              <span class="bullet-icon"></span>
+              <span><strong>Relic:</strong> &ldquo;wigger-pig-ranking-v1.png&rdquo; &mdash; the tier list that started at least three lifelong grudges.</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         MINI DAWN TIMELINE
+         ========================== -->
+    <section id="dawn-timeline">
+      <div class="section-header">
+        <div class="section-tag-bar"></div>
+        <div class="section-title-wrapper">
+          <h2 class="section-title">From Void to Pig &mdash; Dawn Timeline</h2>
+          <p class="section-subtitle">A compressed, regret-filled sprint from empty internet to fully weaponized pig meme.</p>
+        </div>
+      </div>
+      <div class="section-body timeline-wrapper reveal">
+        <div class="timeline-copy">
+          <p>
+            Historians of the AbyssVC council divide the prehistory of the server into two eras:
+            <em>BP</em> (Before Pig) and <em>AP</em> (After Pig). BP was quiet. AP was notifications,
+            late-night game shows, and people asking, &ldquo;how is this still online?&rdquo;.
+          </p>
+          <p style="margin-top: 10px;">
+            What follows is the officially unofficial dawn timeline, reconstructed from screenshots,
+            corrupted exports, and one mod who swears they remember everything despite never sleeping.
+          </p>
+        </div>
+
+        <div class="timeline-mini">
+          <div class="timeline-spine"></div>
+
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-label">T - ∞ · Before Content</div>
+            <div class="timeline-title">The Quiet Tabs</div>
+            <p class="timeline-desc">
+              No Discord server. No pig. Just open tabs: email, docs, productivity, maybe one YouTube video paused at 2:13.
+            </p>
+          </div>
+
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-label">T - 00:05 · The Boredom</div>
+            <div class="timeline-title">MS Paint is Opened</div>
+            <p class="timeline-desc">
+              A mouse drifts toward the Start menu. Against all guidance, <em>Paint</em> is launched. The ancient art program awakens.
+            </p>
+          </div>
+
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-label">T - 00:00 · The Upload</div>
+            <div class="timeline-title">He is Wigger Pig</div>
+            <p class="timeline-desc">
+              The cursed pig JPEG is dragged into a chat box. The caption is typed. The Enter key is pressed.
+              Cosmologists classify this as a minor &ldquo;Big Yikes&rdquo; event.
+            </p>
+          </div>
+
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-label">T + 00:01 · First Contact</div>
+            <div class="timeline-title">The Ping Cascade</div>
+            <p class="timeline-desc">
+              Notifications chain across time zones. Friends are tagged. Alt accounts log in. Someone posts
+              &ldquo;delete this&rdquo; and then immediately saves the file.
+            </p>
+          </div>
+
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-label">T + 00:20 · Structural Damage</div>
+            <div class="timeline-title">First Custom Emoji</div>
+            <p class="timeline-desc">
+              The pig becomes an emoji. Reactions escalate. The server UI begins to buckle under the weight
+              of increasingly stupid image edits.
+            </p>
+          </div>
+
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-label">T + 01:00 · The Divergence</div>
+            <div class="timeline-title">New Channels, New Lore</div>
+            <p class="timeline-desc">
+              Dedicated channels appear: #pig-lab, #copypasta, #vc-hell. The timeline splits. This is the true start of the WiggerPig Expanded Universe.
+            </p>
+          </div>
+
+          <div class="timeline-node">
+            <div class="timeline-dot"></div>
+            <div class="timeline-label">T + 03:16 · Ominous Foreshadowing</div>
+            <div class="timeline-title">First &ldquo;Pig War&rdquo; Joke</div>
+            <p class="timeline-desc">
+              Someone casually types, &ldquo;bro this is gonna cause a pig war&rdquo;. Everyone laughs. Future historians tag this message &ldquo;Prophetic&rdquo;.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         RELICS & ARTIFACTS
+         ========================== -->
+    <section id="relics">
+      <div class="section-header">
+        <div class="section-tag-bar"></div>
+        <div class="section-title-wrapper">
+          <h2 class="section-title">Relics of the First Meme</h2>
+          <p class="section-subtitle">Archaeology of a single pig image that snowballed into a full-blown multiverse.</p>
+        </div>
+      </div>
+      <div class="section-body reveal">
+        <p class="subtle">
+          These artifacts are considered &ldquo;myth-critical&rdquo; to understanding the Dawn Era.
+          Most are lost, redacted, or buried in /archive-hell, but their damage is permanent.
+          Tap a relic to inspect the archaeologists’ notes.
+        </p>
+        <div class="relics-grid">
+          <!-- Relic 1 -->
+          <article class="relic-card">
+            <h3 class="relic-name">The Original Screenshot.jpg</h3>
+            <div class="relic-meta">
+              <span class="relic-tag">FOUND ONCE</span>
+              <span class="relic-tag">144P DIVINITY</span>
+            </div>
+            <p class="relic-status"><strong>Status:</strong> Last seen in a DM labelled &ldquo;delete later&rdquo; (never deleted).</p>
+            <p class="relic-note">
+              Zoomed in, the pixels form patterns eerily similar to later Pig Wars banners.
+              Whether this is foreshadowing or sleep deprivation remains unknown.
+            </p>
+            <p class="relic-hint">Tap to toggle archaeologists' note.</p>
+          </article>
+
+          <!-- Relic 2 -->
+          <article class="relic-card">
+            <h3 class="relic-name">The Reaction Stack</h3>
+            <div class="relic-meta">
+              <span class="relic-tag">EMOJI FOSSIL</span>
+              <span class="relic-tag">EVIDENCE A</span>
+            </div>
+            <p class="relic-status"><strong>Status:</strong> Preserved in <a href="gallery.html">gallery.html</a> as &ldquo;why are there 37 reactions&rdquo;.</p>
+            <p class="relic-note">
+              The stack contains the earliest recorded uses of 😂💀🐷🔥 in a single message.
+              Discord support reportedly flagged it as &ldquo;concerning but impressive&rdquo;.
+            </p>
+            <p class="relic-hint">Tap to toggle archaeologists' note.</p>
+          </article>
+
+          <!-- Relic 3 -->
+          <article class="relic-card">
+            <h3 class="relic-name">The First Copypasta</h3>
+            <div class="relic-meta">
+              <span class="relic-tag">SCRIPTURE</span>
+              <span class="relic-tag">UNNECESSARY LENGTH</span>
+            </div>
+            <p class="relic-status"><strong>Status:</strong> Archived in <a href="wall-of-text.html">wall-of-text.html</a>, against medical advice.</p>
+            <p class="relic-note">
+              Scholars agree: no one actually read the entire message. However, everyone
+              pretended they did, which forged the social contract of the server.
+            </p>
+            <p class="relic-hint">Tap to toggle archaeologists' note.</p>
+          </article>
+
+          <!-- Relic 4 -->
+          <article class="relic-card">
+            <h3 class="relic-name">The Tier List PNG</h3>
+            <div class="relic-meta">
+              <span class="relic-tag">CLASSIFIED</span>
+              <span class="relic-tag">WAR CRIME (SOCIAL)</span>
+            </div>
+            <p class="relic-status"><strong>Status:</strong> Locked behind sealed channels related to <a href="pig-wars.html">pig-wars.html</a>.</p>
+            <p class="relic-note">
+              Rumored to rank Gym Pig above PresiPig. Several friendships were &ldquo;put on hold&rdquo;
+              for three weeks after its release.
+            </p>
+            <p class="relic-hint">Tap to toggle archaeologists' note.</p>
+          </article>
+
+          <!-- Relic 5 -->
+          <article class="relic-card">
+            <h3 class="relic-name">The First VC Hell Recording</h3>
+            <div class="relic-meta">
+              <span class="relic-tag">AUDIO CURSE</span>
+              <span class="relic-tag">UNLISTED</span>
+            </div>
+            <p class="relic-status"><strong>Status:</strong> Allegedly played once during <a href="jeopardy.html">Femboy Jeopardy</a>. Audience still recovering.</p>
+            <p class="relic-note">
+              Contains 37 minutes of overlapping audio: game show trivia, pig lore,
+              and someone asking &ldquo;who joined&rdquo; every 30 seconds.
+            </p>
+            <p class="relic-hint">Tap to toggle archaeologists' note.</p>
+          </article>
+
+          <!-- Relic 6 -->
+          <article class="relic-card">
+            <h3 class="relic-name">The Primordial Server Invite</h3>
+            <div class="relic-meta">
+              <span class="relic-tag">PRIMORDIAL LINK</span>
+              <span class="relic-tag">ONE-WAY</span>
+            </div>
+            <p class="relic-status"><strong>Status:</strong> Upgraded, renamed, and now mythologized as <a href="discord.html">Join the Abyss</a>.</p>
+            <p class="relic-note">
+              Invite description allegedly read: &ldquo;it’s just for a few friends&rdquo;.
+              This is now considered one of the funniest lines in the entire timeline.
+            </p>
+            <p class="relic-hint">Tap to toggle archaeologists' note.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         PROPHECIES & GLITCHES
+         ========================== -->
+    <section id="prophecies">
+      <div class="section-header">
+        <div class="section-tag-bar"></div>
+        <div class="section-title-wrapper">
+          <h2 class="section-title">Prophecies of the Dawn</h2>
+          <p class="section-subtitle">Lines muttered half-jokingly during the Dawn Era that aged like extremely unstable milk.</p>
+        </div>
+      </div>
+      <div class="section-body reveal">
+        <p class="subtle">
+          No cult is complete without slightly ominous one-liners. These phrases, dropped casually in chat during the
+          creation of Wigger Pig, are now considered proto-prophecies. Click one to see if the Dawn is talking directly to you.
+        </p>
+        <div class="prophecy-list">
+          <!-- Prophecy 1 -->
+          <div class="prophecy-line" data-caption="This one was fulfilled the moment someone opened OBS.">
+            <div class="prophecy-text">
+              &ldquo;If this pig ever hits stream, we’re never living it down.&rdquo;
+            </div>
+            <div class="prophecy-meta">
+              <span class="prophecy-status-pill status-fulfilled">FULFILLED</span>
+              <span>Reference: <a href="kick-streams.html">kick-streams.html</a></span>
+            </div>
+            <div class="prophecy-caption"></div>
+          </div>
+
+          <!-- Prophecy 2 -->
+          <div class="prophecy-line" data-caption="You reading this counts as active participation, sorry.">
+            <div class="prophecy-text">
+              &ldquo;One day there will be full lore pages about this pig and you’ll all be implicated.&rdquo;
+            </div>
+            <div class="prophecy-meta">
+              <span class="prophecy-status-pill status-fulfilled">FULFILLED</span>
+              <span>Reference: <a href="lore.html">lore.html</a>, <a href="pigpedia.html">pigpedia.html</a></span>
+            </div>
+            <div class="prophecy-caption"></div>
+          </div>
+
+          <!-- Prophecy 3 -->
+          <div class="prophecy-line" data-caption="Experts recommend avoiding this timeline branch.">
+            <div class="prophecy-text">
+              &ldquo;Imagine if this turns into some kind of trial or court thing.&rdquo;
+            </div>
+            <div class="prophecy-meta">
+              <span class="prophecy-status-pill status-pending">PENDING</span>
+              <span>Reference: <a href="mod-court.html">mod-court.html</a>, <a href="pig-trials.html">pig-trials.html</a></span>
+            </div>
+            <div class="prophecy-caption"></div>
+          </div>
+
+          <!-- Prophecy 4 -->
+          <div class="prophecy-line" data-caption="You are legally allowed to close the tab if this comes true.">
+            <div class="prophecy-text">
+              &ldquo;What if the pig gets its own casino and AI and nobody stops it.&rdquo;
+            </div>
+            <div class="prophecy-meta">
+              <span class="prophecy-status-pill status-please-no">PLEASE NO</span>
+              <span>Reference: <a href="pig-casino.html">pig-casino.html</a>, <a href="pig-ai.html">pig-ai.html</a></span>
+            </div>
+            <div class="prophecy-caption"></div>
+          </div>
+
+          <!-- Prophecy 5 -->
+          <div class="prophecy-line" data-caption="Statistically, this tab is part of the prophecy.">
+            <div class="prophecy-text">
+              &ldquo;Some random person is going to find this site and think we’re all hallucinating the same pig.&rdquo;
+            </div>
+            <div class="prophecy-meta">
+              <span class="prophecy-status-pill status-pending">PENDING</span>
+              <span>Reference: You, reading <strong>the-dawn.html</strong> right now.</span>
+            </div>
+            <div class="prophecy-caption"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         BRIDGE SECTION
+         ========================== -->
+    <section id="bridge">
+      <div class="section-header">
+        <div class="section-tag-bar"></div>
+        <div class="section-title-wrapper">
+          <h2 class="section-title">Bridge &mdash; Where Dawn Ends and Chaos Begins</h2>
+          <p class="section-subtitle">You’ve reached the end of the creation myth. The bad decisions only escalate from here.</p>
+        </div>
+      </div>
+      <div class="section-body bridge-grid reveal">
+        <div class="bridge-cta-body">
+          <p>
+            The Dawn Era is technically over the moment Wigger Pig becomes uncontainable:
+            memes spawn new memes, and channels spawn new channels to quarantine those memes,
+            which never really works.
+          </p>
+          <p style="margin-top: 10px;">
+            From this point forward, the story explodes outward into Pig Wars, VC Hell,
+            game shows where braincells go to die, and a steadily expanding list of
+            questionable experiments labelled &ldquo;for the bit&rdquo;.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>This page is Episode 0.</strong> To keep going, you must choose your next
+            bad idea wisely.
+          </p>
+        </div>
+        <div>
+          <div class="bridge-links">
+            <a href="lore.html" class="bridge-link-row">
+              <div class="bridge-link-main">
+                <span class="bridge-tag">SCRIPTURES</span>
+                <span>Read the Core Lore &mdash; <strong>lore.html</strong></span>
+              </div>
+              <span class="subtle">📘</span>
+            </a>
+            <a href="timeline.html" class="bridge-link-row">
+              <div class="bridge-link-main">
+                <span class="bridge-tag">TIMELINE</span>
+                <span>See the Full Temporal Mess &mdash; <strong>timeline.html</strong></span>
+              </div>
+              <span class="subtle">🕒</span>
+            </a>
+            <a href="pigpedia.html" class="bridge-link-row">
+              <div class="bridge-link-main">
+                <span class="bridge-tag">ENCYCLOPEDIA</span>
+                <span>Study Every Variant &mdash; <strong>pigpedia.html</strong></span>
+              </div>
+              <span class="subtle">📚</span>
+            </a>
+            <a href="pig-wars.html" class="bridge-link-row">
+              <div class="bridge-link-main">
+                <span class="bridge-tag">CONFLICT</span>
+                <span>Enter the War Records &mdash; <strong>pig-wars.html</strong></span>
+              </div>
+              <span class="subtle">⚔️</span>
+            </a>
+            <a href="toys.html" class="bridge-link-row">
+              <div class="bridge-link-main">
+                <span class="bridge-tag">LAB</span>
+                <span>Visit the Chaos Toybox &mdash; <strong>toys.html</strong></span>
+              </div>
+              <span class="subtle">🧪</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         FINAL CTA
+         ========================== -->
+    <section id="cta-end">
+      <div class="section-body final-cta-inner reveal">
+        <h2 class="final-cta-title">You Have Read the Creation Myth. Now Go Cause New Lore.</h2>
+        <p class="final-cta-sub">
+          The Dawn was one image. The rest is whatever you and a suspiciously active Discord server do with it.
+          Join the calls, spam the emojis, and make future historians very confused.
+        </p>
+        <div class="final-cta-buttons">
+          <a href="discord.html" class="btn btn-primary">
+            <span class="icon">🕳️</span>
+            <span>Descend into AbyssVC</span>
+          </a>
+          <a href="jeopardy.html" class="btn btn-ghost">
+            <span class="icon">🎲</span>
+            <span>Experience Femboy Jeopardy</span>
+          </a>
+          <a href="abyss-terminal.html" class="btn btn-ghost">
+            <span class="icon">⌨️</span>
+            <span>Consult the Abyss Terminal</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Episode 0 Archive: <strong>the-dawn.html</strong> · &ldquo;From empty tabs to final boss pig.&rdquo;</span>
+    <span>Next recommended stops: <a href="lore.html">lore.html</a>, <a href="timeline.html">timeline.html</a>, <a href="pigpedia.html">pigpedia.html</a></span>
+  </footer>
+
+  <script>
+    // ==========================
+    // NAV TOGGLE
+    // ==========================
+    (function() {
+      var navToggle = document.querySelector('.nav-toggle');
+      var navCenter = document.querySelector('.nav-center');
+
+      if (navToggle && navCenter) {
+        navToggle.addEventListener('click', function() {
+          var isOpen = navCenter.classList.toggle('open');
+          navToggle.classList.toggle('active', isOpen);
+        });
+
+        // Close menu when clicking a link on mobile
+        navCenter.addEventListener('click', function(e) {
+          if (e.target.tagName === 'A' && navCenter.classList.contains('open')) {
+            navCenter.classList.remove('open');
+            navToggle.classList.remove('active');
+          }
+        });
+      }
+    })();
+
+    // ==========================
+    // SMOOTH SCROLL BUTTONS
+    // ==========================
+    (function() {
+      var buttons = document.querySelectorAll('[data-scroll-to]');
+      buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var targetId = btn.getAttribute('data-scroll-to');
+          if (!targetId) return;
+          var target = document.getElementById(targetId);
+          if (target) {
+            var rect = target.getBoundingClientRect();
+            var offsetTop = rect.top + window.pageYOffset - 76; // account for navbar
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    })();
+
+    // ==========================
+    // INTERSECTION OBSERVER FOR REVEAL
+    // ==========================
+    (function() {
+      var revealEls = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+
+        revealEls.forEach(function(el) {
+          observer.observe(el);
+        });
+      } else {
+        // Fallback if no IntersectionObserver
+        revealEls.forEach(function(el) {
+          el.classList.add('visible');
+        });
+      }
+    })();
+
+    // ==========================
+    // HERO PARALLAX / TILT
+    // ==========================
+    (function() {
+      var sigil = document.getElementById('hero-sigil');
+      if (!sigil) return;
+
+      var maxTilt = 8;
+
+      function handleMove(e) {
+        var rect = sigil.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        var percentX = (x / rect.width) - 0.5;
+        var percentY = (y / rect.height) - 0.5;
+        var tiltX = percentY * maxTilt * -1;
+        var tiltY = percentX * maxTilt;
+
+        sigil.style.transform = 'rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg)';
+      }
+
+      function resetTilt() {
+        sigil.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      }
+
+      sigil.addEventListener('mousemove', handleMove);
+      sigil.addEventListener('mouseleave', resetTilt);
+    })();
+
+    // ==========================
+    // RELIC INSPECT TOGGLE
+    // ==========================
+    (function() {
+      var relicCards = document.querySelectorAll('.relic-card');
+      relicCards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          card.classList.toggle('expanded');
+        });
+      });
+    })();
+
+    // ==========================
+    // PROPHECY INTERACTION
+    // ==========================
+    (function() {
+      var prophecyLines = document.querySelectorAll('.prophecy-line');
+      prophecyLines.forEach(function(line) {
+        line.addEventListener('click', function() {
+          // Toggle activation
+          if (line.classList.contains('activated')) {
+            line.classList.remove('activated');
+            line.querySelector('.prophecy-caption').textContent = '';
+            return;
+          }
+
+          // Remove activation from other lines
+          prophecyLines.forEach(function(other) {
+            if (other !== line) {
+              other.classList.remove('activated');
+              var otherCap = other.querySelector('.prophecy-caption');
+              if (otherCap) otherCap.textContent = '';
+            }
+          });
+
+          line.classList.add('activated');
+          var captionText = line.getAttribute('data-caption') || "The Dawn whispers: you're part of this now.";
+          var captionEl = line.querySelector('.prophecy-caption');
+          if (captionEl) {
+            captionEl.textContent = captionText;
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

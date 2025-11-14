@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WiggerPig Characters – The Core Roster</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #050510;
+      --bg-alt: #0b0b1b;
+      --accent: #ff3ba7;
+      --accent2: #34f5c5;
+      --accent3: #ffcc66;
+      --text: #f5f5ff;
+      --muted: #9aa0c2;
+      --danger: #ff4c4c;
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --card-radius: 18px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.28s ease-out;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #1b0b33 0, transparent 55%),
+        radial-gradient(circle at bottom right, #071b33 0, transparent 55%),
+        linear-gradient(135deg, #02030a, #050510 40%, #05030f 100%);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Floating icons / particles */
+
+    .floating-emoji {
+      position: fixed;
+      z-index: -1;
+      font-size: 1.8rem;
+      opacity: 0.16;
+      pointer-events: none;
+      animation: floatUp 18s linear infinite;
+    }
+
+    .floating-emoji:nth-child(1) {
+      left: 8%;
+      bottom: -10%;
+      animation-duration: 22s;
+      animation-delay: -6s;
+    }
+
+    .floating-emoji:nth-child(2) {
+      left: 75%;
+      bottom: -15%;
+      animation-duration: 26s;
+      animation-delay: -12s;
+    }
+
+    .floating-emoji:nth-child(3) {
+      left: 45%;
+      bottom: -20%;
+      animation-duration: 30s;
+      animation-delay: -3s;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.22;
+      }
+      50% {
+        opacity: 0.3;
+        transform: translateY(-50vh) translateX(8px);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-105vh) translateX(-12px);
+      }
+    }
+
+    /* Navbar */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to right, rgba(5, 5, 16, 0.94), rgba(9, 7, 31, 0.9));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .navbar-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 0%, #ffe37b 0, transparent 55%),
+        radial-gradient(circle at 70% 90%, #ff3ba7 0, transparent 55%),
+        radial-gradient(circle at 10% 90%, #34f5c5 0, transparent 55%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 0 30px rgba(255, 59, 167, 0.6);
+    }
+
+    .nav-logo span {
+      filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.7));
+    }
+
+    .nav-title {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .nav-title-main {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .nav-title-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 0.82rem;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 0.35rem 0.55rem;
+      border-radius: 999px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 -0.2rem 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform var(--transition-fast);
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .nav-link:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      background: radial-gradient(circle at 0 0, rgba(255, 59, 167, 0.3), transparent 55%);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-link.active::after {
+      transform: scaleX(1);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-cta {
+      font-size: 0.8rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: radial-gradient(circle at 0 0, rgba(255, 59, 167, 0.4), transparent 52%), linear-gradient(120deg, rgba(3, 5, 20, 0.95), rgba(9, 14, 35, 0.95));
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.75);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .nav-cta span.icon {
+      font-size: 0.9rem;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px) translateZ(0);
+      border-color: rgba(255, 255, 255, 0.32);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);
+    }
+
+    .nav-cta:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .nav-menu-toggle {
+      display: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 0.3rem 0.48rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(5, 5, 20, 0.85);
+    }
+
+    @media (max-width: 780px) {
+      .navbar-inner {
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 0.3rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav-right {
+        margin-left: auto;
+      }
+    }
+
+    /* Main layout */
+
+    .page {
+      max-width: 1120px;
+      margin: 1.6rem auto 3.5rem auto;
+      padding: 0 1.25rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .section-label::before {
+      content: "";
+      display: inline-block;
+      width: 26px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .section-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .section-heading {
+      font-size: clamp(1.9rem, 3.2vw, 2.4rem);
+      font-weight: 800;
+      background: linear-gradient(120deg, #ffffff, #ffebbb, #ff3ba7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 0.02em;
+    }
+
+    .section-subtitle {
+      max-width: 540px;
+      font-size: 0.94rem;
+      color: var(--muted);
+    }
+
+    .section-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .section-meta strong {
+      color: var(--accent3);
+      font-weight: 600;
+    }
+
+    .chip-row {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .tiny-pill {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.1rem 0.55rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.06), transparent 60%);
+    }
+
+    @media (max-width: 640px) {
+      .section-title-row {
+        align-items: flex-start;
+      }
+
+      .section-meta {
+        text-align: left;
+        align-items: flex-start;
+      }
+    }
+
+    /* Hero buttons */
+
+    .hero-actions {
+      margin-top: 1.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, rgba(7, 8, 30, 0.96), rgba(14, 17, 46, 0.96));
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .btn span.icon {
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at 0 0, rgba(255, 59, 167, 0.48), transparent 55%), linear-gradient(135deg, #1a1027, #29103a);
+      border-color: rgba(255, 119, 210, 0.85);
+    }
+
+    .btn-secondary {
+      background: radial-gradient(circle at 0 0, rgba(52, 245, 197, 0.36), transparent 60%), linear-gradient(135deg, #081724, #071924);
+      border-color: rgba(52, 245, 197, 0.7);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Search & filters */
+
+    .search-section {
+      margin-top: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      background: radial-gradient(circle at 0 0, rgba(255, 59, 167, 0.1), transparent 60%), linear-gradient(135deg, rgba(5, 5, 18, 0.92), rgba(8, 9, 30, 0.95));
+      border-radius: 18px;
+      padding: 0.85rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input-wrap span.icon {
+      position: absolute;
+      left: 0.55rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .search-input {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 0.45rem 0.8rem 0.45rem 1.9rem;
+      font-size: 0.8rem;
+      background: rgba(6, 6, 22, 0.92);
+      color: var(--text);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .search-input::placeholder {
+      color: rgba(154, 160, 194, 0.85);
+    }
+
+    .search-input:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 1px rgba(52, 245, 197, 0.4), 0 0 18px rgba(52, 245, 197, 0.5);
+      background: rgba(4, 7, 28, 0.98);
+      transform: translateY(-1px);
+    }
+
+    .filter-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--muted);
+      cursor: pointer;
+      background: radial-gradient(circle at 0 0, rgba(52, 245, 197, 0.12), transparent 60%);
+      transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .filter-pill:hover {
+      transform: translateY(-1px);
+      color: var(--text);
+      border-color: rgba(52, 245, 197, 0.75);
+    }
+
+    .filter-pill.active {
+      color: #02030a;
+      background: linear-gradient(120deg, var(--accent2), var(--accent));
+      border-color: transparent;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.7);
+    }
+
+    .search-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .search-hint span.key {
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.05rem 0.25rem;
+      font-size: 0.72rem;
+      background: rgba(5, 5, 18, 0.92);
+    }
+
+    @media (max-width: 640px) {
+      .search-section {
+        padding: 0.85rem 0.85rem;
+      }
+    }
+
+    /* Character grid */
+
+    .grid-section {
+      margin-top: 1.6rem;
+    }
+
+    .character-grid {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .character-card {
+      position: relative;
+      border-radius: var(--card-radius);
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 59, 167, 0.3), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(52, 245, 197, 0.2), transparent 60%),
+        linear-gradient(145deg, rgba(7, 6, 24, 0.98), rgba(6, 7, 22, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.8rem;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-fast), background 0.3s ease-out;
+      transform: translateY(6px);
+      opacity: 0;
+    }
+
+    .character-card.visible {
+      transform: translateY(0);
+      opacity: 1;
+      transition: transform 0.4s cubic-bezier(0.16, 0.84, 0.44, 1), opacity 0.4s ease-out, box-shadow var(--transition-med), border-color var(--transition-fast), background 0.3s ease-out;
+    }
+
+    .character-card:hover {
+      transform: translateY(-6px) translateZ(0);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.95);
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 59, 167, 0.5), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(52, 245, 197, 0.36), transparent 60%),
+        linear-gradient(145deg, rgba(10, 10, 40, 0.98), rgba(8, 10, 32, 0.98));
+    }
+
+    .character-card:active {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.9);
+    }
+
+    .card-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .card-header {
+      display: flex;
+      gap: 0.65rem;
+      align-items: center;
+    }
+
+    .card-avatar-wrap {
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background: radial-gradient(circle at 30% 0%, rgba(255, 227, 123, 0.9), transparent 55%), radial-gradient(circle at 70% 100%, rgba(255, 59, 167, 0.9), transparent 55%);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 12px 25px rgba(0, 0, 0, 0.8);
+      transform-origin: center;
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border-radius var(--transition-med);
+    }
+
+    .character-card:hover .card-avatar-wrap {
+      transform: translateY(-2px) scale(1.04);
+      border-radius: 20px;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6), 0 22px 40px rgba(0, 0, 0, 0.96);
+    }
+
+    .card-avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-header-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
+
+    .char-name {
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .char-name span.badge {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.05rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(5, 5, 18, 0.85);
+      color: var(--accent3);
+    }
+
+    .char-role {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .char-desc {
+      font-size: 0.82rem;
+      color: rgba(232, 233, 255, 0.95);
+    }
+
+    .char-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .char-tag-pill {
+      font-size: 0.7rem;
+      border-radius: 999px;
+      padding: 0.1rem 0.45rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(4, 6, 24, 0.96);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .char-tag-pill span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent2);
+    }
+
+    .char-tag-pill.tag-danger span.dot {
+      background: var(--danger);
+    }
+
+    .char-tag-pill.tag-drip span.dot {
+      background: var(--accent);
+    }
+
+    .char-stats {
+      margin-top: 0.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .stat-label {
+      min-width: 54px;
+    }
+
+    .stat-bar {
+      flex: 1;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(10, 10, 30, 0.9);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stat-fill {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      transform: scaleX(0.1);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.16, 0.84, 0.44, 1);
+    }
+
+    .character-card.visible .stat-fill {
+      transform: scaleX(var(--level, 1));
+    }
+
+    .stat-dot-row {
+      display: flex;
+      gap: 2px;
+    }
+
+    .stat-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .stat-dot.active {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .card-footer {
+      margin-top: 0.35rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .card-footer span.highlight {
+      color: var(--accent3);
+    }
+
+    .card-footer span.token {
+      font-family: "SF Mono", Menlo, ui-monospace, monospace;
+      font-size: 0.7rem;
+      color: rgba(199, 200, 255, 0.9);
+    }
+
+    .no-results {
+      display: none;
+      margin-top: 1.8rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .no-results span {
+      color: var(--accent);
+    }
+
+    /* Modal */
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 10% 0, rgba(255, 59, 167, 0.1), transparent 60%), radial-gradient(circle at 100% 100%, rgba(52, 245, 197, 0.08), transparent 60%), rgba(3, 3, 10, 0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-med);
+      z-index: 100;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      width: min(480px, 92vw);
+      max-height: 90vh;
+      background: linear-gradient(145deg, #07061a, #06081f);
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.95);
+      padding: 1.1rem 1.1rem 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      transform: translateY(12px) scale(0.97);
+      opacity: 0;
+      transition: transform 0.28s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.24s ease-out;
+      position: relative;
+    }
+
+    .modal-backdrop.open .modal {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .modal-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: radial-gradient(circle at 0 0, rgba(255, 227, 123, 0.9), transparent 55%), radial-gradient(circle at 100% 100%, rgba(255, 59, 167, 0.9), transparent 55%);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35), 0 18px 38px rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-header-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .modal-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .modal-role {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .modal-tags {
+      margin-top: 0.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .modal-body {
+      font-size: 0.85rem;
+      color: rgba(230, 232, 255, 0.94);
+      margin-top: 0.25rem;
+    }
+
+    .modal-stats {
+      margin-top: 0.4rem;
+      padding: 0.45rem 0.55rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: radial-gradient(circle at 0 0, rgba(52, 245, 197, 0.12), transparent 60%), rgba(4, 7, 26, 0.95);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.35rem 0.65rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .modal-stat-label {
+      color: var(--accent3);
+      font-size: 0.76rem;
+    }
+
+    .modal-funfact {
+      margin-top: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .modal-funfact span {
+      color: var(--accent2);
+    }
+
+    .modal-footer {
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .modal-footer span.code {
+      font-family: "SF Mono", Menlo, ui-monospace, monospace;
+      font-size: 0.72rem;
+      color: rgba(211, 214, 255, 0.9);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(5, 5, 18, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .modal-close:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.7);
+      color: var(--text);
+      background: rgba(10, 10, 34, 0.98);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.85);
+    }
+
+    /* Footer-ish mini note */
+
+    .page-meta-note {
+      margin-top: 2.1rem;
+      font-size: 0.74rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .page-meta-note span {
+      color: var(--accent3);
+    }
+  </style>
+</head>
+<body>
+  <!-- Soft floating chaos -->
+  <div class="floating-emoji">🐷</div>
+  <div class="floating-emoji">💪</div>
+  <div class="floating-emoji">🎩</div>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="nav-left">
+        <div class="nav-logo">
+          <span>🐷</span>
+        </div>
+        <div class="nav-title">
+          <div class="nav-title-main">WiggerPig.com</div>
+          <div class="nav-title-sub">Final Boss of the Internet</div>
+        </div>
+      </div>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="lore.html" class="nav-link">Lore</a>
+        <a href="characters.html" class="nav-link active">Characters</a>
+        <a href="games.html" class="nav-link">Events</a>
+        <a href="memetemple.html" class="nav-link">Memes</a>
+        <a href="discord.html" class="nav-link">Discord</a>
+        <a href="toys.html" class="nav-link">Chaos</a>
+      </nav>
+
+      <div class="nav-right">
+        <button class="nav-cta" onclick="location.href='discord.html'">
+          <span class="icon">🕳️</span>
+          <span>Join the Abyss</span>
+        </button>
+        <button class="nav-menu-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN PAGE -->
+  <main class="page">
+    <!-- HERO / HEADER -->
+    <section>
+      <div class="section-label">CHARACTER ARCHIVE</div>
+      <div class="section-title-row">
+        <div>
+          <h1 class="section-heading">THE CORE ROSTER</h1>
+          <p class="section-subtitle">
+            Five pigs. Zero restraint. Meet the current known cast of the WiggerPig Expanded Universe – each one a walking patch note that accidentally shipped to production.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="location.href='lore.html'">
+              <span class="icon">📜</span>
+              <span>View Lore Scriptures</span>
+            </button>
+            <button class="btn btn-secondary" onclick="location.href='the-cult.html'">
+              <span class="icon">🕯️</span>
+              <span>Meet the Cult</span>
+            </button>
+          </div>
+        </div>
+        <div class="section-meta">
+          <div><strong>Threat Level:</strong> Unsafe but entertaining</div>
+          <div class="chip-row">
+            <span class="tiny-pill">🧪 Live balance testing</span>
+            <span class="tiny-pill">🎮 Character Select Vibes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEARCH / FILTER -->
+      <div class="search-section">
+        <div class="search-row">
+          <div class="search-input-wrap">
+            <span class="icon">🔍</span>
+            <input
+              id="characterSearch"
+              class="search-input"
+              type="search"
+              placeholder="Search by name, role, or tag (e.g. gym, drip, cult, president)…"
+              autocomplete="off"
+            />
+          </div>
+          <div class="filter-pills" id="filterPills">
+            <button class="filter-pill active" data-filter="all">All</button>
+            <button class="filter-pill" data-filter="chaos">Chaos</button>
+            <button class="filter-pill" data-filter="drip">Drip</button>
+            <button class="filter-pill" data-filter="authority">Authority</button>
+            <button class="filter-pill" data-filter="cult">Cult</button>
+          </div>
+        </div>
+        <div class="search-hint">
+          <span>Hint: tap a pig to open their classified file.</span>
+          <span>Press <span class="key">Esc</span> to slam the folder shut.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRID -->
+    <section class="grid-section">
+      <div class="character-grid" id="characterGrid">
+        <!-- Gym Pig -->
+        <article
+          class="character-card reveal"
+          data-name="Gym Pig"
+          data-role="Unstable Muscle Entity"
+          data-tags="gym damagebuff voicechatgrunter chaos"
+          data-bio="Powered by creatine, dry-scooped pre-workout, and pure microphone clipping. Gym Pig treats every voice channel like a locker room and every emoji like a PR attempt."
+          data-chaos="9"
+          data-drip="5"
+          data-lore="4"
+          data-danger="8"
+          data-funfact="Once screamed 'LIGHT WEIGHT BABY' so loud it crashed someone's router."
+          data-image="gym-pig.png"
+        >
+          <div class="card-inner">
+            <div class="card-header">
+              <div class="card-avatar-wrap">
+                <img src="gym-pig.png" alt="Gym Pig portrait">
+              </div>
+              <div class="card-header-main">
+                <div class="char-name">
+                  Gym Pig
+                  <span class="badge">DPS MAIN</span>
+                </div>
+                <div class="char-role">Unstable Muscle Entity</div>
+              </div>
+            </div>
+            <p class="char-desc">
+              Powered by creatine and poor decisions. Can and will squat your entire Discord – including the channels.
+            </p>
+            <div class="char-tags">
+              <span class="char-tag-pill"><span class="dot"></span>#Gym</span>
+              <span class="char-tag-pill"><span class="dot"></span>#DamageBuff</span>
+              <span class="char-tag-pill tag-danger"><span class="dot"></span>#VoiceChatGrunter</span>
+            </div>
+            <div class="char-stats">
+              <div class="stat-row">
+                <span class="stat-label">Chaos</span>
+                <div class="stat-bar">
+                  <div class="stat-fill" style="--level: 0.95;"></div>
+                </div>
+                <div class="stat-dot-row">
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot"></div>
+                </div>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Drip</span>
+                <div class="stat-bar">
+                  <div class="stat-fill" style="--level: 0.55;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span><span class="highlight">Passive:</span> Pre-workout reverb aura.</span>
+              <span class="token">ID: GYM-001</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Captain Pig -->
+        <article
+          class="character-card reveal"
+          data-name="Captain Pig"
+          data-role="Ship of Fools Commander"
+          data-tags="leader tacticalint voicelag authority chaos"
+          data-bio="Captain Pig commands whatever lobby is unfortunate enough to load in with him. Strategically pings the wrong location but somehow wins anyway."
+          data-chaos="7"
+          data-drip="6"
+          data-lore="6"
+          data-danger="7"
+          data-funfact="Once tried to moderate the sun for 'excessive brightness'."
+          data-image="captain-pig.png"
+        >
+          <div class="card-inner">
+            <div class="card-header">
+              <div class="card-avatar-wrap">
+                <img src="captain-pig.png" alt="Captain Pig portrait">
+              </div>
+              <div class="card-header-main">
+                <div class="char-name">
+                  Captain Pig
+                  <span class="badge">SHOTCALLER</span>
+                </div>
+                <div class="char-role">Ship of Fools Commander</div>
+              </div>
+            </div>
+            <p class="char-desc">
+              Leads raids into channels that did not ask for it. Bans people by pointing dramatically and saying “you there.”
+            </p>
+            <div class="char-tags">
+              <span class="char-tag-pill"><span class="dot"></span>#Leader</span>
+              <span class="char-tag-pill"><span class="dot"></span>#TacticalInt</span>
+              <span class="char-tag-pill tag-danger"><span class="dot"></span>#VoiceLag</span>
+            </div>
+            <div class="char-stats">
+              <div class="stat-row">
+                <span class="stat-label">Chaos</span>
+                <div class="stat-bar">
+                  <div class="stat-fill" style="--level: 0.78;"></div>
+                </div>
+                <div class="stat-dot-row">
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot"></div>
+                  <div class="stat-dot"></div>
+                </div>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Lore</span>
+                <div class="stat-bar">
+                  <div class="stat-fill" style="--level: 0.65;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span><span class="highlight">Ultimate:</span> Mass Ping Armada.</span>
+              <span class="token">ID: CPT-002</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Drip Pig -->
+        <article
+          class="character-card reveal"
+          data-name="Drip Pig"
+          data-role="Fashion Stats Maxed"
+          data-tags="drip flex igstorythreat"
+          data-bio="Drip Pig logs on purely to out-outfit everyone and then vanish. The only pig with more fits than messages sent."
+          data-chaos="6"
+          data-drip="10"
+          data-lore="3"
+          data-danger="5"
+          data-funfact="Has a different outfit saved for every channel you've ever joined."
+          data-image="drip-pig.png"
+        >
+          <div class="card-inner">
+            <div class="card-header">
+              <div class="card-avatar-wrap">
+                <img src="drip-pig.png" alt="Drip Pig portrait">
+              </div>
+              <div class="card-header-main">
+                <div class="char-name">
+                  Drip Pig
+                  <span class="badge">STYLE CHECK</span>
+                </div>
+                <div class="char-role">Fashion Stats Maxed</div>
+              </div>
+            </div>
+            <p class="char-desc">
+              Has more outfits than you have braincells. Passive ability: +15 style, −3 responsibility, +∞ mirror selfies.
+            </p>
+            <div class="char-tags">
+              <span class="char-tag-pill tag-drip"><span class="dot"></span>#Drip</span>
+              <span class="char-tag-pill tag-drip"><span class="dot"></span>#Flex</span>
+              <span class="char-tag-pill"><span class="dot"></span>#IGStoryThreat</span>
+            </div>
+            <div class="char-stats">
+              <div class="stat-row">
+                <span class="stat-label">Drip</span>
+                <div class="stat-bar">
+                  <div class="stat-fill" style="--level: 1;"></div>
+                </div>
+                <div class="stat-dot-row">
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                </div>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Chaos</span>
+                <div class="stat-bar">
+                  <div class="stat-fill" style="--level: 0.6;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span><span class="highlight">Passive:</span> Auto-queue fashion roasting.</span>
+              <span class="token">ID: DRP-003</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Fez / Cult Pig -->
+        <article
+          class="character-card reveal"
+          data-name="Fez Pig"
+          data-role="Cult-Adjacent Ritual Enthusiast"
+          data-tags="fez cultvibes redflags cult chaos"
+          data-bio="Fez Pig maintains that this is absolutely not a cult, just 'an aggressively themed friend group with candles and chanting.' Jury is out."
+          data-chaos="8"
+          data-drip="4"
+          data-lore="9"
+          data-danger="8"
+          data-funfact="Will invite you to 'just one little ritual' at 3AM and call it a team-building exercise."
+          data-image="fez-pig.png"
+        >
+          <div class="card-inner">
+            <div class="card-header">
+              <div class="card-avatar-wrap">
+                <img src="fez-pig.png" alt="Fez / Cult Pig portrait">
+              </div>
+              <div class="card-header-main">
+                <div class="char-name">
+                  Fez / Cult Pig
+                  <span class="badge">RED FLAG</span>
+                </div>
+                <div class="char-role">Cult-Adjacent Ritual Enthusiast</div>
+              </div>
+            </div>
+            <p class="char-desc">
+              Definitely not starting a cult (legally speaking). Carries three candles, one fez, and seventeen unanswered DMs.
+            </p>
+            <div class="char-tags">
+              <span class="char-tag-pill"><span class="dot"></span>#Fez</span>
+              <span class="char-tag-pill tag-danger"><span class="dot"></span>#CultVibes</span>
+              <span class="char-tag-pill tag-danger"><span class="dot"></span>#RedFlags</span>
+            </div>
+            <div class="char-stats">
+              <div class="stat-row">
+                <span class="stat-label">Lore</span>
+                <div class="stat-bar">
+                  <div class="stat-fill" style="--level: 0.95;"></div>
+                </div>
+                <div class="stat-dot-row">
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot"></div>
+                </div>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Danger</span>
+                <div class="stat-bar">
+                  <div class="stat-fill" style="--level: 0.85;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span><span class="highlight">Ritual:</span> Summon 3 new inside jokes.</span>
+              <span class="token">ID: FEZ-004</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- PresiPig -->
+        <article
+          class="character-card reveal"
+          data-name="PresiPig"
+          data-role="Questionable Head of State"
+          data-tags="president scandal executiveoink authority"
+          data-bio="PresiPig ran on a platform of 'more pigs, fewer rules' and somehow won. Every speech is a patch note and a public safety hazard."
+          data-chaos="8"
+          data-drip="7"
+          data-lore="7"
+          data-danger="9"
+          data-funfact="Promised 'no more scandals' and then immediately created three new ones in a single stream."
+          data-image="presipig.png"
+        >
+          <div class="card-inner">
+            <div class="card-header">
+              <div class="card-avatar-wrap">
+                <img src="presipig.png" alt="PresiPig portrait">
+              </div>
+              <div class="card-header-main">
+                <div class="char-name">
+                  PresiPig
+                  <span class="badge">HEAD OF STATE</span>
+                </div>
+                <div class="char-role">Questionable Head of State</div>
+              </div>
+            </div>
+            <p class="char-desc">
+              Approval rating: unstable. Damage rating: rising. Every announcement sounds like a nerf but is secretly a buff to chaos.
+            </p>
+            <div class="char-tags">
+              <span class="char-tag-pill"><span class="dot"></span>#President</span>
+              <span class="char-tag-pill tag-danger"><span class="dot"></span>#Scandal</span>
+              <span class="char-tag-pill"><span class="dot"></span>#ExecutiveOink</span>
+            </div>
+            <div class="char-stats">
+              <div class="stat-row">
+                <span class="stat-label">Authority</span>
+                <div class="stat-bar">
+                  <div class="stat-fill" style="--level: 0.9;"></div>
+                </div>
+                <div class="stat-dot-row">
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot active"></div>
+                  <div class="stat-dot"></div>
+                </div>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Chaos</span>
+                <div class="stat-bar">
+                  <div class="stat-fill" style="--level: 0.88;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span><span class="highlight">Decree:</span> VC is now a tax write-off.</span>
+              <span class="token">ID: PRE-005</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="no-results" id="noResults">
+        No pigs found matching that query. <span>Try “gym”, “cult”, or “scandal”.</span>
+      </div>
+    </section>
+
+    <div class="page-meta-note">
+      <span>Classified note:</span> additional pigs may or may not exist in redacted timelines. This roster is the current stable build. “Stable” is doing a lot of work here.
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="characterModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+      <button class="modal-close" id="modalClose" aria-label="Close profile">✕</button>
+      <div class="modal-header">
+        <div class="modal-avatar">
+          <img id="modalImage" src="" alt="">
+        </div>
+        <div class="modal-header-main">
+          <div class="modal-name" id="modalName"></div>
+          <div class="modal-role" id="modalRole"></div>
+          <div class="modal-tags" id="modalTags"></div>
+        </div>
+      </div>
+      <div class="modal-body" id="modalBio"></div>
+      <div class="modal-stats">
+        <div>
+          <div class="modal-stat-label">Chaos Level</div>
+          <div id="modalChaos"></div>
+        </div>
+        <div>
+          <div class="modal-stat-label">Drip Score</div>
+          <div id="modalDrip"></div>
+        </div>
+        <div>
+          <div class="modal-stat-label">Lore Depth</div>
+          <div id="modalLore"></div>
+        </div>
+        <div>
+          <div class="modal-stat-label">Danger Rating</div>
+          <div id="modalDanger"></div>
+        </div>
+      </div>
+      <div class="modal-funfact" id="modalFunfact"></div>
+      <div class="modal-footer">
+        <span>Tap outside or press Esc to exit this briefing.</span>
+        <span class="code" id="modalCode"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple nav toggle for mobile
+    (function () {
+      const toggle = document.getElementById('navToggle');
+      const links = document.getElementById('navLinks');
+      if (!toggle || !links) return;
+
+      toggle.addEventListener('click', function () {
+        links.classList.toggle('open');
+      });
+    })();
+
+    // IntersectionObserver for reveal animations
+    (function () {
+      const cards = document.querySelectorAll('.character-card.reveal');
+      if (!('IntersectionObserver' in window) || !cards.length) {
+        cards.forEach(card => card.classList.add('visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+
+      cards.forEach(card => observer.observe(card));
+    })();
+
+    // Search + filter logic
+    (function () {
+      const searchInput = document.getElementById('characterSearch');
+      const grid = document.getElementById('characterGrid');
+      const cards = Array.from(grid.querySelectorAll('.character-card'));
+      const noResults = document.getElementById('noResults');
+      const filterPills = Array.from(document.querySelectorAll('.filter-pill'));
+
+      function normalize(str) {
+        return (str || '').toLowerCase();
+      }
+
+      function applyFilter() {
+        const query = normalize(searchInput.value);
+        const activeFilter = filterPills.find(p => p.classList.contains('active'))?.dataset.filter || 'all';
+
+        let visibleCount = 0;
+        cards.forEach(card => {
+          const name = normalize(card.dataset.name);
+          const role = normalize(card.dataset.role);
+          const tags = normalize(card.dataset.tags);
+          let matchesQuery = true;
+          let matchesFilter = true;
+
+          if (query) {
+            matchesQuery =
+              name.includes(query) ||
+              role.includes(query) ||
+              tags.includes(query);
+          }
+
+          if (activeFilter && activeFilter !== 'all') {
+            switch (activeFilter) {
+              case 'chaos':
+                matchesFilter = tags.includes('chaos') || tags.includes('damagebuff') || tags.includes('voicelag');
+                break;
+              case 'drip':
+                matchesFilter = tags.includes('drip') || tags.includes('flex');
+                break;
+              case 'authority':
+                matchesFilter = tags.includes('leader') || tags.includes('president') || tags.includes('executiveoink');
+                break;
+              case 'cult':
+                matchesFilter = tags.includes('cult') || tags.includes('cultvibes') || tags.includes('redflags') || tags.includes('fez');
+                break;
+              default:
+                matchesFilter = true;
+            }
+          }
+
+          if (matchesQuery && matchesFilter) {
+            card.style.display = '';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (noResults) {
+          noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', applyFilter);
+      }
+
+      filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          filterPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          applyFilter();
+        });
+      });
+
+      applyFilter();
+    })();
+
+    // Modal logic
+    (function () {
+      const modalBackdrop = document.getElementById('characterModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalName = document.getElementById('modalName');
+      const modalRole = document.getElementById('modalRole');
+      const modalTags = document.getElementById('modalTags');
+      const modalBio = document.getElementById('modalBio');
+      const modalChaos = document.getElementById('modalChaos');
+      const modalDrip = document.getElementById('modalDrip');
+      const modalLore = document.getElementById('modalLore');
+      const modalDanger = document.getElementById('modalDanger');
+      const modalFunfact = document.getElementById('modalFunfact');
+      const modalCode = document.getElementById('modalCode');
+      const modalClose = document.getElementById('modalClose');
+      const cards = document.querySelectorAll('.character-card');
+
+      if (!modalBackdrop) return;
+
+      function levelLabel(value) {
+        const v = Number(value) || 0;
+        if (v >= 9) return 'Catastrophic';
+        if (v >= 7) return 'Very High';
+        if (v >= 5) return 'Elevated';
+        if (v >= 3) return 'Manageable';
+        return 'Suspiciously Low';
+      }
+
+      function openModal(card) {
+        const name = card.dataset.name || '';
+        const role = card.dataset.role || '';
+        const tags = (card.dataset.tags || '').split(/\s+/).filter(Boolean);
+        const bio = card.dataset.bio || '';
+        const chaos = card.dataset.chaos || '0';
+        const drip = card.dataset.drip || '0';
+        const lore = card.dataset.lore || '0';
+        const danger = card.dataset.danger || '0';
+        const funfact = card.dataset.funfact || '';
+        const image = card.dataset.image || '';
+        const code = card.querySelector('.token')?.textContent || '';
+
+        modalName.textContent = name;
+        modalRole.textContent = role;
+        modalBio.textContent = bio;
+        modalFunfact.innerHTML = funfact ? `<span>Fun Fact:</span> ${funfact}` : '';
+
+        modalChaos.textContent = `${chaos}/10 – ${levelLabel(chaos)}`;
+        modalDrip.textContent = `${drip}/10 – ${levelLabel(drip)}`;
+        modalLore.textContent = `${lore}/10 – ${levelLabel(lore)}`;
+        modalDanger.textContent = `${danger}/10 – ${levelLabel(danger)}`;
+        modalCode.textContent = code;
+
+        modalTags.innerHTML = '';
+        tags.forEach(t => {
+          const pill = document.createElement('span');
+          pill.className = 'char-tag-pill';
+          const dot = document.createElement('span');
+          dot.className = 'dot';
+          pill.appendChild(dot);
+          pill.appendChild(document.createTextNode('#' + t));
+          modalTags.appendChild(pill);
+        });
+
+        if (image) {
+          modalImage.src = image;
+          modalImage.alt = name + ' portrait';
+        }
+
+        modalBackdrop.classList.add('open');
+        modalBackdrop.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeModal() {
+        modalBackdrop.classList.remove('open');
+        modalBackdrop.setAttribute('aria-hidden', 'true');
+      }
+
+      cards.forEach(card => {
+        card.addEventListener('click', () => openModal(card));
+      });
+
+      if (modalClose) {
+        modalClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeModal();
+        });
+      }
+
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+      });
+    })();
+
+    // End of chaos
+  </script>
+
+  <!--
+    Provide these images for best results:
+    - gym-pig.png
+    - captain-pig.png
+    - drip-pig.png
+    - fez-pig.png   (Fez / Cult Pig)
+    - presipig.png
+  -->
+</body>
+</html>

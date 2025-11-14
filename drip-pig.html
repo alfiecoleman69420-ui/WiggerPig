@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drip Pig – WiggerPig.com</title>
+  <style>
+    :root {
+      --bg: radial-gradient(circle at top left, #18182a 0, #060613 45%, #02010a 100%);
+      --card: radial-gradient(circle at top left, #1b1b2f 0, #10101f 45%, #060612 100%);
+      --accent: #ff3ea5;
+      --accent-soft: rgba(255, 62, 165, 0.2);
+      --accent2: #34f5c5;
+      --accent3: #f5c35c;
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --text: #f5f5f7;
+      --muted: #9fa4c6;
+      --danger: #ff5c7b;
+      --success: #7af57c;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.6);
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-pill: 999px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #03030a;
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background-image: var(--bg);
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+      border-radius: 999px;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      backdrop-filter: blur(18px);
+      background: radial-gradient(circle at top, rgba(18, 18, 38, 0.96), rgba(5, 5, 15, 0.94));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1120px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #ffffff, #ffe1ff 25%, #ff3ea5 60%, #05030a 100%);
+      box-shadow: 0 0 18px rgba(255, 62, 165, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: #05030a;
+    }
+
+    .nav-title {
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 14px;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 6px 0;
+      color: var(--muted);
+      transition: color var(--transition-fast);
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      transition: width var(--transition-fast);
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.85));
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at top left, #ffffff 0, #ffcef1 10%, #ff3ea5 40%, #1b1025 100%);
+      color: #100313;
+      box-shadow: 0 0 18px rgba(255, 62, 165, 0.6);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 0 26px rgba(255, 62, 165, 0.9);
+    }
+
+    .btn-ghost {
+      background: radial-gradient(circle at top, rgba(30, 34, 70, 0.8), rgba(5, 7, 18, 0.98));
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 18px rgba(52, 245, 197, 0.6);
+      border-color: rgba(52, 245, 197, 0.6);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* Layout */
+    .page {
+      padding: 26px 16px 40px;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section {
+      margin-top: 36px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-title-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-pill {
+      width: 3px;
+      height: 22px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+      box-shadow: 0 0 10px rgba(255, 62, 165, 0.7);
+    }
+
+    .section-title {
+      font-size: 18px;
+      letter-spacing: 0.043em;
+      text-transform: uppercase;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 460px;
+    }
+
+    /* Hero */
+    .hero {
+      margin-top: 18px;
+    }
+
+    .hero-card {
+      position: relative;
+      border-radius: 26px;
+      padding: 22px 22px 22px;
+      background: radial-gradient(circle at top left, rgba(41, 38, 72, 0.96), rgba(5, 3, 15, 0.98));
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      backdrop-filter: blur(22px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: 26px;
+      animation: heroIn 0.7s ease-out both;
+    }
+
+    .hero-glow-ring {
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255, 62, 165, 0.18), transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(52, 245, 197, 0.15), transparent 55%),
+        radial-gradient(circle at 50% 110%, rgba(116, 97, 255, 0.24), transparent 60%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-avatar-wrap {
+      position: relative;
+      padding: 4px;
+      border-radius: 999px;
+      background: conic-gradient(from 140deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+      box-shadow: 0 0 22px rgba(255, 62, 165, 0.8);
+      animation: shimmer 7s linear infinite;
+    }
+
+    .hero-avatar-inner {
+      border-radius: 999px;
+      padding: 4px;
+      background: radial-gradient(circle at top, #151429, #050313);
+    }
+
+    .hero-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 999px;
+      object-fit: cover;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.88);
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      background: radial-gradient(circle at top left, rgba(27, 28, 60, 0.96), rgba(9, 7, 23, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+    }
+
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .hero-title {
+      font-size: 30px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-title span.accent {
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+    }
+
+    .hero-title span.accent::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      filter: drop-shadow(0 0 12px rgba(255, 62, 165, 0.6));
+    }
+
+    .hero-tagline {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 420px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 500;
+      background: radial-gradient(circle at top, rgba(18, 23, 48, 0.98), rgba(7, 7, 18, 1));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+    }
+
+    .pill--accent {
+      border-color: rgba(255, 62, 165, 0.7);
+      color: #ffdff5;
+      background: radial-gradient(circle at top left, rgba(255, 62, 165, 0.22), rgba(14, 3, 23, 0.98));
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent2);
+      box-shadow: 0 0 10px rgba(52, 245, 197, 0.7);
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hero-floaters span {
+      position: absolute;
+      font-size: 16px;
+      opacity: 0.7;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-floaters span:nth-child(1) { top: 14%; left: 6%; animation-delay: -1s; }
+    .hero-floaters span:nth-child(2) { top: 8%; right: 10%; animation-delay: -2.6s; }
+    .hero-floaters span:nth-child(3) { bottom: 4%; right: 22%; animation-delay: -3.8s; }
+    .hero-floaters span:nth-child(4) { bottom: 12%; left: 20%; animation-delay: -5s; }
+    .hero-floaters span:nth-child(5) { top: 50%; left: -4%; animation-delay: -4s; }
+
+    /* Cards */
+    .card-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 14px;
+      background: var(--card);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.75);
+      overflow: hidden;
+      transition:
+        transform var(--transition-med),
+        box-shadow var(--transition-med),
+        border-color var(--transition-med),
+        background var(--transition-med);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      opacity: 0;
+      background:
+        radial-gradient(circle at top left, rgba(255, 62, 165, 0.18), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(52, 245, 197, 0.18), transparent 60%);
+      transition: opacity var(--transition-med);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .card-tag {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: radial-gradient(circle at top, rgba(10, 25, 40, 0.98), rgba(5, 7, 18, 1));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .pill-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at top, rgba(26, 31, 60, 0.98), rgba(5, 7, 18, 1));
+    }
+
+    .pill-status--danger {
+      border-color: rgba(255, 92, 123, 0.8);
+      color: #ffd4de;
+    }
+
+    .pill-status--success {
+      border-color: rgba(137, 255, 171, 0.7);
+      color: #d8ffeb;
+    }
+
+    /* Inputs */
+    .field {
+      margin-bottom: 10px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .input,
+    .textarea,
+    .select,
+    .range {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: radial-gradient(circle at top, rgba(9, 10, 24, 0.98), rgba(2, 3, 10, 1));
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .textarea {
+      min-height: 72px;
+      resize: vertical;
+    }
+
+    .select {
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, var(--accent2) 50%), linear-gradient(135deg, var(--accent2) 50%, transparent 50%);
+      background-position: calc(100% - 14px) calc(50% - 3px), calc(100% - 9px) calc(50% - 3px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+    }
+
+    .range {
+      appearance: none;
+      height: 6px;
+      padding: 0;
+    }
+
+    .range::-webkit-slider-runnable-track {
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent-soft), rgba(255, 255, 255, 0.1));
+    }
+
+    .range::-webkit-slider-thumb {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, var(--accent));
+      box-shadow: 0 0 14px rgba(255, 62, 165, 0.7);
+      margin-top: -5px;
+      cursor: pointer;
+    }
+
+    .input:focus,
+    .textarea:focus,
+    .select:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 1px rgba(52, 245, 197, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .small-hint {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .result {
+      margin-top: 10px;
+      padding: 10px 10px 9px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      background: radial-gradient(circle at top left, rgba(20, 24, 48, 0.98), rgba(3, 4, 12, 0.98));
+      font-size: 12px;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(6px);
+      pointer-events: none;
+    }
+
+    .result.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      animation: resultIn 0.4s var(--transition-med);
+    }
+
+    .result-score {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .stamp {
+      margin-left: auto;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      opacity: 0.8;
+    }
+
+    .stamp--approved {
+      border-color: rgba(122, 245, 124, 0.8);
+      color: var(--success);
+    }
+    .stamp--denied {
+      border-color: rgba(255, 92, 123, 0.9);
+      color: var(--danger);
+    }
+
+    .shake {
+      animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    }
+
+    /* Archetypes */
+    .archetype-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .archetype-card {
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      padding: 12px 12px 10px;
+      background: radial-gradient(circle at top left, #151428, #050414);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .archetype-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 62, 165, 0.7);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85);
+    }
+
+    .archetype-card.active {
+      border-color: rgba(52, 245, 197, 0.9);
+      background: radial-gradient(circle at top left, rgba(52, 245, 197, 0.16), #050313);
+      box-shadow: 0 0 22px rgba(52, 245, 197, 0.55);
+    }
+
+    .archetype-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .archetype-desc {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .archetype-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--muted);
+    }
+
+    .archetype-output {
+      margin-top: 10px;
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      font-size: 12px;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      background: radial-gradient(circle at top left, rgba(19, 24, 46, 0.98), rgba(4, 6, 16, 0.98));
+      color: var(--text);
+    }
+
+    /* Lore */
+    .lore-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .lore-card {
+      position: relative;
+      padding: 14px 14px 12px;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top left, rgba(28, 22, 60, 0.96), rgba(6, 5, 20, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      color: var(--muted);
+      overflow: hidden;
+    }
+
+    .lore-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      margin-bottom: 6px;
+      background: radial-gradient(circle at top, rgba(10, 20, 40, 0.98), rgba(2, 3, 10, 1));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+    }
+
+    .lore-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .patch-card {
+      border-radius: var(--radius-md);
+      padding: 10px 12px 10px;
+      background: radial-gradient(circle at top left, rgba(31, 21, 53, 0.98), rgba(6, 5, 22, 0.98));
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .patch-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent3);
+      margin-bottom: 4px;
+    }
+
+    .links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    /* Testimonials */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-card {
+      border-radius: var(--radius-md);
+      padding: 12px 12px 10px;
+      background: radial-gradient(circle at top left, rgba(16, 20, 40, 0.98), rgba(4, 6, 16, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 12px;
+      color: var(--muted);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-name {
+      font-size: 11px;
+      color: var(--accent3);
+      margin-top: 6px;
+    }
+
+    .testimonial-tag {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.12);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .trauma-form {
+      border-radius: var(--radius-md);
+      padding: 12px;
+      background: radial-gradient(circle at top left, rgba(24, 21, 50, 0.96), rgba(5, 3, 16, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      margin-top: 34px;
+      padding-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-link {
+      position: relative;
+    }
+
+    .footer-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      transition: width var(--transition-fast);
+    }
+
+    .footer-link:hover::after {
+      width: 100%;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Animations */
+    @keyframes heroIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        filter: hue-rotate(0deg);
+      }
+      100% {
+        filter: hue-rotate(360deg);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+      }
+      50% {
+        transform: translateY(-8px) translateX(3px);
+      }
+    }
+
+    @keyframes resultIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shake {
+      10%, 90% { transform: translateX(-1px); }
+      20%, 80% { transform: translateX(2px); }
+      30%, 50%, 70% { transform: translateX(-4px); }
+      40%, 60% { transform: translateX(4px); }
+    }
+
+    /* Responsive */
+    @media (max-width: 920px) {
+      .hero-card {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-right {
+        order: -1;
+      }
+
+      .hero-avatar {
+        width: 120px;
+        height: 120px;
+      }
+
+      .hero-title {
+        font-size: 26px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-center {
+        display: none;
+      }
+
+      .nav-title {
+        font-size: 13px;
+      }
+
+      .page {
+        padding-top: 20px;
+      }
+
+      .hero-card {
+        padding: 18px 16px 18px;
+      }
+
+      .card-grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .hero-title span.accent::after {
+        bottom: -3px;
+      }
+
+      .footer {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <div class="nav-logo">WP</div>
+        <div class="nav-title">WiggerPig.com</div>
+      </div>
+      <nav class="nav-center">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="lore.html" class="nav-link">Lore</a>
+        <a href="characters.html" class="nav-link">Characters</a>
+        <a href="memetemple.html" class="nav-link">Memes</a>
+        <a href="toys.html" class="nav-link">Chaos</a>
+      </nav>
+      <div class="nav-right">
+        <a href="discord.html" class="btn btn-sm btn-primary">
+          <span>Join the Abyss</span>
+          <span>👁️</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-card">
+          <div class="hero-glow-ring"></div>
+          <div class="hero-floaters">
+            <span>🎧</span>
+            <span>✨</span>
+            <span>👟</span>
+            <span>💿</span>
+            <span>🎵</span>
+          </div>
+
+          <div class="hero-left">
+            <div class="hero-avatar-wrap">
+              <div class="hero-avatar-inner">
+                <img src="drip-pig.png" alt="Drip Pig" class="hero-avatar" />
+              </div>
+            </div>
+            <div class="hero-chip">
+              <span style="font-size: 13px;">🐷</span>
+              <span>Live outfit & playlist surveillance active.</span>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div>
+              <h1 class="hero-title">
+                <span class="accent">Drip Pig</span>
+                <span style="font-size: 16px;">™</span>
+              </h1>
+              <p class="hero-tagline">
+                Fashion and playlist consultant. Judging your fit and your Spotify at all times.
+              </p>
+            </div>
+
+            <div class="hero-tags">
+              <div class="pill pill--accent">
+                <span class="pill-dot"></span>
+                <span>👟 Streetwear Sniper</span>
+              </div>
+              <div class="pill">
+                <span>🎧 Playlist Probation Officer</span>
+              </div>
+              <div class="pill">
+                <span>🔥 Outfits Rated, Feelings Hurt</span>
+              </div>
+            </div>
+
+            <div class="hero-buttons">
+              <button class="btn btn-primary" data-scroll-target="#tribunal">
+                🔍 Get Judged
+              </button>
+              <button class="btn btn-ghost" data-scroll-target="#lore">
+                📜 View Style Lore
+              </button>
+            </div>
+
+            <div class="hero-meta">
+              <span>
+                <span style="font-size: 12px;">💿</span>
+                <span>Now playing: “City Pop at 3AM (Emotional Damage Remix)”</span>
+              </span>
+              <span>
+                <span style="font-size: 12px;">🧠</span>
+                <span>Average braincells lost per consult: 2.7</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Fit & Playlist Tribunal -->
+      <section id="tribunal" class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-pill"></div>
+            <h2 class="section-title">Step Into The Drip Tribunal</h2>
+          </div>
+          <p class="section-subtitle">
+            Describe your fit, expose your playlist, and receive a verdict from a pig who has seen one too many
+            “crypto bro casual” hoodies.
+          </p>
+        </div>
+
+        <div class="card-grid-2">
+          <!-- Fit Check Card -->
+          <article class="card" id="fit-card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>👀</span>
+                <span>Fit Check</span>
+              </div>
+              <div class="card-tag">Your outfit is on trial.</div>
+            </div>
+            <p class="card-desc">
+              Confess what you’re wearing and how chaotic you decided to be today. Drip Pig will decide if you’re main
+              character material or background NPC.
+            </p>
+
+            <div class="field">
+              <label for="fit-desc">Describe your fit</label>
+              <textarea id="fit-desc" class="textarea" placeholder="black cargos, oversized tee, white AF1s..."></textarea>
+            </div>
+
+            <div class="field">
+              <label for="fit-energy">Fit energy</label>
+              <select id="fit-energy" class="select">
+                <option value="Comfy">Comfy</option>
+                <option value="Street">Street</option>
+                <option value="Techwear">Techwear</option>
+                <option value="Chaos">Chaos</option>
+                <option value="Business Pig">Business Pig</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="fit-risk">
+                Risk level
+                <span class="small-hint">(0 = pajamas on a Zoom call, 10 = fashion war crime)</span>
+              </label>
+              <input id="fit-risk" type="range" min="0" max="10" step="1" value="4" class="range" />
+            </div>
+
+            <button id="fit-btn" class="btn btn-ghost btn-sm" style="margin-top: 6px;">
+              🧪 Rate My Fit
+            </button>
+
+            <div id="fit-result" class="result">
+              <div class="card-footer">
+                <div class="result-badge">
+                  <span>🐷 Verdict loading...</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Playlist Audit Card -->
+          <article class="card" id="playlist-card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>💿</span>
+                <span>Playlist Audit</span>
+              </div>
+              <div class="card-tag">Your Spotify is a crime scene.</div>
+            </div>
+            <p class="card-desc">
+              Flex your best track, confess your worst one. Drip Pig will determine if your Spotify Wrapped is a
+              personality or a cry for help.
+            </p>
+
+            <div class="field">
+              <label for="flex-track">Biggest flex track</label>
+              <input id="flex-track" class="input" type="text" placeholder="Song that makes you feel 6'5&quot;..." />
+            </div>
+
+            <div class="field">
+              <label for="shame-track">Most embarrassing track you won't remove</label>
+              <input id="shame-track" class="input" type="text" placeholder="That one 2016 dubstep remix..." />
+            </div>
+
+            <div class="field">
+              <label for="genre-chaos">Genre chaos level</label>
+              <select id="genre-chaos" class="select">
+                <option value="Chill">Playlist has a theme</option>
+                <option value="Mixed">Bit of everything</option>
+                <option value="Unhinged">One song per timeline</option>
+              </select>
+            </div>
+
+            <button id="playlist-btn" class="btn btn-ghost btn-sm" style="margin-top: 6px;">
+              🎧 Audit My Playlist
+            </button>
+
+            <div id="playlist-result" class="result">
+              <div class="card-footer">
+                <div class="result-badge">
+                  <span>🐷 Verdict loading...</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Style Archetypes -->
+      <section class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-pill"></div>
+            <h2 class="section-title">Pick Your Drip Class</h2>
+          </div>
+          <p class="section-subtitle">
+            Choose the archetype that hurts your feelings the least. Drip Pig will tell you what to wear and what to
+            listen to while you pretend it wasn’t accurate.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="archetype-grid" id="archetype-grid">
+            <div class="archetype-card" data-key="citypop">
+              <div class="archetype-title">
+                <span>🌃</span>
+                <span>City Pop Nightwalker</span>
+              </div>
+              <p class="archetype-desc">
+                Vintage jacket, wired headphones, pretending your life is an 80s anime opening on the subway.
+              </p>
+              <div class="archetype-tag">
+                <span>Playlist vibe:</span>
+                <span>80s Japanese city pop</span>
+              </div>
+            </div>
+
+            <div class="archetype-card" data-key="gamerjacket">
+              <div class="archetype-title">
+                <span>🎮</span>
+                <span>Gamer With One Nice Jacket</span>
+              </div>
+              <p class="archetype-desc">
+                95% hoodies, 5% “surprisingly fire fit” when you touch grass twice a year.
+              </p>
+              <div class="archetype-tag">
+                <span>Playlist vibe:</span>
+                <span>Lo-fi + boss fight soundtracks</span>
+              </div>
+            </div>
+
+            <div class="archetype-card" data-key="taxevasion">
+              <div class="archetype-title">
+                <span>🥷</span>
+                <span>Techwear Tax Evasion</span>
+              </div>
+              <p class="archetype-desc">
+                All black, too many zippers, looks like you parkour to the grocery store.
+              </p>
+              <div class="archetype-tag">
+                <span>Playlist vibe:</span>
+                <span>Industrial, glitch, future bass</span>
+              </div>
+            </div>
+
+            <div class="archetype-card" data-key="gymcozy">
+              <div class="archetype-title">
+                <span>🏋️</span>
+                <span>Gym Rat But Make It Cozy</span>
+              </div>
+              <p class="archetype-desc">
+                Pump cover supremacy. Can deadlift your emotions but still wears fluffy socks.
+              </p>
+              <div class="archetype-tag">
+                <span>Playlist vibe:</span>
+                <span>Rage + nostalgic pop</span>
+              </div>
+            </div>
+
+            <div class="archetype-card" data-key="cursede">
+              <div class="archetype-title">
+                <span>🕸️</span>
+                <span>Cursed E-boy Archive</span>
+              </div>
+              <p class="archetype-desc">
+                Rings, eyeliner, and trauma. Outfit powered by late night Discord calls.
+              </p>
+              <div class="archetype-tag">
+                <span>Playlist vibe:</span>
+                <span>Hyperpop, sad rap, nightcore</span>
+              </div>
+            </div>
+
+            <div class="archetype-card" data-key="npcdrip">
+              <div class="archetype-title">
+                <span>🧍</span>
+                <span>NPC But Drippy</span>
+              </div>
+              <p class="archetype-desc">
+                Basic pieces, flawless execution. You look like a side quest with great rewards.
+              </p>
+              <div class="archetype-tag">
+                <span>Playlist vibe:</span>
+                <span>Indie, soft R&amp;B, TikTok hits</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="archetype-output" class="archetype-output">
+            <strong>Tap a drip class</strong> to receive a custom Drip Pig recommendation loadout.
+          </div>
+        </div>
+      </section>
+
+      <!-- Drip Lore & Crossovers -->
+      <section id="lore" class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-pill"></div>
+            <h2 class="section-title">Lore: The Trials of Drip Pig</h2>
+          </div>
+          <p class="section-subtitle">
+            From Pig Wars to VC Hell, Drip Pig has been roasting outfits across the multiverse. Here’s the short version
+            before your attention span logs off.
+          </p>
+        </div>
+
+        <div class="lore-grid">
+          <article class="lore-card">
+            <div class="lore-badge">
+              <span>⚔️ Pig Wars</span>
+            </div>
+            <div class="lore-title">Battlefield Fit Inspector</div>
+            <p>
+              During the Pig Wars saga, Drip Pig was deployed to the front lines—not to fight, but to flag armor combos
+              as “fashion crimes.” Several factions surrendered after being called “medieval Fortnite skins.”
+            </p>
+          </article>
+
+          <article class="lore-card">
+            <div class="lore-badge">
+              <span>🎙 VC Hell</span>
+            </div>
+            <div class="lore-title">Judge, Jury, Fit Executioner</div>
+            <p>
+              In VC Hell, webcams are optional but outfits are not. Drip Pig can sense mismatched socks through your
+              microphone and silently downgrades your social credit accordingly.
+            </p>
+          </article>
+
+          <article class="lore-card">
+            <div class="lore-badge">
+              <span>❓ Femboy Jeopardy</span>
+            </div>
+            <div class="lore-title">Special Guest: Fit Judge</div>
+            <p>
+              Occasionally appears in Femboy Jeopardy as a bonus round where contestants must defend their outfit while
+              under cross-examination. Most walk away with negative drip points and emotional damage.
+            </p>
+          </article>
+        </div>
+
+        <div style="margin-top: 12px;" class="patch-card">
+          <div class="patch-title">Patch Notes v1.03 – Drip Enforcement Update</div>
+          <ul style="margin: 0; padding-left: 18px; list-style: square;">
+            <li>Auto-bans crocs with socks (experimental, may cause collateral damage).</li>
+            <li>Added +15 judgment multiplier for “crypto bro casual” hoodies.</li>
+            <li>Buffed “3AM city pop enjoyer” perk: +10 charisma, -5 sleep schedule.</li>
+          </ul>
+          <div class="links-row">
+            <a class="btn btn-ghost btn-sm" href="characters.html">🐖 Meet the other pigs</a>
+            <a class="btn btn-ghost btn-sm" href="pig-wars.html">📚 Read the Pig Wars chronicles</a>
+            <a class="btn btn-ghost btn-sm" href="vc-hell.html">🔥 Enter VC Hell (not recommended)</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials & Roast Wall -->
+      <section class="section reveal">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-pill"></div>
+            <h2 class="section-title">Victims of The Drip</h2>
+          </div>
+          <p class="section-subtitle">
+            Real (fake) reviews from people who willingly subjected themselves to porcine fashion judgment. Learn from
+            their mistakes. Or don’t.
+          </p>
+        </div>
+
+        <div id="testimonials" class="testimonials-grid">
+          <!-- JS will inject testimonials here -->
+        </div>
+
+        <div class="trauma-form">
+          <div class="card-header" style="margin-bottom: 8px;">
+            <div class="card-title">
+              <span>📨</span>
+              <span>Submit your own trauma</span>
+            </div>
+            <div class="card-tag">Drip Pig is listening. And judging.</div>
+          </div>
+
+          <form id="trauma-form">
+            <div class="field">
+              <label for="trauma-name">Name / @handle</label>
+              <input id="trauma-name" class="input" type="text" placeholder="@fashion-victim" />
+            </div>
+            <div class="field">
+              <label for="trauma-text">What did Drip Pig do to you?</label>
+              <textarea id="trauma-text" class="textarea" placeholder="Describe the emotional damage..."></textarea>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 4px;">
+              <button type="submit" class="btn btn-primary btn-sm">💌 Send to the roast wall</button>
+              <span id="trauma-status" class="small-hint">Entries are stored locally in your shame cache.</span>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-links">
+          <a href="index.html" class="footer-link">Home</a>
+          <a href="lore.html" class="footer-link">Lore</a>
+          <a href="characters.html" class="footer-link">Characters</a>
+          <a href="games.html" class="footer-link">Games</a>
+          <a href="discord.html" class="footer-link">Discord</a>
+        </div>
+        <div>
+          <div>© WiggerPig Expanded Universe – All fits judged, no tears refunded.</div>
+          <div class="small-hint">Powered by questionable fashion choices and worse playlists.</div>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    // Smooth scroll for hero buttons
+    document.querySelectorAll("[data-scroll-target]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const target = document.querySelector(btn.getAttribute("data-scroll-target"));
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll(".reveal");
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    revealEls.forEach((el) => revealObserver.observe(el));
+
+    // Fit rating logic
+    const fitBtn = document.getElementById("fit-btn");
+    const fitResult = document.getElementById("fit-result");
+
+    function generateFitVerdict(desc, energy, risk) {
+      const riskNum = parseInt(risk, 10) || 0;
+      const base =
+        energy === "Techwear"
+          ? 7
+          : energy === "Street"
+          ? 7
+          : energy === "Chaos"
+          ? 6
+          : energy === "Business Pig"
+          ? 6
+          : 5;
+
+      const chaosBonus =
+        riskNum > 7 ? 2 : riskNum > 4 ? 1 : riskNum === 0 ? -1 : 0;
+
+      let rawScore =
+        base + chaosBonus + (desc && desc.length > 40 ? 1 : 0) + (Math.random() * 2 - 1);
+      rawScore = Math.min(10, Math.max(1, rawScore));
+      const score = rawScore.toFixed(1);
+
+      const lowRoasts = [
+        "You dress like a default character in a tutorial level.",
+        "This fit screams 'I only own one pair of pants.'",
+        "NPC energy detected. Side quest reward: one (1) pity compliment.",
+      ];
+      const midRoasts = [
+        "Solid attempt. You definitely scroll Pinterest too much but it’s working.",
+        "You’re one accessory away from main character status.",
+        "Safe but effective. Background character with surprise plot twist potential.",
+      ];
+      const highRoasts = [
+        "Okay, you ate. Nobody is looking at the scenery anymore.",
+        "Certified Drip Pig Approved™ (for legal reasons, not actually a certification).",
+        "Main lobby turns their camera on when you join VC, respectfully.",
+      ];
+
+      let tone;
+      let stamp = "APPROVED";
+      let approved = true;
+
+      if (rawScore < 4.5) {
+        tone = lowRoasts[Math.floor(Math.random() * lowRoasts.length)];
+        stamp = "DENIED";
+        approved = false;
+      } else if (rawScore < 7.5) {
+        tone = midRoasts[Math.floor(Math.random() * midRoasts.length)];
+      } else {
+        tone = highRoasts[Math.floor(Math.random() * highRoasts.length)];
+      }
+
+      const riskLabel =
+        riskNum === 0
+          ? "Risk Level: pajamas on a Zoom call."
+          : riskNum < 4
+          ? "Risk Level: playing it pretty safe."
+          : riskNum < 8
+          ? "Risk Level: tasteful chaos."
+          : "Risk Level: fashion war crime (in a good way?).";
+
+      return { score, tone, riskLabel, approved };
+    }
+
+    fitBtn.addEventListener("click", function () {
+      const desc = document.getElementById("fit-desc").value.trim();
+      const energy = document.getElementById("fit-energy").value;
+      const risk = document.getElementById("fit-risk").value;
+
+      const verdict = generateFitVerdict(desc, energy, risk);
+
+      const stampClass = verdict.approved ? "stamp--approved" : "stamp--denied";
+      const statusClass = verdict.approved
+        ? "pill-status pill-status--success"
+        : "pill-status pill-status--danger";
+
+      fitResult.innerHTML = `
+        <div class="result-score">Score: ${verdict.score}/10</div>
+        <div class="card-footer">
+          <div class="${statusClass}">
+            <span>${verdict.approved ? "✅" : "⚠️"}</span>
+            <span>${verdict.riskLabel}</span>
+          </div>
+          <div class="stamp ${stampClass}">
+            ${verdict.approved ? "APPROVED" : "DENIED"}
+          </div>
+        </div>
+        <p style="margin: 8px 0 0; font-size: 12px;">${verdict.tone}</p>
+      `;
+
+      fitResult.classList.add("visible");
+      fitResult.classList.remove("shake");
+      if (!verdict.approved) {
+        void fitResult.offsetWidth; // force reflow
+        fitResult.classList.add("shake");
+      }
+    });
+
+    // Playlist audit logic
+    const playlistBtn = document.getElementById("playlist-btn");
+    const playlistResult = document.getElementById("playlist-result");
+
+    function generatePlaylistVerdict(flex, shame, chaosLevel) {
+      const flexMention = flex ? `Flex track: “${flex}”. ` : "";
+      const shameMention = shame
+        ? `Uninstall-worthy shame: “${shame}”. `
+        : "You refused to confess your worst track. Coward. ";
+
+      let chaosLine;
+      let correction;
+
+      switch (chaosLevel) {
+        case "Chill":
+          chaosLine = "Your playlist actually has a theme. Suspiciously stable behavior.";
+          correction =
+            "Inject one unhinged hyperpop banger and one 2010 R&B classic immediately.";
+          break;
+        case "Mixed":
+          chaosLine =
+            "Bit of everything, like a buffet where half the trays are mild identity crises.";
+          correction =
+            "Curate one 'main character walk' playlist and one 'I am the problem' playlist.";
+          break;
+        case "Unhinged":
+          chaosLine =
+            "One song per timeline. Your Spotify is a multiverse breach waiting for patch notes.";
+          correction =
+            "No correction, actually. Lean in. Just maybe touch grass between rage tracks.";
+          break;
+        default:
+          chaosLine = "Your genre chaos cannot be quantified.";
+          correction = "Restart Spotify like a router and try again.";
+      }
+
+      const recommendations = [
+        "Add one city pop track for 3AM introspection.",
+        "Include at least one song your parents would recognize.",
+        "Replace a random track with elevator jazz as a social experiment.",
+        "Make a 'songs I’ll never admit I love' playlist and send it to Drip Pig.",
+      ];
+      const recExtra = recommendations[Math.floor(Math.random() * recommendations.length)];
+
+      return {
+        summary: flexMention + shameMention,
+        chaosLine,
+        correction: correction + " " + recExtra,
+      };
+    }
+
+    playlistBtn.addEventListener("click", function () {
+      const flex = document.getElementById("flex-track").value.trim();
+      const shame = document.getElementById("shame-track").value.trim();
+      const chaosLevel = document.getElementById("genre-chaos").value;
+
+      const verdict = generatePlaylistVerdict(flex, shame, chaosLevel);
+
+      playlistResult.innerHTML = `
+        <div class="card-footer">
+          <div class="pill-status">
+            <span>🎧</span>
+            <span>${verdict.chaosLine}</span>
+          </div>
+          <div class="stamp stamp--approved">AUDITED</div>
+        </div>
+        <p style="margin: 8px 0 0; font-size: 12px;">${verdict.summary}</p>
+        <p style="margin: 4px 0 0; font-size: 12px; color: var(--accent2);">
+          Recommended Vibe Correction: ${verdict.correction}
+        </p>
+      `;
+
+      playlistResult.classList.add("visible");
+      playlistResult.classList.remove("shake");
+    });
+
+    // Archetype verdicts
+    const archetypeVerdicts = {
+      citypop:
+        "Wear: oversized blazer, loose trousers, vintage sneakers, and wired headphones. Listen: city pop, funk, and tracks that sound like neon reflections in puddles. Side effect: you will stare out of bus windows dramatically.",
+      gamerjacket:
+        "Wear: clean sneakers, that one actually good jacket, and pants that aren’t sweatpants (for once). Listen: game OSTs, lo-fi beats, and one aggressively confident pop anthem to fake social skills.",
+      taxevasion:
+        "Wear: layered black everything, utility straps, pockets no human needs. Listen: industrial beats, glitchcore, and soundtracks that make walking to the store feel like a stealth mission.",
+      gymcozy:
+        "Wear: pump cover hoodie, fitted tee, comfy shorts or sweats, and headphones big enough to block out bad form. Listen: rage tracks to lift, nostalgic bops to stretch, and one ballad to PR cry.",
+      cursede:
+        "Wear: layered jewelry, striped shirt or mesh, black nail polish, oversized hoodie for emotional support. Listen: hyperpop, sad rap, breakcore, and songs you found at 4AM via cursed TikToks.",
+      npcdrip:
+        "Wear: simple tee, clean denim, white sneakers, one tasteful accessory. Listen: indie, chill R&B, and algorithm-core vibes. You look approachable and suspiciously emotionally stable.",
+    };
+
+    const archetypeGrid = document.getElementById("archetype-grid");
+    const archetypeOutput = document.getElementById("archetype-output");
+
+    archetypeGrid.addEventListener("click", function (e) {
+      const card = e.target.closest(".archetype-card");
+      if (!card) return;
+      const key = card.getAttribute("data-key");
+      if (!key || !archetypeVerdicts[key]) return;
+
+      archetypeGrid.querySelectorAll(".archetype-card").forEach((c) => c.classList.remove("active"));
+      card.classList.add("active");
+
+      archetypeOutput.innerHTML = `
+        <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:4px;">
+          <div class="pill-status pill-status--success">
+            <span>🐷</span>
+            <span>Drip Pig verdict loaded.</span>
+          </div>
+        </div>
+        <p style="margin: 0; font-size: 12px;">${archetypeVerdicts[key]}</p>
+      `;
+    });
+
+    // Testimonials
+    const testimonialsEl = document.getElementById("testimonials");
+    const traumaForm = document.getElementById("trauma-form");
+    const traumaNameInput = document.getElementById("trauma-name");
+    const traumaTextInput = document.getElementById("trauma-text");
+    const traumaStatus = document.getElementById("trauma-status");
+
+    const testimonials = [
+      {
+        text: "Drip Pig called my outfit 'Crypto Bro Casual'. I haven’t recovered.",
+        name: "@chart-down-only",
+      },
+      {
+        text: "My Spotify was declared a war crime. 10/10 would cry again.",
+        name: "@playlist-fugitive",
+      },
+      {
+        text: "Got a 9/10 fit rating but 2/10 emotional stability.",
+        name: "@sleepless-streetwear",
+      },
+      {
+        text: "He said my crocs with socks build 'violates multiple Geneva conventions'.",
+        name: "@foam-rubber-felon",
+      },
+    ];
+
+    function renderTestimonials() {
+      testimonialsEl.innerHTML = "";
+      testimonials.forEach((t, index) => {
+        const div = document.createElement("article");
+        div.className = "testimonial-card";
+        div.innerHTML = `
+          <div class="testimonial-tag">${index === 0 ? "ORIGINAL SIN" : "CASE FILE"}</div>
+          <p>${t.text}</p>
+          <div class="testimonial-name">— ${t.name}</div>
+        `;
+        testimonialsEl.appendChild(div);
+      });
+    }
+
+    renderTestimonials();
+
+    traumaForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = traumaNameInput.value.trim() || "@anonymous-victim";
+      const text =
+        traumaTextInput.value.trim() ||
+        "Redacted by Drip Pig for being legally concerning but emotionally valid.";
+
+      testimonials.unshift({ text, name });
+      if (testimonials.length > 12) testimonials.pop();
+      renderTestimonials();
+
+      traumaStatus.textContent = "Received & judged 👁 Local shame cache updated.";
+      traumaStatus.style.color = "var(--accent2)";
+
+      traumaForm.classList.add("shake");
+      void traumaForm.offsetWidth;
+      traumaForm.classList.remove("shake");
+
+      traumaForm.reset();
+      setTimeout(() => {
+        traumaStatus.textContent = "Entries are stored locally in your shame cache.";
+        traumaStatus.style.color = "";
+      }, 2600);
+    });
+  </script>
+</body>
+</html>
